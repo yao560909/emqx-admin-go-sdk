@@ -8,8 +8,8 @@ import (
 type Edition int
 
 const (
-	openSource Edition = iota
-	enterprise
+	OpenSource Edition = iota
+	Enterprise
 )
 
 type ClientOptionFunc func(config *core.Config)
@@ -55,5 +55,12 @@ func NewClient(edition Edition, appId, appSecret, target, scheme string, options
 }
 
 func initService(client *Client, config *core.Config) {
-	client.Nodes = nodes.NewService(config)
+	edition := client.Edition
+	switch edition {
+	case OpenSource:
+		client.Nodes=nodes.NewService(config)
+	case Enterprise:
+		client.Nodes=nodes.NewService(config)
+	default:
+	}
 }
