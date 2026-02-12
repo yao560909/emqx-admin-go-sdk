@@ -2,6 +2,7 @@ package sdk
 
 import (
 	"github.com/yao560909/emqx-admin-go-sdk/core"
+	"github.com/yao560909/emqx-admin-go-sdk/service/clients"
 	"github.com/yao560909/emqx-admin-go-sdk/service/nodes"
 )
 
@@ -30,7 +31,8 @@ type Client struct {
 	Edition Edition
 	Config  *core.Config
 
-	Nodes *nodes.NodesService
+	Nodes   *nodes.NodesService
+	Clients *clients.ClientsService
 }
 
 func NewClient(edition Edition, appId, appSecret, target, scheme string, options ...ClientOptionFunc) *Client {
@@ -58,9 +60,11 @@ func initService(client *Client, config *core.Config) {
 	edition := client.Edition
 	switch edition {
 	case OpenSource:
-		client.Nodes=nodes.NewService(config)
+		client.Nodes = nodes.NewService(config)
+		client.Clients = clients.NewService(config)
 	case Enterprise:
-		client.Nodes=nodes.NewService(config)
+		client.Nodes = nodes.NewService(config)
+		client.Clients = clients.NewService(config)
 	default:
 	}
 }
