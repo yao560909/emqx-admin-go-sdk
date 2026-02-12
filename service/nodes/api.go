@@ -25,7 +25,7 @@ func (n *NodesService) ListNodes(ctx context.Context, req *ListNodesReq, options
 	apiReq.ApiPath = ApiPathNodes
 	apiReq.HttpMethod = "GET"
 	requester := core.NewRequester(n.config)
-	apiResp, err := core.DoRequest(requester, apiReq, options...)
+	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
 		n.config.Logger.Error(ctx, fmt.Sprintf("[ListNodes] fail to invoke api, error: %v", err.Error()))
 		return nil, err

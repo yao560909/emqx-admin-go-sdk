@@ -36,30 +36,34 @@ func NewRequester(config *Config) *Requester {
 	}
 }
 
-func DoRequest(requester *Requester, apiReq *APIReq, options ...RequestOptionFunc) (*APIResp, error) {
+func (r *Requester) DoRequest(apiReq *APIReq, options ...RequestOptionFunc) (*APIResp, error) {
 	req := fasthttp.AcquireRequest()
-	req.Reset()
 	defer fasthttp.ReleaseRequest(req)
+
 	reqURI := fasthttp.AcquireURI()
 	defer fasthttp.ReleaseURI(reqURI)
-	reqURI.CopyTo(requester.uri)
+	r.uri.CopyTo(reqURI)
 	if apiReq.SkipAuth {
 		reqURI.SetUsername("")
 		reqURI.SetPassword("")
 	}
 	req.SetURI(reqURI)
+
 	path, err := reqTranslator.Path(apiReq.ApiPath, apiReq.PathParams)
 	if err != nil {
 		return nil, err
 	}
 	req.URI().SetPath(path)
+
 	req.URI().QueryArgs().Reset()
 	for k, vs := range apiReq.QueryParams {
 		for _, v := range vs {
 			req.URI().QueryArgs().Add(k, v)
 		}
 	}
+
 	req.Header.SetMethod(apiReq.HttpMethod)
+
 	opt := &RequestOption{
 		Header: make(map[string]string, 8),
 	}
@@ -69,6 +73,7 @@ func DoRequest(requester *Requester, apiReq *APIReq, options ...RequestOptionFun
 	for k, v := range opt.Header {
 		req.Header.Set(k, v)
 	}
+
 	contentType, body, err := reqTranslator.Payload(apiReq.Body)
 	if err != nil {
 		return nil, err
@@ -79,9 +84,11 @@ func DoRequest(requester *Requester, apiReq *APIReq, options ...RequestOptionFun
 	} else {
 		req.ResetBody()
 	}
+
 	resp := fasthttp.AcquireResponse()
 	defer fasthttp.ReleaseResponse(resp)
-	err = requester.client.Do(req, resp)
+
+	err = r.client.Do(req, resp)
 	if err != nil {
 		return nil, fmt.Errorf("request %s failed: %w", req.URI().String(), err)
 	}
