@@ -16,6 +16,10 @@ type NodesService struct {
 	config *core.Config
 }
 
+func NewService(config *core.Config) *NodesService {
+	return &NodesService{config: config}
+}
+
 func (n *NodesService) ListNodes(ctx context.Context, req *ListNodesReq, options ...core.RequestOptionFunc) (*ListNodesResp, error) {
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathNodes

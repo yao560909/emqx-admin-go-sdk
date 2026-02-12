@@ -1,1 +1,5 @@
 package sample
+
+func ListNodes() {
+
+}

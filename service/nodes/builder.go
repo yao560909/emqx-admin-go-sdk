@@ -11,3 +11,22 @@ type ListNodesResp struct {
 	core.CodeError
 	Data []*Node
 }
+
+type ListNodesReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewListNodesReqBuilder() *ListNodesReqBuilder {
+	builder := &ListNodesReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *ListNodesReqBuilder) Build() *ListNodesReq {
+	req := &ListNodesReq{}
+	req.apiReq = b.apiReq
+	return req
+}

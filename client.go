@@ -2,6 +2,7 @@ package sdk
 
 import (
 	"github.com/yao560909/emqx-admin-go-sdk/core"
+	"github.com/yao560909/emqx-admin-go-sdk/service/nodes"
 )
 
 type Edition int
@@ -28,6 +29,8 @@ func WithLogLevel(logLevel core.LogLevel) ClientOptionFunc {
 type Client struct {
 	Edition Edition
 	Config  *core.Config
+
+	Nodes *nodes.NodesService
 }
 
 func NewClient(edition Edition, appId, appSecret, target, scheme string, options ...ClientOptionFunc) *Client {
@@ -47,10 +50,10 @@ func NewClient(edition Edition, appId, appSecret, target, scheme string, options
 		Edition: edition,
 		Config:  config,
 	}
-
+	initService(client, config)
 	return client
 }
 
 func initService(client *Client, config *core.Config) {
-
+	client.Nodes = nodes.NewService(config)
 }
