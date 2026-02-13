@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	ApiPathBanned        = "/api/v5/banned"
-	ApiPathBanned_As_Who = "/api/v5/banned/{as}/{who}"
+	ApiPathBanned         = "/api/v5/banned"
+	ApiPathBanned_As__Who = "/api/v5/banned/{as}/{who}"
 )
 
 type BannedService struct {
@@ -44,7 +44,7 @@ func (s *BannedService) Banned(ctx context.Context, req *BannedReq, options ...c
 // Remove a client ID, username or IP address from the blacklist.
 func (s *BannedService) RemoveBanned(ctx context.Context, req *RemoveBannedReq, options ...core.RequestOptionFunc) (*RemoveBannedResp, error) {
 	apiReq := req.apiReq
-	apiReq.ApiPath = ApiPathBanned_As_Who
+	apiReq.ApiPath = ApiPathBanned_As__Who
 	apiReq.HttpMethod = "DELETE"
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
