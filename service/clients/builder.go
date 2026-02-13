@@ -6,6 +6,7 @@ import (
 	"github.com/yao560909/emqx-admin-go-sdk/core"
 )
 
+// -------------------------
 type ListClientsReq struct {
 	apiReq *core.APIReq
 }
@@ -137,6 +138,7 @@ func (b *ListClientsReqBuilder) LteConnectedAt(lteConnectedAt string) *ListClien
 	return b
 }
 
+// ---------------------------
 type KickOutClientReq struct {
 	apiReq *core.APIReq
 }
@@ -170,6 +172,7 @@ type KickOutClientResp struct {
 	core.CodeError
 }
 
+// --------------------------------
 type BatchKickOutClientReq struct {
 	apiReq *core.APIReq
 }
@@ -193,6 +196,12 @@ func (b *BatchKickOutClientReqBuilder) Build() *BatchKickOutClientReq {
 	return req
 }
 
+/*
+*
+Array[
+string
+]
+*/
 func (b *BatchKickOutClientReqBuilder) ClientIdArray(clientIdArray []string) *BatchKickOutClientReqBuilder {
 	b.apiReq.Body = clientIdArray
 	return b
