@@ -3,6 +3,7 @@ package sdk
 import (
 	"github.com/yao560909/emqx-admin-go-sdk/core"
 	"github.com/yao560909/emqx-admin-go-sdk/service/clients"
+	"github.com/yao560909/emqx-admin-go-sdk/service/metrics"
 	"github.com/yao560909/emqx-admin-go-sdk/service/nodes"
 )
 
@@ -33,6 +34,7 @@ type Client struct {
 
 	Nodes   *nodes.NodesService
 	Clients *clients.ClientsService
+	Metrics *metrics.MetricsService
 }
 
 func NewClient(edition Edition, appId, appSecret, target, scheme string, options ...ClientOptionFunc) *Client {
@@ -62,9 +64,11 @@ func initService(client *Client, config *core.Config) {
 	case OpenSource:
 		client.Nodes = nodes.NewService(config)
 		client.Clients = clients.NewService(config)
+		client.Metrics = metrics.NewService(config)
 	case Enterprise:
 		client.Nodes = nodes.NewService(config)
 		client.Clients = clients.NewService(config)
+		client.Metrics = metrics.NewService(config)
 	default:
 	}
 }
