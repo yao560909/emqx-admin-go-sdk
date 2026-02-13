@@ -2,6 +2,7 @@ package sdk
 
 import (
 	"github.com/yao560909/emqx-admin-go-sdk/core"
+	"github.com/yao560909/emqx-admin-go-sdk/service/authentication"
 	"github.com/yao560909/emqx-admin-go-sdk/service/banned"
 	"github.com/yao560909/emqx-admin-go-sdk/service/clients"
 	"github.com/yao560909/emqx-admin-go-sdk/service/metrics"
@@ -33,10 +34,11 @@ type Client struct {
 	Edition Edition
 	Config  *core.Config
 
-	Nodes   *nodes.NodesService
-	Clients *clients.ClientsService
-	Metrics *metrics.MetricsService
-	Banned  *banned.BannedService
+	Nodes          *nodes.NodesService
+	Clients        *clients.ClientsService
+	Metrics        *metrics.MetricsService
+	Banned         *banned.BannedService
+	Authentication *authentication.AuthenticationService
 }
 
 func NewClient(edition Edition, appId, appSecret, target, scheme string, options ...ClientOptionFunc) *Client {
@@ -68,11 +70,13 @@ func initService(client *Client, config *core.Config) {
 		client.Clients = clients.NewService(config)
 		client.Metrics = metrics.NewService(config)
 		client.Banned = banned.NewService(config)
+		client.Authentication = authentication.NewService(config)
 	case Enterprise:
 		client.Nodes = nodes.NewService(config)
 		client.Clients = clients.NewService(config)
 		client.Metrics = metrics.NewService(config)
 		client.Banned = banned.NewService(config)
+		client.Authentication = authentication.NewService(config)
 	default:
 	}
 }
