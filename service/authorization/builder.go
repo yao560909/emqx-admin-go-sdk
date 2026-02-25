@@ -211,3 +211,47 @@ type GetRuleForClientResp struct {
 	core.CodeError
 	ClientRules
 }
+
+type SetRuleForClientReq struct {
+	apiReq *core.APIReq
+}
+
+type SetRuleForClientReqBody struct {
+	ClientId string  `json:"clientid"`
+	Rules    []*Rule `json:"rules"`
+}
+
+type SetRuleForClientReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewSetRuleForClientReqBuilder() *SetRuleForClientReqBuilder {
+	builder := &SetRuleForClientReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *SetRuleForClientReqBuilder) ClientId(clientId string) *SetRuleForClientReqBuilder {
+	b.apiReq.PathParams.Set("clientid", clientId)
+	b.apiReq.Body.(*SetRuleForClientReqBody).ClientId = clientId
+	return b
+}
+
+func (b *SetRuleForClientReqBuilder) Rules(rules []*Rule) *SetRuleForClientReqBuilder {
+	b.apiReq.Body.(*SetRuleForClientReqBody).Rules = rules
+	return b
+}
+
+func (b *SetRuleForClientReqBuilder) Build() *SetRuleForClientReq {
+	req := &SetRuleForClientReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type SetRuleForClientResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
