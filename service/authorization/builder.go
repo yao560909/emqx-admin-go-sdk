@@ -520,6 +520,34 @@ func (b *ListRulesForAllReqBuilder) Build() *ListRulesForAllReq {
 	return req
 }
 
+type DeleteRulesForAllReq struct {
+	apiReq *core.APIReq
+}
+
+type DeleteRulesForAllResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
+
+type DeleteRulesForAllReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewDeleteRulesForAllReqBuilder() *DeleteRulesForAllReqBuilder {
+	builder := &DeleteRulesForAllReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *DeleteRulesForAllReqBuilder) Build() *DeleteRulesForAllReq {
+	req := &DeleteRulesForAllReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
 type MoveAuthorizationSourceReq struct {
 	apiReq *core.APIReq
 }

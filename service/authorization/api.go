@@ -305,6 +305,28 @@ func (s *AuthorizationService) DeleteAllRules(ctx context.Context, req *DeleteAl
 	return resp, nil
 }
 
+// Delete rules for 'all'
+func (s *AuthorizationService) DeleteRulesForAll(ctx context.Context, req *DeleteRulesForAllReq, options ...core.RequestOptionFunc) (*DeleteRulesForAllResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesAll
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteRulesForAll] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &DeleteRulesForAllResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteRulesForAll] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
+
 // Show the list of rules for 'all'
 func (s *AuthorizationService) ListRulesForAll(ctx context.Context, req *ListRulesForAllReq, options ...core.RequestOptionFunc) (*ListRulesForAllResp, error) {
 	apiReq := req.apiReq
