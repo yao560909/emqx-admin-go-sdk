@@ -13,6 +13,7 @@ const (
 	ApiPathAuthentication_Id_Users        = "/api/v5/authentication/{id}/users"
 	ApiPathAuthentication_Id_Position     = "/api/v5/authentication/{id}/position/{position}"
 	ApiPathAuthentication_Id_Users_UserId = "/api/v5/authentication/{id}/users/{user_id}"
+	ApiPathAuthentication_Id_Status       = "/api/v5/authentication/{id}/status"
 )
 
 type AuthenticationService struct {
@@ -163,6 +164,26 @@ func (s *AuthenticationService) DeleteUserFromAuthenticator(ctx context.Context,
 			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteUserFromAuthenticator] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Get authenticator status from global authentication chain.
+func (s *AuthenticationService) GetAuthenticatorStatus(ctx context.Context, req *GetAuthenticatorStatusReq, options ...core.RequestOptionFunc) (*GetAuthenticatorStatusResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthentication_Id_Status
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAuthenticatorStatus] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetAuthenticatorStatusResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAuthenticatorStatus] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }

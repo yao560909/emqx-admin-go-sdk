@@ -394,3 +394,42 @@ type DeleteUserFromAuthenticatorResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
+
+// ------------------------------------------
+type GetAuthenticatorStatusReq struct {
+	apiReq *core.APIReq
+}
+
+type GetAuthenticatorStatusReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetAuthenticatorStatusReqBuilder() *GetAuthenticatorStatusReqBuilder {
+	builder := &GetAuthenticatorStatusReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+Authenticator ID.
+*/
+func (b *GetAuthenticatorStatusReqBuilder) Id(id string) *GetAuthenticatorStatusReqBuilder {
+	b.apiReq.PathParams.Set("id", id)
+	return b
+}
+
+func (b *GetAuthenticatorStatusReqBuilder) Build() *GetAuthenticatorStatusReq {
+	req := &GetAuthenticatorStatusReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetAuthenticatorStatusResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	AuthenticatorStatus
+}

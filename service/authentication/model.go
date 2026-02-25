@@ -1,6 +1,5 @@
 package authentication
 
-// Keep only common fields
 type Authentication struct {
 	Id        string `json:"id"`
 	Backend   string `json:"backend"`
@@ -18,4 +17,53 @@ type Meta struct {
 	HasNext bool `json:"hasnext"`
 	Limit   int  `json:"limit"`
 	Page    int  `json:"page"`
+}
+
+type AuthenticatorStatus struct {
+	Status              string                 `json:"status"`
+	NodeStatus          []*NodeStatus          `json:"node_status"`
+	Metrics             *AuthenticatorMetrics  `json:"metrics"`
+	ResourceMetrics     *ResourceMetrics       `json:"resource_metrics"`
+	NodeError           []*NodeError           `json:"node_error"`
+	NodeMetrics         []*NodeMetrics         `json:"node_metrics"`
+	NodeResourceMetrics []*NodeResourceMetrics `json:"node_resource_metrics"`
+}
+
+type NodeStatus struct {
+	Node   string `json:"node"`
+	Status string `json:"status"`
+}
+
+type NodeError struct {
+	Node  string `json:"node"`
+	Error string `json:"error"`
+}
+
+type AuthenticatorMetrics struct {
+	Nomatch    int `json:"nomatch"`
+	Total      int `json:"total"`
+	Success    int `json:"success"`
+	Failed     int `json:"failed"`
+	Rate       int `json:"rate"`
+	RateLast5m int `json:"rate_last5m"`
+	RateMax    int `json:"rate_max"`
+}
+
+type ResourceMetrics struct {
+	Success    int `json:"success"`
+	Matched    int `json:"matched"`
+	Failed     int `json:"failed"`
+	Rate       int `json:"rate"`
+	RateLast5m int `json:"rate_last5m"`
+	RateMax    int `json:"rate_max"`
+}
+
+type NodeMetrics struct {
+	Node    string                `json:"node"`
+	Metrics *AuthenticatorMetrics `json:"metrics"`
+}
+
+type NodeResourceMetrics struct {
+	Node    string           `json:"node"`
+	Metrics *ResourceMetrics `json:"metrics"`
 }
