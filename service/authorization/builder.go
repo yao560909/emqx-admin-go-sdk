@@ -490,3 +490,50 @@ type DeleteAllRulesResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
+
+type MoveAuthorizationSourceReq struct {
+	apiReq *core.APIReq
+}
+
+type MoveAuthorizationSourceReqBody struct {
+	Position string `json:"position"`
+}
+
+type MoveAuthorizationSourceReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewMoveAuthorizationSourceReqBuilder() *MoveAuthorizationSourceReqBuilder {
+	builder := &MoveAuthorizationSourceReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+Enum: "file" "built_in_database" "http" "redis" "mysql" "postgresql" "mongodb" "ldap"
+Authorization type
+*/
+func (b *MoveAuthorizationSourceReqBuilder) Type(sourceType string) *MoveAuthorizationSourceReqBuilder {
+	b.apiReq.PathParams.Set("type", sourceType)
+	return b
+}
+
+func (b *MoveAuthorizationSourceReqBuilder) Position(position string) *MoveAuthorizationSourceReqBuilder {
+	b.apiReq.Body.(*MoveAuthorizationSourceReqBody).Position = position
+	return b
+}
+
+func (b *MoveAuthorizationSourceReqBuilder) Build() *MoveAuthorizationSourceReq {
+	req := &MoveAuthorizationSourceReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type MoveAuthorizationSourceResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}

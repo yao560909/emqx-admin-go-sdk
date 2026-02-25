@@ -15,6 +15,7 @@ const (
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients         = "/api/v5/authorization/sources/built_in_database/rules/clients"
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClientsClientId = "/api/v5/authorization/sources/built_in_database/rules/clients/{clientid}"
 	ApiPathAuthorizationSourcesTypeStatus                          = "/api/v5/authorization/sources/{type}/status"
+	ApiPathAuthorizationSourcesTypeMove                            = "/api/v5/authorization/sources/{type}/move"
 	ApiPathAuthorizationSources                                    = "/api/v5/authorization/sources"
 )
 
@@ -294,6 +295,28 @@ func (s *AuthorizationService) DeleteAllRules(ctx context.Context, req *DeleteAl
 		err = json.Unmarshal(apiResp.RawBody, resp)
 		if err != nil {
 			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteAllRules] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
+
+// Change the exection order of sources
+func (s *AuthorizationService) MoveAuthorizationSource(ctx context.Context, req *MoveAuthorizationSourceReq, options ...core.RequestOptionFunc) (*MoveAuthorizationSourceResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesTypeMove
+	apiReq.HttpMethod = "POST"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[MoveAuthorizationSource] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &MoveAuthorizationSourceResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[MoveAuthorizationSource] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
 	}
