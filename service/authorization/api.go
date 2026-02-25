@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers = "/api/v5/authorization/sources/built_in_database/rules/users"
+	ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers   = "/api/v5/authorization/sources/built_in_database/rules/users"
+	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients = "/api/v5/authorization/sources/built_in_database/rules/clients"
 )
 
 type AuthorizationService struct {
@@ -58,6 +59,26 @@ func (s *AuthorizationService) AddRule(ctx context.Context, req *AddRuleReq, opt
 			s.config.Logger.Error(ctx, fmt.Sprintf("[AddRule] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Show the list of rules for clients
+func (s *AuthorizationService) ListRulesForClients(ctx context.Context, req *ListRulesForClientsReq, options ...core.RequestOptionFunc) (*ListRulesForClientsResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[ListRulesForClients] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &ListRulesForClientsResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[ListRulesForClients] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }

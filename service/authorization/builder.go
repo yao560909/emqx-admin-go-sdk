@@ -89,3 +89,48 @@ type AddRuleResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
+
+type ListRulesForClientsReq struct {
+	apiReq *core.APIReq
+}
+
+type ListRulesForClientsReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewListRulesForClientsReqBuilder() *ListRulesForClientsReqBuilder {
+	builder := &ListRulesForClientsReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *ListRulesForClientsReqBuilder) LikeClientId(likeClientId string) *ListRulesForClientsReqBuilder {
+	b.apiReq.QueryParams.Set("like_clientid", likeClientId)
+	return b
+}
+
+func (b *ListRulesForClientsReqBuilder) Page(page string) *ListRulesForClientsReqBuilder {
+	b.apiReq.QueryParams.Set("page", page)
+	return b
+}
+
+func (b *ListRulesForClientsReqBuilder) Limit(limit string) *ListRulesForClientsReqBuilder {
+	b.apiReq.QueryParams.Set("limit", limit)
+	return b
+}
+
+func (b *ListRulesForClientsReqBuilder) Build() *ListRulesForClientsReq {
+	req := &ListRulesForClientsReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type ListRulesForClientsResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Data []*ClientRules `json:"data"`
+	Meta *Meta          `json:"meta"`
+}

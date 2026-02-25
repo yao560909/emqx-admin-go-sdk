@@ -13,6 +13,11 @@ type UserRules struct {
 	Rules    []*Rule `json:"rules"`
 }
 
+type ClientRules struct {
+	ClientId string  `json:"clientid"`
+	Rules    []*Rule `json:"rules"`
+}
+
 type Meta struct {
 	Count   int  `json:"count"`
 	HasNext bool `json:"hasnext"`
