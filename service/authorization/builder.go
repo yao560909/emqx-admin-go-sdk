@@ -642,3 +642,44 @@ func (b *CleanAuthorizationCacheReqBuilder) Build() *CleanAuthorizationCacheReq 
 	req.apiReq = b.apiReq
 	return req
 }
+
+type GetAuthorizationSettingsReq struct {
+	apiReq *core.APIReq
+}
+
+type Cache struct {
+	Enable  bool   `json:"enable"`
+	MaxSize string `json:"max_size"`
+	Ttl     string `json:"ttl"`
+}
+
+type GetAuthorizationSettingsResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	AuthorizationSettings
+}
+
+type AuthorizationSettings struct {
+	Cache      *Cache `json:"cache"`
+	DenyAction string `json:"deny_action"`
+	NoMatch    string `json:"no_match"`
+}
+
+type GetAuthorizationSettingsReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetAuthorizationSettingsReqBuilder() *GetAuthorizationSettingsReqBuilder {
+	builder := &GetAuthorizationSettingsReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetAuthorizationSettingsReqBuilder) Build() *GetAuthorizationSettingsReq {
+	req := &GetAuthorizationSettingsReq{}
+	req.apiReq = b.apiReq
+	return req
+}

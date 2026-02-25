@@ -19,6 +19,7 @@ const (
 	ApiPathAuthorizationSourcesType                                = "/api/v5/authorization/sources/{type}"
 	ApiPathAuthorizationSources                                    = "/api/v5/authorization/sources"
 	ApiPathAuthorizationCache                                      = "/api/v5/authorization/cache"
+	ApiPathAuthorizationSettings                                   = "/api/v5/authorization/settings"
 )
 
 type AuthorizationService struct {
@@ -385,6 +386,26 @@ func (s *AuthorizationService) CleanAuthorizationCache(ctx context.Context, req 
 			s.config.Logger.Error(ctx, fmt.Sprintf("[CleanAuthorizationCache] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Get authorization settings
+func (s *AuthorizationService) GetAuthorizationSettings(ctx context.Context, req *GetAuthorizationSettingsReq, options ...core.RequestOptionFunc) (*GetAuthorizationSettingsResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSettings
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAuthorizationSettings] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetAuthorizationSettingsResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAuthorizationSettings] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }
