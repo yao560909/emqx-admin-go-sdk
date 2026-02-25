@@ -343,3 +343,25 @@ func (s *AuthorizationService) GetAuthorizationSource(ctx context.Context, req *
 	}
 	return resp, nil
 }
+
+// Delete source
+func (s *AuthorizationService) DeleteAuthorizationSource(ctx context.Context, req *DeleteAuthorizationSourceReq, options ...core.RequestOptionFunc) (*DeleteAuthorizationSourceResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesType
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteAuthorizationSource] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &DeleteAuthorizationSourceResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteAuthorizationSource] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}

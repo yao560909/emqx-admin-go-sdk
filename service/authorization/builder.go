@@ -576,3 +576,41 @@ type GetAuthorizationSourceResp struct {
 	core.CodeError
 	sources []*AuthorizationSource `json:"sources"`
 }
+
+type DeleteAuthorizationSourceReq struct {
+	apiReq *core.APIReq
+}
+
+type DeleteAuthorizationSourceResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
+
+type DeleteAuthorizationSourceReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewDeleteAuthorizationSourceReqBuilder() *DeleteAuthorizationSourceReqBuilder {
+	builder := &DeleteAuthorizationSourceReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+Enum: "file" "built_in_database" "http" "redis" "mysql" "postgresql" "mongodb" "ldap"
+Authorization type
+*/
+func (b *DeleteAuthorizationSourceReqBuilder) Type(sourceType string) *DeleteAuthorizationSourceReqBuilder {
+	b.apiReq.PathParams.Set("type", sourceType)
+	return b
+}
+
+func (b *DeleteAuthorizationSourceReqBuilder) Build() *DeleteAuthorizationSourceReq {
+	req := &DeleteAuthorizationSourceReq{}
+	req.apiReq = b.apiReq
+	return req
+}
