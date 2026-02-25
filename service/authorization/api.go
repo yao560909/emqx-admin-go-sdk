@@ -12,6 +12,7 @@ const (
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers           = "/api/v5/authorization/sources/built_in_database/rules/users"
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients         = "/api/v5/authorization/sources/built_in_database/rules/clients"
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClientsClientId = "/api/v5/authorization/sources/built_in_database/rules/clients/{clientid}"
+	ApiPathAuthorizationSourcesTypeStatus                          = "/api/v5/authorization/sources/{type}/status"
 )
 
 type AuthorizationService struct {
@@ -166,6 +167,26 @@ func (s *AuthorizationService) DeleteRuleForClient(ctx context.Context, req *Del
 			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteRuleForClient] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Get a authorization source status
+func (s *AuthorizationService) GetAuthorizationSourceStatus(ctx context.Context, req *GetAuthorizationSourceStatusReq, options ...core.RequestOptionFunc) (*GetAuthorizationSourceStatusResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesTypeStatus
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAuthorizationSourceStatus] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetAuthorizationSourceStatusResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAuthorizationSourceStatus] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }

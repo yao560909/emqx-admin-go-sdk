@@ -288,3 +288,37 @@ type DeleteRuleForClientResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
+
+type GetAuthorizationSourceStatusReq struct {
+	apiReq *core.APIReq
+}
+
+type GetAuthorizationSourceStatusReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetAuthorizationSourceStatusReqBuilder() *GetAuthorizationSourceStatusReqBuilder {
+	builder := &GetAuthorizationSourceStatusReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetAuthorizationSourceStatusReqBuilder) Type(sourceType string) *GetAuthorizationSourceStatusReqBuilder {
+	b.apiReq.PathParams.Set("type", sourceType)
+	return b
+}
+
+func (b *GetAuthorizationSourceStatusReqBuilder) Build() *GetAuthorizationSourceStatusReq {
+	req := &GetAuthorizationSourceStatusReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetAuthorizationSourceStatusResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	AuthorizationSourceStatus
+}
