@@ -9,6 +9,7 @@ import (
 )
 
 const (
+	ApiPathAuthorizationSourcesBuiltInDatabaseRulesAll             = "/api/v5/authorization/sources/built_in_database/rules/all"
 	ApiPathAuthorizationSourcesBuiltInDatabaseRules                = "/api/v5/authorization/sources/built_in_database/rules"
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers           = "/api/v5/authorization/sources/built_in_database/rules/users"
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsersUsername   = "/api/v5/authorization/sources/built_in_database/rules/users/{username}"
@@ -300,6 +301,26 @@ func (s *AuthorizationService) DeleteAllRules(ctx context.Context, req *DeleteAl
 			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteAllRules] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Show the list of rules for 'all'
+func (s *AuthorizationService) ListRulesForAll(ctx context.Context, req *ListRulesForAllReq, options ...core.RequestOptionFunc) (*ListRulesForAllResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesAll
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[ListRulesForAll] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &ListRulesForAllResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[ListRulesForAll] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }

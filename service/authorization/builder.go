@@ -491,6 +491,35 @@ type DeleteAllRulesResp struct {
 	core.CodeError
 }
 
+type ListRulesForAllReq struct {
+	apiReq *core.APIReq
+}
+
+type ListRulesForAllResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Rules []*Rule `json:"rules"`
+}
+
+type ListRulesForAllReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewListRulesForAllReqBuilder() *ListRulesForAllReqBuilder {
+	builder := &ListRulesForAllReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *ListRulesForAllReqBuilder) Build() *ListRulesForAllReq {
+	req := &ListRulesForAllReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
 type MoveAuthorizationSourceReq struct {
 	apiReq *core.APIReq
 }
