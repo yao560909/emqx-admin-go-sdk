@@ -144,3 +144,25 @@ func (s *AuthenticationService) UpdateUserInAuthenticator(ctx context.Context, r
 	}
 	return resp, nil
 }
+
+// Delete user in authenticator in global authentication chain.
+func (s *AuthenticationService) DeleteUserFromAuthenticator(ctx context.Context, req *DeleteUserFromAuthenticatorReq, options ...core.RequestOptionFunc) (*DeleteUserFromAuthenticatorResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthentication_Id_Users_UserId
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteUserFromAuthenticator] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &DeleteUserFromAuthenticatorResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteUserFromAuthenticator] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}

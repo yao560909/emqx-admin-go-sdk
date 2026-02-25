@@ -347,3 +347,50 @@ type UpdateUserInAuthenticatorResp struct {
 	core.CodeError
 	User
 }
+
+// ------------------------------------------
+type DeleteUserFromAuthenticatorReq struct {
+	apiReq *core.APIReq
+}
+
+type DeleteUserFromAuthenticatorReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewDeleteUserFromAuthenticatorReqBuilder() *DeleteUserFromAuthenticatorReqBuilder {
+	builder := &DeleteUserFromAuthenticatorReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+Authenticator ID.
+*/
+func (b *DeleteUserFromAuthenticatorReqBuilder) Id(id string) *DeleteUserFromAuthenticatorReqBuilder {
+	b.apiReq.PathParams.Set("id", id)
+	return b
+}
+
+/*
+*
+User ID.
+*/
+func (b *DeleteUserFromAuthenticatorReqBuilder) UserId(userId string) *DeleteUserFromAuthenticatorReqBuilder {
+	b.apiReq.PathParams.Set("user_id", userId)
+	return b
+}
+
+func (b *DeleteUserFromAuthenticatorReqBuilder) Build() *DeleteUserFromAuthenticatorReq {
+	req := &DeleteUserFromAuthenticatorReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type DeleteUserFromAuthenticatorResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
