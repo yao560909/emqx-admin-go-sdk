@@ -409,3 +409,23 @@ func (s *AuthorizationService) GetAuthorizationSettings(ctx context.Context, req
 	}
 	return resp, nil
 }
+
+// Update authorization settings
+func (s *AuthorizationService) UpdateAuthorizationSettings(ctx context.Context, req *UpdateAuthorizationSettingsReq, options ...core.RequestOptionFunc) (*UpdateAuthorizationSettingsResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSettings
+	apiReq.HttpMethod = "PUT"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateAuthorizationSettings] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &UpdateAuthorizationSettingsResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateAuthorizationSettings] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}

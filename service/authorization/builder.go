@@ -683,3 +683,93 @@ func (b *GetAuthorizationSettingsReqBuilder) Build() *GetAuthorizationSettingsRe
 	req.apiReq = b.apiReq
 	return req
 }
+
+type UpdateAuthorizationSettingsReq struct {
+	apiReq *core.APIReq
+}
+
+type UpdateAuthorizationSettingsReqBody struct {
+	Cache      *Cache `json:"cache"`
+	DenyAction string `json:"deny_action"`
+	NoMatch    string `json:"no_match"`
+}
+
+type UpdateAuthorizationSettingsResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	AuthorizationSettings
+}
+
+type UpdateAuthorizationSettingsReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewUpdateAuthorizationSettingsReqBuilder() *UpdateAuthorizationSettingsReqBuilder {
+	builder := &UpdateAuthorizationSettingsReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+Default: true
+Enable or disable the authorization cache.
+*/
+func (b *UpdateAuthorizationSettingsReqBuilder) CacheEnable(enable bool) *UpdateAuthorizationSettingsReqBuilder {
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).Cache.Enable = enable
+	return b
+}
+
+/*
+*
+Default: 32
+Maximum number of cached items.
+*/
+func (b *UpdateAuthorizationSettingsReqBuilder) CacheMaxSize(maxSize string) *UpdateAuthorizationSettingsReqBuilder {
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).Cache.MaxSize = maxSize
+	return b
+}
+
+/*
+*
+Default: "1m"
+Time to live for the cached data.
+*/
+func (b *UpdateAuthorizationSettingsReqBuilder) CacheTtl(ttl string) *UpdateAuthorizationSettingsReqBuilder {
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).Cache.Ttl = ttl
+	return b
+}
+
+/*
+*
+Default: "ignore"
+Enum: "ignore" "disconnect"
+The action when the authorization check rejects an operation.
+*/
+func (b *UpdateAuthorizationSettingsReqBuilder) DenyAction(denyAction string) *UpdateAuthorizationSettingsReqBuilder {
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).DenyAction = denyAction
+	return b
+}
+
+/*
+*
+Default: "allow"
+Enum: "allow" "deny"
+Default access control action if the user or client matches no ACL rules,
+or if no such user or client is found by the configurable authorization
+sources such as built_in_database, an HTTP API, or a query against PostgreSQL.
+Find more details in 'authorization.sources' config.
+*/
+func (b *UpdateAuthorizationSettingsReqBuilder) NoMatch(noMatch string) *UpdateAuthorizationSettingsReqBuilder {
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).NoMatch = noMatch
+	return b
+}
+
+func (b *UpdateAuthorizationSettingsReqBuilder) Build() *UpdateAuthorizationSettingsReq {
+	req := &UpdateAuthorizationSettingsReq{}
+	req.apiReq = b.apiReq
+	return req
+}
