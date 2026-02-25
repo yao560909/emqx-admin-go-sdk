@@ -78,5 +78,3 @@ type AuthorizationSource struct {
 	Type   string `json:"type"`
 	Enable bool   `json:"enable"`
 }
-
-

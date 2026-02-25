@@ -555,6 +555,11 @@ func NewGetAuthorizationSourceReqBuilder() *GetAuthorizationSourceReqBuilder {
 	return builder
 }
 
+/*
+*
+Enum: "file" "built_in_database" "http" "redis" "mysql" "postgresql" "mongodb" "ldap"
+Authorization type
+*/
 func (b *GetAuthorizationSourceReqBuilder) Type(sourceType string) *GetAuthorizationSourceReqBuilder {
 	b.apiReq.PathParams.Set("type", sourceType)
 	return b

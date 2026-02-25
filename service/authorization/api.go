@@ -324,7 +324,7 @@ func (s *AuthorizationService) MoveAuthorizationSource(ctx context.Context, req 
 	return resp, nil
 }
 
-// Get authorization source by type
+// Get a authorization source
 func (s *AuthorizationService) GetAuthorizationSource(ctx context.Context, req *GetAuthorizationSourceReq, options ...core.RequestOptionFunc) (*GetAuthorizationSourceResp, error) {
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesType
