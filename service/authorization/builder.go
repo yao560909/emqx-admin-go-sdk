@@ -52,8 +52,8 @@ type AddRuleReq struct {
 }
 
 type AddRuleReqBody struct {
-	Username string `json:"username"`
-	Rules    []Rule `json:"rules"`
+	Username string  `json:"username"`
+	Rules    []*Rule `json:"rules"`
 }
 
 type AddRuleReqBuilder struct {
@@ -74,7 +74,7 @@ func (b *AddRuleReqBuilder) Username(username string) *AddRuleReqBuilder {
 	return b
 }
 
-func (b *AddRuleReqBuilder) Rules(rules []Rule) *AddRuleReqBuilder {
+func (b *AddRuleReqBuilder) Rules(rules []*Rule) *AddRuleReqBuilder {
 	b.apiReq.Body.(*AddRuleReqBody).Rules = rules
 	return b
 }
@@ -133,4 +133,47 @@ type ListRulesForClientsResp struct {
 	core.CodeError
 	Data []*ClientRules `json:"data"`
 	Meta *Meta          `json:"meta"`
+}
+
+type AddRuleForClientsReq struct {
+	apiReq *core.APIReq
+}
+
+type AddRuleForClientsReqBody struct {
+	ClientId string  `json:"clientid"`
+	Rules    []*Rule `json:"rules"`
+}
+
+type AddRuleForClientsReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewAddRuleForClientsReqBuilder() *AddRuleForClientsReqBuilder {
+	builder := &AddRuleForClientsReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *AddRuleForClientsReqBuilder) ClientId(clientId string) *AddRuleForClientsReqBuilder {
+	b.apiReq.Body.(*AddRuleForClientsReqBody).ClientId = clientId
+	return b
+}
+
+func (b *AddRuleForClientsReqBuilder) Rules(rules []*Rule) *AddRuleForClientsReqBuilder {
+	b.apiReq.Body.(*AddRuleForClientsReqBody).Rules = rules
+	return b
+}
+
+func (b *AddRuleForClientsReqBuilder) Build() *AddRuleForClientsReq {
+	req := &AddRuleForClientsReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type AddRuleForClientsResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
 }

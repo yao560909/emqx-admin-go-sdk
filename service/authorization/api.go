@@ -82,3 +82,25 @@ func (s *AuthorizationService) ListRulesForClients(ctx context.Context, req *Lis
 	}
 	return resp, nil
 }
+
+// Add new rule for 'clientid'
+func (s *AuthorizationService) AddRuleForClients(ctx context.Context, req *AddRuleForClientsReq, options ...core.RequestOptionFunc) (*AddRuleForClientsResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients
+	apiReq.HttpMethod = "POST"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[AddRuleForClients] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &AddRuleForClientsResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[AddRuleForClients] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
