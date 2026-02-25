@@ -16,6 +16,7 @@ const (
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClientsClientId = "/api/v5/authorization/sources/built_in_database/rules/clients/{clientid}"
 	ApiPathAuthorizationSourcesTypeStatus                          = "/api/v5/authorization/sources/{type}/status"
 	ApiPathAuthorizationSourcesTypeMove                            = "/api/v5/authorization/sources/{type}/move"
+	ApiPathAuthorizationSourcesType                                = "/api/v5/authorization/sources/{type}"
 	ApiPathAuthorizationSources                                    = "/api/v5/authorization/sources"
 )
 
@@ -319,6 +320,26 @@ func (s *AuthorizationService) MoveAuthorizationSource(ctx context.Context, req 
 			s.config.Logger.Error(ctx, fmt.Sprintf("[MoveAuthorizationSource] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Get authorization source by type
+func (s *AuthorizationService) GetAuthorizationSource(ctx context.Context, req *GetAuthorizationSourceReq, options ...core.RequestOptionFunc) (*GetAuthorizationSourceResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesType
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAuthorizationSource] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetAuthorizationSourceResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAuthorizationSource] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }

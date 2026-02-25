@@ -349,7 +349,7 @@ func (b *ListAuthorizationSourcesReqBuilder) Build() *ListAuthorizationSourcesRe
 type ListAuthorizationSourcesResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
-	Data []*AuthorizationSourceListItem `json:"sources"`
+	Data []*AuthorizationSource `json:"sources"`
 }
 
 type GetRuleForUserReq struct {
@@ -536,4 +536,38 @@ func (b *MoveAuthorizationSourceReqBuilder) Build() *MoveAuthorizationSourceReq 
 type MoveAuthorizationSourceResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
+}
+
+type GetAuthorizationSourceReq struct {
+	apiReq *core.APIReq
+}
+
+type GetAuthorizationSourceReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetAuthorizationSourceReqBuilder() *GetAuthorizationSourceReqBuilder {
+	builder := &GetAuthorizationSourceReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetAuthorizationSourceReqBuilder) Type(sourceType string) *GetAuthorizationSourceReqBuilder {
+	b.apiReq.PathParams.Set("type", sourceType)
+	return b
+}
+
+func (b *GetAuthorizationSourceReqBuilder) Build() *GetAuthorizationSourceReq {
+	req := &GetAuthorizationSourceReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetAuthorizationSourceResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	sources []*AuthorizationSource `json:"sources"`
 }

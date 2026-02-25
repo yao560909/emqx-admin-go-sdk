@@ -74,7 +74,9 @@ type AuthorizationSourceStatus struct {
 	ResourceMetrics     *ResourceMetrics                  `json:"resource_metrics"`
 }
 
-type AuthorizationSourceListItem struct {
+type AuthorizationSource struct {
 	Type   string `json:"type"`
 	Enable bool   `json:"enable"`
 }
+
+
