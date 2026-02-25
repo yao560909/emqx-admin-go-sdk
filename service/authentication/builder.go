@@ -433,3 +433,42 @@ type GetAuthenticatorStatusResp struct {
 	core.CodeError
 	AuthenticatorStatus
 }
+
+// ------------------------------------------
+type GetAuthenticatorReq struct {
+	apiReq *core.APIReq
+}
+
+type GetAuthenticatorReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetAuthenticatorReqBuilder() *GetAuthenticatorReqBuilder {
+	builder := &GetAuthenticatorReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+Authenticator ID.
+*/
+func (b *GetAuthenticatorReqBuilder) Id(id string) *GetAuthenticatorReqBuilder {
+	b.apiReq.PathParams.Set("id", id)
+	return b
+}
+
+func (b *GetAuthenticatorReqBuilder) Build() *GetAuthenticatorReq {
+	req := &GetAuthenticatorReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetAuthenticatorResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Authentication
+}
