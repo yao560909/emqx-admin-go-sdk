@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	ApiPathAuthentication          = "/api/v5/authentication"
-	ApiPathAuthentication_Id_Users = "/api/v5/authentication/{id}/users"
+	ApiPathAuthentication             = "/api/v5/authentication"
+	ApiPathAuthentication_Id_Users    = "/api/v5/authentication/{id}/users"
+	ApiPathAuthentication_Id_Position = "/api/v5/authentication/{id}/position/{position}"
 )
 
 type AuthenticationService struct {
@@ -77,6 +78,28 @@ func (s *AuthenticationService) CreateUsersForAuthenticator(ctx context.Context,
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[CreateUsersForAuthenticator] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
+	}
+	return resp, nil
+}
+
+// Move authenticator position in global authentication chain.
+func (s *AuthenticationService) MoveAuthenticatorPosition(ctx context.Context, req *MoveAuthenticatorPositionReq, options ...core.RequestOptionFunc) (*MoveAuthenticatorPositionResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthentication_Id_Position
+	apiReq.HttpMethod = "PUT"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[MoveAuthenticatorPosition] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &MoveAuthenticatorPositionResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[MoveAuthenticatorPosition] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
 	}
 	return resp, nil
 }

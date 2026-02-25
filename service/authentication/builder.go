@@ -189,3 +189,51 @@ type CreateUsersForAuthenticatorResp struct {
 	core.CodeError
 	User
 }
+
+// ------------------------------------------
+type MoveAuthenticatorPositionReq struct {
+	apiReq *core.APIReq
+}
+
+type MoveAuthenticatorPositionReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewMoveAuthenticatorPositionReqBuilder() *MoveAuthenticatorPositionReqBuilder {
+	builder := &MoveAuthenticatorPositionReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+Authenticator ID.
+*/
+func (b *MoveAuthenticatorPositionReqBuilder) Id(id string) *MoveAuthenticatorPositionReqBuilder {
+	b.apiReq.PathParams.Set("id", id)
+	return b
+}
+
+/*
+*
+Position of the authenticator in the chain.
+*/
+func (b *MoveAuthenticatorPositionReqBuilder) Position(position string) *MoveAuthenticatorPositionReqBuilder {
+	b.apiReq.PathParams.Set("position", position)
+	return b
+}
+
+
+func (b *MoveAuthenticatorPositionReqBuilder) Build() *MoveAuthenticatorPositionReq {
+	req := &MoveAuthenticatorPositionReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type MoveAuthenticatorPositionResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
