@@ -124,3 +124,23 @@ func (s *AuthenticationService) GetUserFromAuthenticator(ctx context.Context, re
 	}
 	return resp, nil
 }
+
+// Update user in authenticator in global authentication chain.
+func (s *AuthenticationService) UpdateUserInAuthenticator(ctx context.Context, req *UpdateUserInAuthenticatorReq, options ...core.RequestOptionFunc) (*UpdateUserInAuthenticatorResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthentication_Id_Users_UserId
+	apiReq.HttpMethod = "PUT"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateUserInAuthenticator] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &UpdateUserInAuthenticatorResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateUserInAuthenticator] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}

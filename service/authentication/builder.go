@@ -284,3 +284,66 @@ type GetUserFromAuthenticatorResp struct {
 	core.CodeError
 	User
 }
+
+// ------------------------------------------
+type UpdateUserInAuthenticatorReq struct {
+	apiReq *core.APIReq
+}
+
+type UpdateUserInAuthenticatorReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewUpdateUserInAuthenticatorReqBuilder() *UpdateUserInAuthenticatorReqBuilder {
+	builder := &UpdateUserInAuthenticatorReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+		Body:        &UserBody{},
+	}
+	return builder
+}
+
+/*
+*
+Authenticator ID.
+*/
+func (b *UpdateUserInAuthenticatorReqBuilder) Id(id string) *UpdateUserInAuthenticatorReqBuilder {
+	b.apiReq.PathParams.Set("id", id)
+	return b
+}
+
+/*
+*
+User ID.
+*/
+func (b *UpdateUserInAuthenticatorReqBuilder) UserId(userId string) *UpdateUserInAuthenticatorReqBuilder {
+	b.apiReq.PathParams.Set("user_id", userId)
+	return b
+}
+
+func (b *UpdateUserInAuthenticatorReqBuilder) Password(password string) *UpdateUserInAuthenticatorReqBuilder {
+	b.apiReq.Body.(*UserBody).Password = &password
+	return b
+}
+
+/*
+*
+Default: false
+*/
+func (b *UpdateUserInAuthenticatorReqBuilder) IsSuperuser(isSuperuser string) *UpdateUserInAuthenticatorReqBuilder {
+	b.apiReq.Body.(*UserBody).IsSuperuser = &isSuperuser
+	return b
+}
+
+func (b *UpdateUserInAuthenticatorReqBuilder) Build() *UpdateUserInAuthenticatorReq {
+	req := &UpdateUserInAuthenticatorReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type UpdateUserInAuthenticatorResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	User
+}
