@@ -232,3 +232,47 @@ func (s *AuthorizationService) GetRuleForUser(ctx context.Context, req *GetRuleF
 	}
 	return resp, nil
 }
+
+// Set rule for 'username'
+func (s *AuthorizationService) SetRuleForUser(ctx context.Context, req *SetRuleForUserReq, options ...core.RequestOptionFunc) (*SetRuleForUserResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsersUsername
+	apiReq.HttpMethod = "PUT"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[SetRuleForUser] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &SetRuleForUserResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[SetRuleForUser] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
+
+// Delete rule for 'username'
+func (s *AuthorizationService) DeleteRuleForUser(ctx context.Context, req *DeleteRuleForUserReq, options ...core.RequestOptionFunc) (*DeleteRuleForUserResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsersUsername
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteRuleForUser] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &DeleteRuleForUserResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteRuleForUser] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
