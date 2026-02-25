@@ -226,7 +226,6 @@ func (b *MoveAuthenticatorPositionReqBuilder) Position(position string) *MoveAut
 	return b
 }
 
-
 func (b *MoveAuthenticatorPositionReqBuilder) Build() *MoveAuthenticatorPositionReq {
 	req := &MoveAuthenticatorPositionReq{}
 	req.apiReq = b.apiReq
@@ -236,4 +235,52 @@ func (b *MoveAuthenticatorPositionReqBuilder) Build() *MoveAuthenticatorPosition
 type MoveAuthenticatorPositionResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
+}
+
+// ------------------------------------------
+type GetUserFromAuthenticatorReq struct {
+	apiReq *core.APIReq
+}
+
+type GetUserFromAuthenticatorReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetUserFromAuthenticatorReqBuilder() *GetUserFromAuthenticatorReqBuilder {
+	builder := &GetUserFromAuthenticatorReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+Authenticator ID.
+*/
+func (b *GetUserFromAuthenticatorReqBuilder) Id(id string) *GetUserFromAuthenticatorReqBuilder {
+	b.apiReq.PathParams.Set("id", id)
+	return b
+}
+
+/*
+*
+User ID.
+*/
+func (b *GetUserFromAuthenticatorReqBuilder) UserId(userId string) *GetUserFromAuthenticatorReqBuilder {
+	b.apiReq.PathParams.Set("user_id", userId)
+	return b
+}
+
+func (b *GetUserFromAuthenticatorReqBuilder) Build() *GetUserFromAuthenticatorReq {
+	req := &GetUserFromAuthenticatorReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetUserFromAuthenticatorResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	User
 }

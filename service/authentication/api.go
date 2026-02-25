@@ -9,9 +9,10 @@ import (
 )
 
 const (
-	ApiPathAuthentication             = "/api/v5/authentication"
-	ApiPathAuthentication_Id_Users    = "/api/v5/authentication/{id}/users"
-	ApiPathAuthentication_Id_Position = "/api/v5/authentication/{id}/position/{position}"
+	ApiPathAuthentication                 = "/api/v5/authentication"
+	ApiPathAuthentication_Id_Users        = "/api/v5/authentication/{id}/users"
+	ApiPathAuthentication_Id_Position     = "/api/v5/authentication/{id}/position/{position}"
+	ApiPathAuthentication_Id_Users_UserId = "/api/v5/authentication/{id}/users/{user_id}"
 )
 
 type AuthenticationService struct {
@@ -100,6 +101,26 @@ func (s *AuthenticationService) MoveAuthenticatorPosition(ctx context.Context, r
 			s.config.Logger.Error(ctx, fmt.Sprintf("[MoveAuthenticatorPosition] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Get user from authenticator in global authentication chain.
+func (s *AuthenticationService) GetUserFromAuthenticator(ctx context.Context, req *GetUserFromAuthenticatorReq, options ...core.RequestOptionFunc) (*GetUserFromAuthenticatorResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthentication_Id_Users_UserId
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetUserFromAuthenticator] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetUserFromAuthenticatorResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetUserFromAuthenticator] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }
