@@ -472,3 +472,41 @@ type GetAuthenticatorResp struct {
 	core.CodeError
 	Authentication
 }
+
+// ------------------------------------------
+type DeleteAuthenticatorReq struct {
+	apiReq *core.APIReq
+}
+
+type DeleteAuthenticatorReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewDeleteAuthenticatorReqBuilder() *DeleteAuthenticatorReqBuilder {
+	builder := &DeleteAuthenticatorReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+Authenticator ID.
+*/
+func (b *DeleteAuthenticatorReqBuilder) Id(id string) *DeleteAuthenticatorReqBuilder {
+	b.apiReq.PathParams.Set("id", id)
+	return b
+}
+
+func (b *DeleteAuthenticatorReqBuilder) Build() *DeleteAuthenticatorReq {
+	req := &DeleteAuthenticatorReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type DeleteAuthenticatorResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}

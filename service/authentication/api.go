@@ -208,3 +208,25 @@ func (s *AuthenticationService) GetAuthenticator(ctx context.Context, req *GetAu
 	}
 	return resp, nil
 }
+
+// Delete authenticator from global authentication chain.
+func (s *AuthenticationService) DeleteAuthenticator(ctx context.Context, req *DeleteAuthenticatorReq, options ...core.RequestOptionFunc) (*DeleteAuthenticatorResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthentication_Id
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteAuthenticator] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &DeleteAuthenticatorResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteAuthenticator] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
