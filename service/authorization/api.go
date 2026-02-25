@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers   = "/api/v5/authorization/sources/built_in_database/rules/users"
-	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients = "/api/v5/authorization/sources/built_in_database/rules/clients"
+	ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers           = "/api/v5/authorization/sources/built_in_database/rules/users"
+	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients         = "/api/v5/authorization/sources/built_in_database/rules/clients"
+	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClientsClientId = "/api/v5/authorization/sources/built_in_database/rules/clients/{clientid}"
 )
 
 type AuthorizationService struct {
@@ -101,6 +102,26 @@ func (s *AuthorizationService) AddRuleForClients(ctx context.Context, req *AddRu
 			s.config.Logger.Error(ctx, fmt.Sprintf("[AddRuleForClients] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Get rule for 'clientid'
+func (s *AuthorizationService) GetRuleForClient(ctx context.Context, req *GetRuleForClientReq, options ...core.RequestOptionFunc) (*GetRuleForClientResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesClientsClientId
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetRuleForClient] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetRuleForClientResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetRuleForClient] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }

@@ -177,3 +177,37 @@ type AddRuleForClientsResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
+
+type GetRuleForClientReq struct {
+	apiReq *core.APIReq
+}
+
+type GetRuleForClientReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetRuleForClientReqBuilder() *GetRuleForClientReqBuilder {
+	builder := &GetRuleForClientReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetRuleForClientReqBuilder) ClientId(clientId string) *GetRuleForClientReqBuilder {
+	b.apiReq.PathParams.Set("clientid", clientId)
+	return b
+}
+
+func (b *GetRuleForClientReqBuilder) Build() *GetRuleForClientReq {
+	req := &GetRuleForClientReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetRuleForClientResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	ClientRules
+}
