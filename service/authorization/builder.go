@@ -548,6 +548,44 @@ func (b *DeleteRulesForAllReqBuilder) Build() *DeleteRulesForAllReq {
 	return req
 }
 
+type SetRulesForAllReq struct {
+	apiReq *core.APIReq
+}
+
+type SetRulesForAllReqBody struct {
+	Rules []*Rule `json:"rules"`
+}
+
+type SetRulesForAllResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
+
+type SetRulesForAllReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewSetRulesForAllReqBuilder() *SetRulesForAllReqBuilder {
+	builder := &SetRulesForAllReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+		Body:        &SetRulesForAllReqBody{},
+	}
+	return builder
+}
+
+func (b *SetRulesForAllReqBuilder) Rules(rules []*Rule) *SetRulesForAllReqBuilder {
+	b.apiReq.Body.(*SetRulesForAllReqBody).Rules = rules
+	return b
+}
+
+func (b *SetRulesForAllReqBuilder) Build() *SetRulesForAllReq {
+	req := &SetRulesForAllReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
 type MoveAuthorizationSourceReq struct {
 	apiReq *core.APIReq
 }

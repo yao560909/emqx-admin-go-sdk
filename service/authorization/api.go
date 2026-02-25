@@ -327,6 +327,26 @@ func (s *AuthorizationService) DeleteRulesForAll(ctx context.Context, req *Delet
 	return resp, nil
 }
 
+// Create/Update the list of rules for 'all'
+func (s *AuthorizationService) SetRulesForAll(ctx context.Context, req *SetRulesForAllReq, options ...core.RequestOptionFunc) (*SetRulesForAllResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesAll
+	apiReq.HttpMethod = "PUT"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[SetRulesForAll] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &SetRulesForAllResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[SetRulesForAll] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
 // Show the list of rules for 'all'
 func (s *AuthorizationService) ListRulesForAll(ctx context.Context, req *ListRulesForAllReq, options ...core.RequestOptionFunc) (*ListRulesForAllResp, error) {
 	apiReq := req.apiReq
