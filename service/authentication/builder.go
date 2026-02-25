@@ -299,7 +299,6 @@ func NewUpdateUserInAuthenticatorReqBuilder() *UpdateUserInAuthenticatorReqBuild
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
-		Body:        &UserBody{},
 	}
 	return builder
 }
