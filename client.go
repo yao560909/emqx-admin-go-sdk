@@ -41,6 +41,7 @@ type Client struct {
 	Banned         *banned.BannedService
 	Authentication *authentication.AuthenticationService
 	Topics         *topics.TopicsService
+	Authorization  *authentication.AuthenticationService
 }
 
 func NewClient(edition Edition, appId, appSecret, target, scheme string, options ...ClientOptionFunc) *Client {
@@ -74,6 +75,7 @@ func initService(client *Client, config *core.Config) {
 		client.Banned = banned.NewService(config)
 		client.Authentication = authentication.NewService(config)
 		client.Topics = topics.NewService(config)
+		client.Authorization = authentication.NewService(config)
 	case Enterprise:
 		client.Nodes = nodes.NewService(config)
 		client.Clients = clients.NewService(config)
@@ -81,6 +83,7 @@ func initService(client *Client, config *core.Config) {
 		client.Banned = banned.NewService(config)
 		client.Authentication = authentication.NewService(config)
 		client.Topics = topics.NewService(config)
+		client.Authorization = authentication.NewService(config)
 	default:
 	}
 }

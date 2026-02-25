@@ -147,3 +147,25 @@ func (s *AuthorizationService) SetRuleForClient(ctx context.Context, req *SetRul
 	}
 	return resp, nil
 }
+
+// Delete rule for 'clientid'
+func (s *AuthorizationService) DeleteRuleForClient(ctx context.Context, req *DeleteRuleForClientReq, options ...core.RequestOptionFunc) (*DeleteRuleForClientResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesClientsClientId
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteRuleForClient] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &DeleteRuleForClientResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteRuleForClient] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}

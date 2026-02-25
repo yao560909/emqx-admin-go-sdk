@@ -217,8 +217,7 @@ type SetRuleForClientReq struct {
 }
 
 type SetRuleForClientReqBody struct {
-	ClientId string  `json:"clientid"`
-	Rules    []*Rule `json:"rules"`
+	Rules []*Rule `json:"rules"`
 }
 
 type SetRuleForClientReqBuilder struct {
@@ -230,13 +229,13 @@ func NewSetRuleForClientReqBuilder() *SetRuleForClientReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &SetRuleForClientReqBody{},
 	}
 	return builder
 }
 
 func (b *SetRuleForClientReqBuilder) ClientId(clientId string) *SetRuleForClientReqBuilder {
 	b.apiReq.PathParams.Set("clientid", clientId)
-	b.apiReq.Body.(*SetRuleForClientReqBody).ClientId = clientId
 	return b
 }
 
@@ -252,6 +251,40 @@ func (b *SetRuleForClientReqBuilder) Build() *SetRuleForClientReq {
 }
 
 type SetRuleForClientResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	ClientRules
+}
+
+type DeleteRuleForClientReq struct {
+	apiReq *core.APIReq
+}
+
+type DeleteRuleForClientReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewDeleteRuleForClientReqBuilder() *DeleteRuleForClientReqBuilder {
+	builder := &DeleteRuleForClientReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *DeleteRuleForClientReqBuilder) ClientId(clientId string) *DeleteRuleForClientReqBuilder {
+	b.apiReq.PathParams.Set("clientid", clientId)
+	return b
+}
+
+func (b *DeleteRuleForClientReqBuilder) Build() *DeleteRuleForClientReq {
+	req := &DeleteRuleForClientReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type DeleteRuleForClientResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
