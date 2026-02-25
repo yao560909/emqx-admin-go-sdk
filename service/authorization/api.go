@@ -9,6 +9,7 @@ import (
 )
 
 const (
+	ApiPathAuthorizationSourcesBuiltInDatabaseRules                = "/api/v5/authorization/sources/built_in_database/rules"
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers           = "/api/v5/authorization/sources/built_in_database/rules/users"
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsersUsername   = "/api/v5/authorization/sources/built_in_database/rules/users/{username}"
 	ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients         = "/api/v5/authorization/sources/built_in_database/rules/clients"
@@ -271,6 +272,28 @@ func (s *AuthorizationService) DeleteRuleForUser(ctx context.Context, req *Delet
 		err = json.Unmarshal(apiResp.RawBody, resp)
 		if err != nil {
 			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteRuleForUser] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
+
+// Delete all rules for all 'users', 'clients' and 'all'
+func (s *AuthorizationService) DeleteAllRules(ctx context.Context, req *DeleteAllRulesReq, options ...core.RequestOptionFunc) (*DeleteAllRulesResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRules
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteAllRules] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &DeleteAllRulesResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteAllRules] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
 	}

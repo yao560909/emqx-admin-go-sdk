@@ -391,8 +391,8 @@ type SetRuleForUserReq struct {
 }
 
 type SetRuleForUserReqBody struct {
-	Username string `json:"username"`
-	Rules []*Rule `json:"rules"`
+	Username string  `json:"username"`
+	Rules    []*Rule `json:"rules"`
 }
 
 type SetRuleForUserReqBuilder struct {
@@ -410,7 +410,7 @@ func NewSetRuleForUserReqBuilder() *SetRuleForUserReqBuilder {
 
 func (b *SetRuleForUserReqBuilder) Username(username string) *SetRuleForUserReqBuilder {
 	b.apiReq.PathParams.Set("username", username)
-	b.apiReq.Body.(*SetRuleForUserReqBody).Username=username
+	b.apiReq.Body.(*SetRuleForUserReqBody).Username = username
 	return b
 }
 
@@ -459,6 +459,34 @@ func (b *DeleteRuleForUserReqBuilder) Build() *DeleteRuleForUserReq {
 }
 
 type DeleteRuleForUserResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
+
+type DeleteAllRulesReq struct {
+	apiReq *core.APIReq
+}
+
+type DeleteAllRulesReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewDeleteAllRulesReqBuilder() *DeleteAllRulesReqBuilder {
+	builder := &DeleteAllRulesReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *DeleteAllRulesReqBuilder) Build() *DeleteAllRulesReq {
+	req := &DeleteAllRulesReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type DeleteAllRulesResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
