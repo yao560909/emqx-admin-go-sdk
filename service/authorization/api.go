@@ -20,7 +20,7 @@ func NewService(config *core.Config) *AuthorizationService {
 	return &AuthorizationService{config: config}
 }
 
-//Show the list of rules for users
+// Show the list of rules for users
 func (s *AuthorizationService) ListRulesForUsers(ctx context.Context, req *ListRulesForUsersReq, options ...core.RequestOptionFunc) (*ListRulesForUsersResp, error) {
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers
@@ -36,6 +36,28 @@ func (s *AuthorizationService) ListRulesForUsers(ctx context.Context, req *ListR
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[ListRulesForUsers] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
+	}
+	return resp, nil
+}
+
+// Add new rule for 'username'
+func (s *AuthorizationService) AddRule(ctx context.Context, req *AddRuleReq, options ...core.RequestOptionFunc) (*AddRuleResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers
+	apiReq.HttpMethod = "POST"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[AddRule] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &AddRuleResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[AddRule] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
 	}
 	return resp, nil
 }
