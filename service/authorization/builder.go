@@ -351,3 +351,37 @@ type ListAuthorizationSourcesResp struct {
 	core.CodeError
 	Data []*AuthorizationSourceListItem `json:"sources"`
 }
+
+type GetRuleForUserReq struct {
+	apiReq *core.APIReq
+}
+
+type GetRuleForUserReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetRuleForUserReqBuilder() *GetRuleForUserReqBuilder {
+	builder := &GetRuleForUserReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetRuleForUserReqBuilder) Username(username string) *GetRuleForUserReqBuilder {
+	b.apiReq.PathParams.Set("username", username)
+	return b
+}
+
+func (b *GetRuleForUserReqBuilder) Build() *GetRuleForUserReq {
+	req := &GetRuleForUserReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetRuleForUserResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	UserRules
+}
