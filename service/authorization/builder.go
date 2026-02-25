@@ -322,3 +322,32 @@ type GetAuthorizationSourceStatusResp struct {
 	core.CodeError
 	AuthorizationSourceStatus
 }
+
+type ListAuthorizationSourcesReq struct {
+	apiReq *core.APIReq
+}
+
+type ListAuthorizationSourcesReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewListAuthorizationSourcesReqBuilder() *ListAuthorizationSourcesReqBuilder {
+	builder := &ListAuthorizationSourcesReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *ListAuthorizationSourcesReqBuilder) Build() *ListAuthorizationSourcesReq {
+	req := &ListAuthorizationSourcesReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type ListAuthorizationSourcesResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Data []*AuthorizationSourceListItem `json:"sources"`
+}

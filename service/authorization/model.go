@@ -73,3 +73,8 @@ type AuthorizationSourceStatus struct {
 	NodeStatus          []*NodeStatus                     `json:"node_status"`
 	ResourceMetrics     *ResourceMetrics                  `json:"resource_metrics"`
 }
+
+type AuthorizationSourceListItem struct {
+	Type   string `json:"type"`
+	Enable bool   `json:"enable"`
+}
