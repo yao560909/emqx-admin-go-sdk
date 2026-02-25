@@ -18,6 +18,7 @@ const (
 	ApiPathAuthorizationSourcesTypeMove                            = "/api/v5/authorization/sources/{type}/move"
 	ApiPathAuthorizationSourcesType                                = "/api/v5/authorization/sources/{type}"
 	ApiPathAuthorizationSources                                    = "/api/v5/authorization/sources"
+	ApiPathAuthorizationCache                                      = "/api/v5/authorization/cache"
 )
 
 type AuthorizationService struct {
@@ -360,6 +361,28 @@ func (s *AuthorizationService) DeleteAuthorizationSource(ctx context.Context, re
 		err = json.Unmarshal(apiResp.RawBody, resp)
 		if err != nil {
 			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteAuthorizationSource] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
+
+// Clean all authorization cache in the cluster.
+func (s *AuthorizationService) CleanAuthorizationCache(ctx context.Context, req *CleanAuthorizationCacheReq, options ...core.RequestOptionFunc) (*CleanAuthorizationCacheResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAuthorizationCache
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[CleanAuthorizationCache] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &CleanAuthorizationCacheResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[CleanAuthorizationCache] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
 	}

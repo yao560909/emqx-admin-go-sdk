@@ -614,3 +614,31 @@ func (b *DeleteAuthorizationSourceReqBuilder) Build() *DeleteAuthorizationSource
 	req.apiReq = b.apiReq
 	return req
 }
+
+type CleanAuthorizationCacheReq struct {
+	apiReq *core.APIReq
+}
+
+type CleanAuthorizationCacheResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
+
+type CleanAuthorizationCacheReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewCleanAuthorizationCacheReqBuilder() *CleanAuthorizationCacheReqBuilder {
+	builder := &CleanAuthorizationCacheReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *CleanAuthorizationCacheReqBuilder) Build() *CleanAuthorizationCacheReq {
+	req := &CleanAuthorizationCacheReq{}
+	req.apiReq = b.apiReq
+	return req
+}
