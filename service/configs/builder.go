@@ -373,3 +373,32 @@ func (b *GetDashboardConfigReqBuilder) Build() *GetDashboardConfigReq {
 	req.apiReq = b.apiReq
 	return req
 }
+
+type GetLogConfigReq struct {
+	apiReq *core.APIReq
+}
+
+type GetLogConfigResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	LogConfig
+}
+
+type GetLogConfigReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetLogConfigReqBuilder() *GetLogConfigReqBuilder {
+	builder := &GetLogConfigReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetLogConfigReqBuilder) Build() *GetLogConfigReq {
+	req := &GetLogConfigReq{}
+	req.apiReq = b.apiReq
+	return req
+}

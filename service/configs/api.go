@@ -14,6 +14,7 @@ const (
 	ApiPathGlobalZoneConfig = "/api/v5/configs/global_zone"
 	ApiPathAlarmConfig      = "/api/v5/configs/alarm"
 	ApiPathDashboardConfig  = "/api/v5/configs/dashboard"
+	ApiPathLogConfig        = "/api/v5/configs/log"
 )
 
 type ConfigsService struct {
@@ -195,6 +196,26 @@ func (s *ConfigsService) GetDashboardConfig(ctx context.Context, req *GetDashboa
 	err = json.Unmarshal(apiResp.RawBody, resp)
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[GetDashboardConfig] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+// Get the sub-configurations under log
+func (s *ConfigsService) GetLogConfig(ctx context.Context, req *GetLogConfigReq, options ...core.RequestOptionFunc) (*GetLogConfigResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathLogConfig
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetLogConfig] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetLogConfigResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetLogConfig] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
 	}
 	return resp, nil

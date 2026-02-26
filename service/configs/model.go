@@ -125,3 +125,29 @@ type DashboardHttpListener struct {
 	ProxyHeader    bool   `json:"proxy_header"`
 	SendTimeout    string `json:"send_timeout"`
 }
+
+type LogConfig struct {
+	Console *Console `json:"console"`
+	File    *File    `json:"file"`
+}
+
+type Console struct {
+	Enable     bool   `json:"enable"`
+	Formatter  string `json:"formatter"`
+	Level      string `json:"level"`
+	TimeOffset string `json:"time_offset"`
+}
+
+type File struct {
+	Default *FileDefault `json:"default"`
+}
+
+type FileDefault struct {
+	Enable        bool   `json:"enable"`
+	Formatter     string `json:"formatter"`
+	Level         string `json:"level"`
+	Path          string `json:"path"`
+	RotationCount int    `json:"rotation_count"`
+	RotationSize  string `json:"rotation_size"`
+	TimeOffset    string `json:"time_offset"`
+}
