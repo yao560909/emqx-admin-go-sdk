@@ -11,6 +11,14 @@ type Listener struct {
 	NodeStatus []*NodeStatus `json:"node_status"`
 }
 
+type ListenerStatus struct {
+	Enable     bool          `json:"enable"`
+	Ids        []string      `json:"ids"`
+	NodeStatus []*NodeStatus `json:"node_status"`
+	Status     *Status       `json:"status"`
+	Type       string        `json:"type"`
+}
+
 type Status struct {
 	CurrentConnections int    `json:"current_connections"`
 	MaxConnections     string `json:"max_connections"`
