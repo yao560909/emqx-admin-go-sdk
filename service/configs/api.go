@@ -13,6 +13,7 @@ const (
 	ApiPathSysmonConfig     = "/api/v5/configs/sysmon"
 	ApiPathGlobalZoneConfig = "/api/v5/configs/global_zone"
 	ApiPathAlarmConfig      = "/api/v5/configs/alarm"
+	ApiPathDashboardConfig  = "/api/v5/configs/dashboard"
 )
 
 type ConfigsService struct {
@@ -174,6 +175,26 @@ func (s *ConfigsService) UpdateAlarmConfig(ctx context.Context, req *UpdateAlarm
 	err = json.Unmarshal(apiResp.RawBody, resp)
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateAlarmConfig] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+// Get the sub-configurations under dashboard
+func (s *ConfigsService) GetDashboardConfig(ctx context.Context, req *GetDashboardConfigReq, options ...core.RequestOptionFunc) (*GetDashboardConfigResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathDashboardConfig
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetDashboardConfig] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetDashboardConfigResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetDashboardConfig] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
 	}
 	return resp, nil

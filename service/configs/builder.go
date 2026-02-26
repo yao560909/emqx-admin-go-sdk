@@ -344,3 +344,32 @@ func (b *UpdateAlarmConfigReqBuilder) Build() *UpdateAlarmConfigReq {
 	req.apiReq = b.apiReq
 	return req
 }
+
+type GetDashboardConfigReq struct {
+	apiReq *core.APIReq
+}
+
+type GetDashboardConfigResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	DashboardConfig
+}
+
+type GetDashboardConfigReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetDashboardConfigReqBuilder() *GetDashboardConfigReqBuilder {
+	builder := &GetDashboardConfigReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetDashboardConfigReqBuilder) Build() *GetDashboardConfigReq {
+	req := &GetDashboardConfigReq{}
+	req.apiReq = b.apiReq
+	return req
+}

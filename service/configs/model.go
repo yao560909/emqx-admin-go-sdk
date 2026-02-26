@@ -102,3 +102,26 @@ type AlarmConfig struct {
 	SizeLimit      int       `json:"size_limit"`
 	ValidityPeriod string    `json:"validity_period"`
 }
+
+type DashboardConfig struct {
+	Cors             bool                `json:"cors"`
+	DefaultPassword  string              `json:"default_password"`
+	DefaultUsername  string              `json:"default_username"`
+	Listeners        *DashboardListeners `json:"listeners"`
+	TokenExpiredTime string              `json:"token_expired_time"`
+}
+
+type DashboardListeners struct {
+	Http *DashboardHttpListener `json:"http"`
+}
+
+type DashboardHttpListener struct {
+	Backlog        int    `json:"backlog"`
+	Bind           int    `json:"bind"`
+	Inet6          bool   `json:"inet6"`
+	Ipv6V6only     bool   `json:"ipv6_v6only"`
+	MaxConnections int    `json:"max_connections"`
+	NumAcceptors   int    `json:"num_acceptors"`
+	ProxyHeader    bool   `json:"proxy_header"`
+	SendTimeout    string `json:"send_timeout"`
+}
