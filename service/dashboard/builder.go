@@ -145,3 +145,42 @@ type CreateUserResp struct {
 	core.CodeError
 	User
 }
+
+type UpdateUserReq struct {
+	apiReq *core.APIReq
+}
+
+type UpdateUserReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewUpdateUserReqBuilder() *UpdateUserReqBuilder {
+	builder := &UpdateUserReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		SkipAuth:    true,
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+type UpdateUserReqBody struct {
+	Description string `json:"description"`
+}
+
+func (b *UpdateUserReqBuilder) Build() *UpdateUserReq {
+	req := &UpdateUserReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+func (b *UpdateUserReqBuilder) Description(description string) *UpdateUserReqBuilder {
+	b.apiReq.Body.(*UpdateUserReqBody).Description = description
+	return b
+}
+
+type UpdateUserResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	User
+}

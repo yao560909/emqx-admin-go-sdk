@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	ApiPathUsers = "/api/v5/users"
-	ApiPathLogin = "/api/v5/login"
+	ApiPathUsers          = "/api/v5/users"
+	ApiPathUsers_Username = "/api/v5/users/{username}"
+	ApiPathLogin          = "/api/v5/login"
 )
 
 type DashboardService struct {
@@ -62,6 +63,7 @@ func (s *DashboardService) ListUsers(ctx context.Context, req *ListUsersReq, opt
 	}
 	return resp, nil
 }
+
 // 需要先调用login获取token
 // Create dashboard user
 func (s *DashboardService) CreateUser(ctx context.Context, req *CreateUserReq, options ...core.RequestOptionFunc) (*CreateUserResp, error) {
@@ -78,6 +80,27 @@ func (s *DashboardService) CreateUser(ctx context.Context, req *CreateUserReq, o
 	err = json.Unmarshal(apiResp.RawBody, resp)
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[CreateUser] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+// 需要先调用login获取token
+// Update dashboard user description
+func (s *DashboardService) UpdateUser(ctx context.Context, req *UpdateUserReq, options ...core.RequestOptionFunc) (*UpdateUserResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathUsers_Username
+	apiReq.HttpMethod = "PUT"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateUser] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &UpdateUserResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateUser] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
 	}
 	return resp, nil
