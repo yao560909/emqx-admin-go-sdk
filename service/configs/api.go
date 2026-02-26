@@ -10,6 +10,7 @@ import (
 
 const (
 	ApiPathSysTopicsConfig = "/api/v5/configs/sys_topics"
+	ApiPathSysmonConfig    = "/api/v5/configs/sysmon"
 )
 
 type ConfigsService struct {
@@ -54,6 +55,45 @@ func (s *ConfigsService) UpdateSysTopicsConfig(ctx context.Context, req *UpdateS
 	err = json.Unmarshal(apiResp.RawBody, resp)
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateSysTopicsConfig] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+// Get the sub-configurations under sysmon
+func (s *ConfigsService) GetSysmonConfig(ctx context.Context, req *GetSysmonConfigReq, options ...core.RequestOptionFunc) (*GetSysmonConfigResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathSysmonConfig
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetSysmonConfig] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetSysmonConfigResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetSysmonConfig] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ConfigsService) UpdateSysmonConfig(ctx context.Context, req *UpdateSysmonConfigReq, options ...core.RequestOptionFunc) (*UpdateSysmonConfigResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathSysmonConfig
+	apiReq.HttpMethod = "PUT"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateSysmonConfig] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &UpdateSysmonConfigResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateSysmonConfig] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
 	}
 	return resp, nil

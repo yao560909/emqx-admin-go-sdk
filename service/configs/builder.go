@@ -56,6 +56,7 @@ func NewUpdateSysTopicsConfigReqBuilder() *UpdateSysTopicsConfigReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &UpdateSysTopicsConfigReqBody{},
 	}
 	return builder
 }
@@ -77,6 +78,80 @@ func (b *UpdateSysTopicsConfigReqBuilder) SysMsgInterval(sysMsgInterval string) 
 
 func (b *UpdateSysTopicsConfigReqBuilder) Build() *UpdateSysTopicsConfigReq {
 	req := &UpdateSysTopicsConfigReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetSysmonConfigReq struct {
+	apiReq *core.APIReq
+}
+
+type GetSysmonConfigResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	SysmonConfig
+}
+
+type GetSysmonConfigReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetSysmonConfigReqBuilder() *GetSysmonConfigReqBuilder {
+	builder := &GetSysmonConfigReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetSysmonConfigReqBuilder) Build() *GetSysmonConfigReq {
+	req := &GetSysmonConfigReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type UpdateSysmonConfigReq struct {
+	apiReq *core.APIReq
+}
+
+type UpdateSysmonConfigReqBody struct {
+	SysmonVm SysmonVm `json:"vm"`
+	SysmonOs SysmonOs `json:"os"`
+}
+
+type UpdateSysmonConfigResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	SysmonConfig
+}
+
+type UpdateSysmonConfigReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewUpdateSysmonConfigReqBuilder() *UpdateSysmonConfigReqBuilder {
+	builder := &UpdateSysmonConfigReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+		Body:        &UpdateSysmonConfigReqBody{},
+	}
+	return builder
+}
+
+func (b *UpdateSysmonConfigReqBuilder) Os(os SysmonOs) *UpdateSysmonConfigReqBuilder {
+	b.apiReq.Body.(*UpdateSysmonConfigReqBody).SysmonOs = os
+	return b
+}
+
+func (b *UpdateSysmonConfigReqBuilder) Vm(vm SysmonVm) *UpdateSysmonConfigReqBuilder {
+	b.apiReq.Body.(*UpdateSysmonConfigReqBody).SysmonVm = vm
+	return b
+}
+
+func (b *UpdateSysmonConfigReqBuilder) Build() *UpdateSysmonConfigReq {
+	req := &UpdateSysmonConfigReq{}
 	req.apiReq = b.apiReq
 	return req
 }
