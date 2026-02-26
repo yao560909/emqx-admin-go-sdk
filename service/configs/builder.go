@@ -155,3 +155,89 @@ func (b *UpdateSysmonConfigReqBuilder) Build() *UpdateSysmonConfigReq {
 	req.apiReq = b.apiReq
 	return req
 }
+
+type GetGlobalZoneConfigReq struct {
+	apiReq *core.APIReq
+}
+
+type GetGlobalZoneConfigResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	GlobalZoneConfig
+}
+
+type GetGlobalZoneConfigReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetGlobalZoneConfigReqBuilder() *GetGlobalZoneConfigReqBuilder {
+	builder := &GetGlobalZoneConfigReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetGlobalZoneConfigReqBuilder) Build() *GetGlobalZoneConfigReq {
+	req := &GetGlobalZoneConfigReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type UpdateGlobalZoneConfigReq struct {
+	apiReq *core.APIReq
+}
+
+type UpdateGlobalZoneConfigReqBody struct {
+	FlappingDetect *FlappingDetect `json:"flapping_detect"`
+	ForceGc        *ForceGc        `json:"force_gc"`
+	ForceShutdown  *ForceShutdown  `json:"force_shutdown"`
+	Mqtt           *Mqtt           `json:"mqtt"`
+}
+
+type UpdateGlobalZoneConfigResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	GlobalZoneConfig
+}
+
+type UpdateGlobalZoneConfigReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewUpdateGlobalZoneConfigReqBuilder() *UpdateGlobalZoneConfigReqBuilder {
+	builder := &UpdateGlobalZoneConfigReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+		Body:        &UpdateGlobalZoneConfigReqBody{},
+	}
+	return builder
+}
+
+func (b *UpdateGlobalZoneConfigReqBuilder) FlappingDetect(flappingDetect *FlappingDetect) *UpdateGlobalZoneConfigReqBuilder {
+	b.apiReq.Body.(*UpdateGlobalZoneConfigReqBody).FlappingDetect = flappingDetect
+	return b
+}
+
+func (b *UpdateGlobalZoneConfigReqBuilder) ForceGc(forceGc *ForceGc) *UpdateGlobalZoneConfigReqBuilder {
+	b.apiReq.Body.(*UpdateGlobalZoneConfigReqBody).ForceGc = forceGc
+	return b
+}
+
+func (b *UpdateGlobalZoneConfigReqBuilder) ForceShutdown(forceShutdown *ForceShutdown) *UpdateGlobalZoneConfigReqBuilder {
+	b.apiReq.Body.(*UpdateGlobalZoneConfigReqBody).ForceShutdown = forceShutdown
+	return b
+}
+
+func (b *UpdateGlobalZoneConfigReqBuilder) Mqtt(mqtt *Mqtt) *UpdateGlobalZoneConfigReqBuilder {
+	b.apiReq.Body.(*UpdateGlobalZoneConfigReqBody).Mqtt = mqtt
+	return b
+}
+
+func (b *UpdateGlobalZoneConfigReqBuilder) Build() *UpdateGlobalZoneConfigReq {
+	req := &UpdateGlobalZoneConfigReq{}
+	req.apiReq = b.apiReq
+	return req
+}

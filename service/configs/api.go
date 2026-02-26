@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	ApiPathSysTopicsConfig = "/api/v5/configs/sys_topics"
-	ApiPathSysmonConfig    = "/api/v5/configs/sysmon"
+	ApiPathSysTopicsConfig  = "/api/v5/configs/sys_topics"
+	ApiPathSysmonConfig     = "/api/v5/configs/sysmon"
+	ApiPathGlobalZoneConfig = "/api/v5/configs/global_zone"
 )
 
 type ConfigsService struct {
@@ -94,6 +95,45 @@ func (s *ConfigsService) UpdateSysmonConfig(ctx context.Context, req *UpdateSysm
 	err = json.Unmarshal(apiResp.RawBody, resp)
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateSysmonConfig] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+// Get the sub-configurations under global_zone
+func (s *ConfigsService) GetGlobalZoneConfig(ctx context.Context, req *GetGlobalZoneConfigReq, options ...core.RequestOptionFunc) (*GetGlobalZoneConfigResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathGlobalZoneConfig
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetGlobalZoneConfig] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetGlobalZoneConfigResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetGlobalZoneConfig] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ConfigsService) UpdateGlobalZoneConfig(ctx context.Context, req *UpdateGlobalZoneConfigReq, options ...core.RequestOptionFunc) (*UpdateGlobalZoneConfigResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathGlobalZoneConfig
+	apiReq.HttpMethod = "PUT"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateGlobalZoneConfig] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &UpdateGlobalZoneConfigResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateGlobalZoneConfig] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
 	}
 	return resp, nil

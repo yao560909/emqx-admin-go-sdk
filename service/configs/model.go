@@ -37,3 +37,62 @@ type SysmonVm struct {
 	ProcessHighWatermark string `json:"process_high_watermark"`
 	ProcessLowWatermark  string `json:"process_low_watermark"`
 }
+
+type GlobalZoneConfig struct {
+	FlappingDetect *FlappingDetect `json:"flapping_detect"`
+	ForceGc        *ForceGc        `json:"force_gc"`
+	ForceShutdown  *ForceShutdown  `json:"force_shutdown"`
+	Mqtt           *Mqtt           `json:"mqtt"`
+}
+
+type FlappingDetect struct {
+	BanTime    string `json:"ban_time"`
+	Enable     bool   `json:"enable"`
+	MaxCount   int    `json:"max_count"`
+	WindowTime string `json:"window_time"`
+}
+
+type ForceGc struct {
+	Bytes  string `json:"bytes"`
+	Count  int    `json:"count"`
+	Enable bool   `json:"enable"`
+}
+
+type ForceShutdown struct {
+	Enable         bool   `json:"enable"`
+	MaxHeapSize    string `json:"max_heap_size"`
+	MaxMailboxSize int    `json:"max_mailbox_size"`
+}
+
+type Mqtt struct {
+	AwaitRelTimeout            string  `json:"await_rel_timeout"`
+	ExclusiveSubscription      bool    `json:"exclusive_subscription"`
+	IdleTimeout                string  `json:"idle_timeout"`
+	IgnoreLoopDeliver          bool    `json:"ignore_loop_deliver"`
+	KeepaliveMultiplier        float64 `json:"keepalive_multiplier"`
+	MaxAwaitingRel             int     `json:"max_awaiting_rel"`
+	MaxClientidLen             int     `json:"max_clientid_len"`
+	MaxInflight                int     `json:"max_inflight"`
+	MaxMqueueLen               int     `json:"max_mqueue_len"`
+	MaxPacketSize              string  `json:"max_packet_size"`
+	MaxQosAllowed              int     `json:"max_qos_allowed"`
+	MaxSubscriptions           string  `json:"max_subscriptions"`
+	MaxTopicAlias              int     `json:"max_topic_alias"`
+	MaxTopicLevels             int     `json:"max_topic_levels"`
+	MqueueDefaultPriority      string  `json:"mqueue_default_priority"`
+	MqueuePriorities           string  `json:"mqueue_priorities"`
+	MqueueStoreQos0            bool    `json:"mqueue_store_qos0"`
+	PeerCertAsClientid         string  `json:"peer_cert_as_clientid"`
+	PeerCertAsUsername         string  `json:"peer_cert_as_username"`
+	ResponseInformation        string  `json:"response_information"`
+	RetainAvailable            bool    `json:"retain_available"`
+	RetryInterval              string  `json:"retry_interval"`
+	ServerKeepalive            string  `json:"server_keepalive"`
+	SessionExpiryInterval      string  `json:"session_expiry_interval"`
+	SharedSubscription         bool    `json:"shared_subscription"`
+	SharedSubscriptionStrategy string  `json:"shared_subscription_strategy"`
+	StrictMode                 bool    `json:"strict_mode"`
+	UpgradeQos                 bool    `json:"upgrade_qos"`
+	UseUsernameAsClientid      bool    `json:"use_username_as_clientid"`
+	WildcardSubscription       bool    `json:"wildcard_subscription"`
+}
