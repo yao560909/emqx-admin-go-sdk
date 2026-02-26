@@ -5,6 +5,7 @@ import (
 	"github.com/yao560909/emqx-admin-go-sdk/service/authentication"
 	"github.com/yao560909/emqx-admin-go-sdk/service/banned"
 	"github.com/yao560909/emqx-admin-go-sdk/service/clients"
+	"github.com/yao560909/emqx-admin-go-sdk/service/configs"
 	"github.com/yao560909/emqx-admin-go-sdk/service/metrics"
 	"github.com/yao560909/emqx-admin-go-sdk/service/nodes"
 	"github.com/yao560909/emqx-admin-go-sdk/service/topics"
@@ -42,6 +43,7 @@ type Client struct {
 	Authentication *authentication.AuthenticationService
 	Topics         *topics.TopicsService
 	Authorization  *authentication.AuthenticationService
+	Configs        *configs.ConfigsService
 }
 
 func NewClient(edition Edition, appId, appSecret, target, scheme string, options ...ClientOptionFunc) *Client {
@@ -76,6 +78,7 @@ func initService(client *Client, config *core.Config) {
 		client.Authentication = authentication.NewService(config)
 		client.Topics = topics.NewService(config)
 		client.Authorization = authentication.NewService(config)
+		client.Configs = configs.NewService(config)
 	case Enterprise:
 		client.Nodes = nodes.NewService(config)
 		client.Clients = clients.NewService(config)
@@ -84,6 +87,7 @@ func initService(client *Client, config *core.Config) {
 		client.Authentication = authentication.NewService(config)
 		client.Topics = topics.NewService(config)
 		client.Authorization = authentication.NewService(config)
+		client.Configs = configs.NewService(config)
 	default:
 	}
 }
