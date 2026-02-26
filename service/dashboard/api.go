@@ -13,6 +13,7 @@ const (
 	ApiPathUsers_Username           = "/api/v5/users/{username}"
 	ApiPathUsers_Username_ChangePwd = "/api/v5/users/{username}/change_pwd"
 	ApiPathLogin                    = "/api/v5/login"
+	ApiPathLogout                   = "/api/v5/logout"
 )
 
 type DashboardService struct {
@@ -147,6 +148,31 @@ func (s *DashboardService) ChangePassword(ctx context.Context, req *ChangePasswo
 		err = json.Unmarshal(apiResp.RawBody, resp)
 		if err != nil {
 			s.config.Logger.Error(ctx, fmt.Sprintf("[ChangePassword] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
+
+// 需要先调用login获取token
+// Dashboard user logout.
+// This endpoint is only for the Dashboard, not the API Key.
+// The token from the /login endpoint must be a bearer authorization in the headers.
+func (s *DashboardService) Logout(ctx context.Context, req *LogoutReq, options ...core.RequestOptionFunc) (*LogoutResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathLogout
+	apiReq.HttpMethod = "POST"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[Logout] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &LogoutResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[Logout] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
 	}

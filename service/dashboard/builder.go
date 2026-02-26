@@ -267,3 +267,41 @@ type ChangePasswordResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
+
+type LogoutReq struct {
+	apiReq *core.APIReq
+}
+
+type LogoutReqBody struct {
+	Username string `json:"username"`
+}
+
+type LogoutReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewLogoutReqBuilder() *LogoutReqBuilder {
+	builder := &LogoutReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		SkipAuth:    true,
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *LogoutReqBuilder) username(username string) *LogoutReqBuilder {
+	b.apiReq.Body.(*LogoutReqBody).Username = username
+	return b
+}
+
+func (b *LogoutReqBuilder) Build() *LogoutReq {
+	req := &LogoutReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type LogoutResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
