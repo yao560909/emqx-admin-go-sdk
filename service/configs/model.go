@@ -96,3 +96,9 @@ type Mqtt struct {
 	UseUsernameAsClientid      bool    `json:"use_username_as_clientid"`
 	WildcardSubscription       bool    `json:"wildcard_subscription"`
 }
+
+type AlarmConfig struct {
+	Actions        []*string `json:"actions"`
+	SizeLimit      int       `json:"size_limit"`
+	ValidityPeriod string    `json:"validity_period"`
+}

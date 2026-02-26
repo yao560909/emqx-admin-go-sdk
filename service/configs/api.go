@@ -12,6 +12,7 @@ const (
 	ApiPathSysTopicsConfig  = "/api/v5/configs/sys_topics"
 	ApiPathSysmonConfig     = "/api/v5/configs/sysmon"
 	ApiPathGlobalZoneConfig = "/api/v5/configs/global_zone"
+	ApiPathAlarmConfig      = "/api/v5/configs/alarm"
 )
 
 type ConfigsService struct {
@@ -134,6 +135,45 @@ func (s *ConfigsService) UpdateGlobalZoneConfig(ctx context.Context, req *Update
 	err = json.Unmarshal(apiResp.RawBody, resp)
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateGlobalZoneConfig] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+// Get the sub-configurations under alarm
+func (s *ConfigsService) GetAlarmConfig(ctx context.Context, req *GetAlarmConfigReq, options ...core.RequestOptionFunc) (*GetAlarmConfigResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAlarmConfig
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAlarmConfig] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetAlarmConfigResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetAlarmConfig] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (s *ConfigsService) UpdateAlarmConfig(ctx context.Context, req *UpdateAlarmConfigReq, options ...core.RequestOptionFunc) (*UpdateAlarmConfigResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathAlarmConfig
+	apiReq.HttpMethod = "PUT"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateAlarmConfig] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &UpdateAlarmConfigResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateAlarmConfig] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
 	}
 	return resp, nil

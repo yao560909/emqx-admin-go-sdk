@@ -241,3 +241,106 @@ func (b *UpdateGlobalZoneConfigReqBuilder) Build() *UpdateGlobalZoneConfigReq {
 	req.apiReq = b.apiReq
 	return req
 }
+
+type GetAlarmConfigReq struct {
+	apiReq *core.APIReq
+}
+
+type GetAlarmConfigResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	AlarmConfig
+}
+
+type GetAlarmConfigReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetAlarmConfigReqBuilder() *GetAlarmConfigReqBuilder {
+	builder := &GetAlarmConfigReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetAlarmConfigReqBuilder) Build() *GetAlarmConfigReq {
+	req := &GetAlarmConfigReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type UpdateAlarmConfigReq struct {
+	apiReq *core.APIReq
+}
+
+type UpdateAlarmConfigReqBody struct {
+	Actions        []*string `json:"actions"`
+	SizeLimit      int       `json:"size_limit"`
+	ValidityPeriod string    `json:"validity_period"`
+}
+
+type UpdateAlarmConfigResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	AlarmConfig
+}
+
+type UpdateAlarmConfigReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewUpdateAlarmConfigReqBuilder() *UpdateAlarmConfigReqBuilder {
+	builder := &UpdateAlarmConfigReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+		Body:        &UpdateAlarmConfigReqBody{},
+	}
+	return builder
+}
+
+/*
+*
+Default: ["log","publish"]
+The actions triggered when the alarm is activated.
+Currently, the following actions are supported: log and publish.
+log is to write the alarm to log (console or file).
+publish is to publish the alarm as an MQTT message to the system topics:
+$SYS/brokers/emqx@xx.xx.xx.x/alarms/activate and
+$SYS/brokers/emqx@xx.xx.xx.x/alarms/deactivate
+*/
+func (b *UpdateAlarmConfigReqBuilder) Actions(actions []*string) *UpdateAlarmConfigReqBuilder {
+	b.apiReq.Body.(*UpdateAlarmConfigReqBody).Actions = actions
+	return b
+}
+
+/*
+*
+integer [ 1 .. 3000 ]
+Default: 1000
+The maximum total number of deactivated alarms to keep as history.
+When this limit is exceeded, the oldest deactivated alarms are deleted to cap the total number.
+*/
+func (b *UpdateAlarmConfigReqBuilder) SizeLimit(sizeLimit int) *UpdateAlarmConfigReqBuilder {
+	b.apiReq.Body.(*UpdateAlarmConfigReqBody).SizeLimit = sizeLimit
+	return b
+}
+
+/*
+*
+Default: "24h"
+Retention time of deactivated alarms. Alarms are not deleted immediately
+when deactivated, but after the retention time.
+*/
+func (b *UpdateAlarmConfigReqBuilder) ValidityPeriod(validityPeriod string) *UpdateAlarmConfigReqBuilder {
+	b.apiReq.Body.(*UpdateAlarmConfigReqBody).ValidityPeriod = validityPeriod
+	return b
+}
+
+func (b *UpdateAlarmConfigReqBuilder) Build() *UpdateAlarmConfigReq {
+	req := &UpdateAlarmConfigReq{}
+	req.apiReq = b.apiReq
+	return req
+}
