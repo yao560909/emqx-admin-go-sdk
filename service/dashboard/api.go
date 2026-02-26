@@ -62,3 +62,23 @@ func (s *DashboardService) ListUsers(ctx context.Context, req *ListUsersReq, opt
 	}
 	return resp, nil
 }
+// 需要先调用login获取token
+// Create dashboard user
+func (s *DashboardService) CreateUser(ctx context.Context, req *CreateUserReq, options ...core.RequestOptionFunc) (*CreateUserResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathUsers
+	apiReq.HttpMethod = "POST"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[CreateUser] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &CreateUserResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[CreateUser] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}

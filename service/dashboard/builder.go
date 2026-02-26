@@ -94,3 +94,54 @@ type LoginResp struct {
 	core.CodeError
 	LoginResponse
 }
+
+type CreateUserReq struct {
+	apiReq *core.APIReq
+}
+
+type CreateUserReqBody struct {
+	Username    string `json:"username"`
+	Password    string `json:"password"`
+	Description string `json:"description"`
+}
+
+type CreateUserReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewCreateUserReqBuilder() *CreateUserReqBuilder {
+	builder := &CreateUserReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		SkipAuth:    true,
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *CreateUserReqBuilder) Username(username string) *CreateUserReqBuilder {
+	b.apiReq.Body.(*CreateUserReqBody).Username = username
+	return b
+}
+
+func (b *CreateUserReqBuilder) Password(password string) *CreateUserReqBuilder {
+	b.apiReq.Body.(*CreateUserReqBody).Password = password
+	return b
+}
+
+func (b *CreateUserReqBuilder) Description(description string) *CreateUserReqBuilder {
+	b.apiReq.Body.(*CreateUserReqBody).Description = description
+	return b
+}
+
+func (b *CreateUserReqBuilder) Build() *CreateUserReq {
+	req := &CreateUserReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type CreateUserResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	User
+}
