@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	ApiPathCluster = "/api/v5/cluster"
+	ApiPathCluster         = "/api/v5/cluster"
+	ApiPathClusterTopology = "/api/v5/cluster/topology"
 )
 
 type ClusterService struct {
@@ -35,6 +36,26 @@ func (s *ClusterService) ListCluster(ctx context.Context, req *ListClusterReq, o
 	err = json.Unmarshal(apiResp.RawBody, resp)
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[ListCluster] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+// Get cluster topology
+func (s *ClusterService) GetClusterTopology(ctx context.Context, req *GetClusterTopologyReq, options ...core.RequestOptionFunc) (*GetClusterTopologyResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathClusterTopology
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetClusterTopology] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetClusterTopologyResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetClusterTopology] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
 	}
 	return resp, nil
