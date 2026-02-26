@@ -69,13 +69,119 @@ func NewUpdatePrometheusConfigReqBuilder() *UpdatePrometheusConfigReqBuilder {
 	return builder
 }
 
+/*
+*
+Default: false
+Deprecated since 5.4.0, use prometheus.push_gateway.url instead
+*/
 func (b *UpdatePrometheusConfigReqBuilder) Enable(enable bool) *UpdatePrometheusConfigReqBuilder {
 	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).Enable = enable
 	return b
 }
 
+/*
+*
+Default: "15s"
+Deprecated since 5.4.0, use prometheus.push_gateway.interval instead
+*/
 func (b *UpdatePrometheusConfigReqBuilder) Interval(interval string) *UpdatePrometheusConfigReqBuilder {
 	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).Interval = interval
+	return b
+}
+
+/*
+*
+Default: "http://127.0.0.1:9091"
+Deprecated since 5.4.0, use prometheus.push_gateway.url instead
+*/
+func (b *UpdatePrometheusConfigReqBuilder) PushGatewayServer(pushGatewayServer string) *UpdatePrometheusConfigReqBuilder {
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).PushGatewayServer = pushGatewayServer
+	return b
+}
+
+/*
+*
+Default: {}
+Deprecated since 5.4.0, use prometheus.push_gateway.headers instead
+*/
+func (b *UpdatePrometheusConfigReqBuilder) Headers(headers map[string]string) *UpdatePrometheusConfigReqBuilder {
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).Headers = headers
+	return b
+}
+
+/*
+*
+Default: "${name}/instance/${name}~${host}"
+Deprecated since 5.4.0, use prometheus.push_gateway.job_name instead
+*/
+func (b *UpdatePrometheusConfigReqBuilder) JobName(jobName string) *UpdatePrometheusConfigReqBuilder {
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).JobName = jobName
+	return b
+}
+
+/*
+*
+Default: "disabled"
+Enum: "disabled" "enabled"
+Deprecated since 5.4.0, use prometheus.collectors.vm_dist instead
+*/
+func (b *UpdatePrometheusConfigReqBuilder) VmDistCollector(vmDistCollector string) *UpdatePrometheusConfigReqBuilder {
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).VmDistCollector = vmDistCollector
+	return b
+}
+
+/*
+*
+Default: "disabled"
+Enum: "enabled" "disabled"
+Deprecated since 5.4.0, use prometheus.collectors.mnesia instead
+*/
+func (b *UpdatePrometheusConfigReqBuilder) MnesiaCollector(mnesiaCollector string) *UpdatePrometheusConfigReqBuilder {
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).MnesiaCollector = mnesiaCollector
+	return b
+}
+
+/*
+*
+Default: "disabled"
+Enum: "enabled" "disabled"
+Deprecated since 5.4.0, use prometheus.collectors.vm_statistics instead
+*/
+func (b *UpdatePrometheusConfigReqBuilder) VmStatisticsCollector(vmStatisticsCollector string) *UpdatePrometheusConfigReqBuilder {
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).VmStatisticsCollector = vmStatisticsCollector
+	return b
+}
+
+/*
+*
+Default: "disabled"
+Enum: "enabled" "disabled"
+Deprecated, use prometheus.collectors.vm_system_info instead
+*/
+func (b *UpdatePrometheusConfigReqBuilder) VmSystemInfoCollector(vmSystemInfoCollector string) *UpdatePrometheusConfigReqBuilder {
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).VmSystemInfoCollector = vmSystemInfoCollector
+	return b
+}
+
+/*
+*
+Default: "disabled"
+Enum: "enabled" "disabled"
+Deprecated since 5.4.0, use prometheus.collectors.vm_memory instead
+*/
+func (b *UpdatePrometheusConfigReqBuilder) VmMemoryCollector(vmMemoryCollector string) *UpdatePrometheusConfigReqBuilder {
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).VmMemoryCollector = vmMemoryCollector
+	return b
+}
+
+/*
+*
+Default: "disabled"
+Enum: "enabled" "disabled"
+Deprecated since 5.4.0, use prometheus.collectors.vm_msacc instead
+*/
+func (b *UpdatePrometheusConfigReqBuilder) VmMsaccCollector(vmMsaccCollector string) *UpdatePrometheusConfigReqBuilder {
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).VmMsaccCollector = vmMsaccCollector
 	return b
 }
 
@@ -120,6 +226,10 @@ type UpdateOpenTelemetryConfigReq struct {
 }
 
 type UpdateOpenTelemetryConfigReqBody struct {
+	Metrics  Metrics  `json:"metrics"`
+	Logs     Logs     `json:"logs"`
+	Traces   Traces   `json:"traces"`
+	Exporter Exporter `json:"exporter"`
 }
 
 type Metrics struct {
@@ -133,13 +243,13 @@ type Logs struct {
 }
 
 type Traces struct {
-	Enable         bool   `json:"enable"`
-	ScheduledDelay string `json:"scheduled_delay"`
+	Enable         bool    `json:"enable"`
+	ScheduledDelay string  `json:"scheduled_delay"`
 	Filter         *Filter `json:"filter"`
 }
 
 type Exporter struct {
-	Endpoint   string     `json:"endpoint"`
+	Endpoint   string      `json:"endpoint"`
 	SslOptions *SslOptions `json:"ssl_options"`
 }
 
@@ -160,6 +270,22 @@ func NewUpdateOpenTelemetryConfigReqBuilder() *UpdateOpenTelemetryConfigReqBuild
 		QueryParams: core.QueryParams{},
 	}
 	return builder
+}
+func (b *UpdateOpenTelemetryConfigReqBuilder) Metrics(metrics Metrics) *UpdateOpenTelemetryConfigReqBuilder {
+	b.apiReq.Body.(*UpdateOpenTelemetryConfigReqBody).Metrics = metrics
+	return b
+}
+func (b *UpdateOpenTelemetryConfigReqBuilder) Logs(logs Logs) *UpdateOpenTelemetryConfigReqBuilder {
+	b.apiReq.Body.(*UpdateOpenTelemetryConfigReqBody).Logs = logs
+	return b
+}
+func (b *UpdateOpenTelemetryConfigReqBuilder) Traces(traces Traces) *UpdateOpenTelemetryConfigReqBuilder {
+	b.apiReq.Body.(*UpdateOpenTelemetryConfigReqBody).Traces = traces
+	return b
+}
+func (b *UpdateOpenTelemetryConfigReqBuilder) Exporter(exporter Exporter) *UpdateOpenTelemetryConfigReqBuilder {
+	b.apiReq.Body.(*UpdateOpenTelemetryConfigReqBody).Exporter = exporter
+	return b
 }
 
 func (b *UpdateOpenTelemetryConfigReqBuilder) Build() *UpdateOpenTelemetryConfigReq {
