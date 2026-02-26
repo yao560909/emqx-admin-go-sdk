@@ -105,3 +105,26 @@ func (s *DashboardService) UpdateUser(ctx context.Context, req *UpdateUserReq, o
 	}
 	return resp, nil
 }
+
+// 需要先调用login获取token
+// Delete dashboard user
+func (s *DashboardService) DeleteUser(ctx context.Context, req *DeleteUserReq, options ...core.RequestOptionFunc) (*DeleteUserResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathUsers_Username
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteUser] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &DeleteUserResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteUser] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}

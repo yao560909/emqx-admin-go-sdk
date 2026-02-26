@@ -184,3 +184,37 @@ type UpdateUserResp struct {
 	core.CodeError
 	User
 }
+
+type DeleteUserReq struct {
+	apiReq *core.APIReq
+}
+
+type DeleteUserReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewDeleteUserReqBuilder() *DeleteUserReqBuilder {
+	builder := &DeleteUserReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		SkipAuth:    true,
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *DeleteUserReqBuilder) Username(username string) *DeleteUserReqBuilder {
+	b.apiReq.PathParams["username"] = username
+	return b
+}
+
+func (b *DeleteUserReqBuilder) Build() *DeleteUserReq {
+	req := &DeleteUserReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type DeleteUserResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
