@@ -9,9 +9,10 @@ import (
 )
 
 const (
-	ApiPathUsers          = "/api/v5/users"
-	ApiPathUsers_Username = "/api/v5/users/{username}"
-	ApiPathLogin          = "/api/v5/login"
+	ApiPathUsers                    = "/api/v5/users"
+	ApiPathUsers_Username           = "/api/v5/users/{username}"
+	ApiPathUsers_Username_ChangePwd = "/api/v5/users/{username}/change_pwd"
+	ApiPathLogin                    = "/api/v5/login"
 )
 
 type DashboardService struct {
@@ -123,6 +124,29 @@ func (s *DashboardService) DeleteUser(ctx context.Context, req *DeleteUserReq, o
 		err = json.Unmarshal(apiResp.RawBody, resp)
 		if err != nil {
 			s.config.Logger.Error(ctx, fmt.Sprintf("[DeleteUser] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
+	}
+	return resp, nil
+}
+
+// 需要先调用login获取token
+// Change dashboard user password
+func (s *DashboardService) ChangePassword(ctx context.Context, req *ChangePasswordReq, options ...core.RequestOptionFunc) (*ChangePasswordResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathUsers_Username_ChangePwd
+	apiReq.HttpMethod = "POST"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[ChangePassword] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &ChangePasswordResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[ChangePassword] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
 	}

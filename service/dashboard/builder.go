@@ -218,3 +218,52 @@ type DeleteUserResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
+
+type ChangePasswordReq struct {
+	apiReq *core.APIReq
+}
+
+type ChangePasswordReqBody struct {
+	OldPwd string `json:"old_pwd"`
+	NewPwd string `json:"new_pwd"`
+}
+
+type ChangePasswordReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewChangePasswordReqBuilder() *ChangePasswordReqBuilder {
+	builder := &ChangePasswordReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		SkipAuth:    true,
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *ChangePasswordReqBuilder) Username(username string) *ChangePasswordReqBuilder {
+	b.apiReq.PathParams["username"] = username
+	return b
+}
+
+func (b *ChangePasswordReqBuilder) OldPwd(oldPwd string) *ChangePasswordReqBuilder {
+	b.apiReq.Body.(*ChangePasswordReqBody).OldPwd = oldPwd
+	return b
+}
+
+func (b *ChangePasswordReqBuilder) NewPwd(newPwd string) *ChangePasswordReqBuilder {
+	b.apiReq.Body.(*ChangePasswordReqBody).NewPwd = newPwd
+	return b
+}
+
+func (b *ChangePasswordReqBuilder) Build() *ChangePasswordReq {
+	req := &ChangePasswordReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type ChangePasswordResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
