@@ -1,0 +1,96 @@
+package dashboard
+
+import (
+	"encoding/json"
+
+	"github.com/yao560909/emqx-admin-go-sdk/core"
+)
+
+type ListUsersReq struct {
+	apiReq *core.APIReq
+}
+
+// ListUsersReqBuilder represents the builder for ListUsersReq.
+type ListUsersReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+// NewListUsersReqBuilder creates a new ListUsersReqBuilder.
+func NewListUsersReqBuilder() *ListUsersReqBuilder {
+	builder := &ListUsersReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		SkipAuth:    true,
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+// Build builds the ListUsersReq.
+func (b *ListUsersReqBuilder) Build() *ListUsersReq {
+	req := &ListUsersReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+// ListUsersResp represents the response for listing users.
+type ListUsersResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Data []*User `json:"-"`
+}
+
+func (resp *ListUsersResp) UnmarshalJSON(b []byte) error {
+	var users []*User
+	if err := json.Unmarshal(b, &users); err == nil {
+		resp.Data = users
+		return nil
+	}
+	type alias ListUsersResp
+	return json.Unmarshal(b, (*alias)(resp))
+}
+
+type LoginReq struct {
+	apiReq *core.APIReq
+}
+
+type LoginReqBody struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type LoginReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewLoginReqBuilder() *LoginReqBuilder {
+	builder := &LoginReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		SkipAuth:    true,
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *LoginReqBuilder) Username(username string) *LoginReqBuilder {
+	b.apiReq.Body.(*LoginReqBody).Username = username
+	return b
+}
+
+func (b *LoginReqBuilder) Password(password string) *LoginReqBuilder {
+	b.apiReq.Body.(*LoginReqBody).Password = password
+	return b
+}
+
+func (b *LoginReqBuilder) Builder() *LoginReq {
+	req := &LoginReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type LoginResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	LoginResponse
+}
