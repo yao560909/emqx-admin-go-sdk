@@ -69,3 +69,32 @@ type AlarmListResp struct {
 	Data []*Alarm `json:"data"`
 	Meta Meta     `json:"meta"`
 }
+
+// --------------------------------
+type DeleteAlarmsReq struct {
+	apiReq *core.APIReq
+}
+
+type DeleteAlarmsReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewDeleteAlarmsReqBuilder() *DeleteAlarmsReqBuilder {
+	builder := &DeleteAlarmsReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *DeleteAlarmsReqBuilder) Build() *DeleteAlarmsReq {
+	req := &DeleteAlarmsReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type DeleteAlarmsResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
