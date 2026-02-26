@@ -402,3 +402,43 @@ func (b *GetLogConfigReqBuilder) Build() *GetLogConfigReq {
 	req.apiReq = b.apiReq
 	return req
 }
+
+type GetConfigsReq struct {
+	apiReq *core.APIReq
+}
+
+type GetConfigsResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Configs map[string]interface{} `json:"configs"`
+}
+
+type GetConfigsReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetConfigsReqBuilder() *GetConfigsReqBuilder {
+	builder := &GetConfigsReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+/*
+*
+
+string
+Enum: "actions" "alarm" "api_key" "authentication" "authorization" "auto_subscribe" "bridges" "cluster" "conn_congestion" "connectors" "crl_cache" "dashboard" "delayed" "exhook" "flapping_detect" "force_gc" "force_shutdown" "gateway" "limiter" "listeners" "log" "mqtt" "node" "opentelemetry" "overload_protection" "prometheus" "psk_authentication" "retainer" "rewrite" "rpc" "rule_engine" "slow_subs" "sys_topics" "sysmon" "telemetry" "topic_metrics"
+*/
+func (b *GetConfigsReqBuilder) Key(key string) *GetConfigsReqBuilder {
+	b.apiReq.QueryParams.Set("key", key)
+	return b
+}
+
+func (b *GetConfigsReqBuilder) Build() *GetConfigsReq {
+	req := &GetConfigsReq{}
+	req.apiReq = b.apiReq
+	return req
+}

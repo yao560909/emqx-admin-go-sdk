@@ -9,6 +9,7 @@ import (
 )
 
 const (
+	ApiPathConfigs          = "/api/v5/configs"
 	ApiPathSysTopicsConfig  = "/api/v5/configs/sys_topics"
 	ApiPathSysmonConfig     = "/api/v5/configs/sysmon"
 	ApiPathGlobalZoneConfig = "/api/v5/configs/global_zone"
@@ -218,5 +219,20 @@ func (s *ConfigsService) GetLogConfig(ctx context.Context, req *GetLogConfigReq,
 		s.config.Logger.Error(ctx, fmt.Sprintf("[GetLogConfig] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
 	}
+	return resp, nil
+}
+
+// Get all the configurations of the specified keys, including hot and non-hot updatable items
+func (s *ConfigsService) GetConfigs(ctx context.Context, req *GetConfigsReq, options ...core.RequestOptionFunc) (*GetConfigsResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathConfigs
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetConfigs] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetConfigsResp{APIResp: apiResp}
 	return resp, nil
 }
