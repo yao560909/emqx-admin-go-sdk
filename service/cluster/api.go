@@ -41,7 +41,7 @@ func (s *ClusterService) ListCluster(ctx context.Context, req *ListClusterReq, o
 	return resp, nil
 }
 
-// Get cluster topology
+// Get RLOG cluster topology: connections between core and replicant nodes.
 func (s *ClusterService) GetClusterTopology(ctx context.Context, req *GetClusterTopologyReq, options ...core.RequestOptionFunc) (*GetClusterTopologyResp, error) {
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClusterTopology
