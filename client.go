@@ -3,6 +3,7 @@ package sdk
 import (
 	"github.com/yao560909/emqx-admin-go-sdk/core"
 	"github.com/yao560909/emqx-admin-go-sdk/service/alarms"
+	"github.com/yao560909/emqx-admin-go-sdk/service/apikeys"
 	"github.com/yao560909/emqx-admin-go-sdk/service/authentication"
 	"github.com/yao560909/emqx-admin-go-sdk/service/banned"
 	"github.com/yao560909/emqx-admin-go-sdk/service/clients"
@@ -48,6 +49,7 @@ type Client struct {
 	Configs        *configs.ConfigsService
 	Alarms         *alarms.AlarmsService
 	Subscriptions  *subscriptions.SubscriptionsService
+	APIKeys        *apikeys.APIKeysService
 }
 
 func NewClient(edition Edition, appId, appSecret, target, scheme string, options ...ClientOptionFunc) *Client {
@@ -85,6 +87,7 @@ func initService(client *Client, config *core.Config) {
 		client.Configs = configs.NewService(config)
 		client.Alarms = alarms.NewService(config)
 		client.Subscriptions = subscriptions.NewService(config)
+		client.APIKeys = apikeys.NewService(config)
 	case Enterprise:
 		client.Nodes = nodes.NewService(config)
 		client.Clients = clients.NewService(config)
@@ -96,6 +99,7 @@ func initService(client *Client, config *core.Config) {
 		client.Configs = configs.NewService(config)
 		client.Alarms = alarms.NewService(config)
 		client.Subscriptions = subscriptions.NewService(config)
+		client.APIKeys = apikeys.NewService(config)
 	default:
 	}
 }
