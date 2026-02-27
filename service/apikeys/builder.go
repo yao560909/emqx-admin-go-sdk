@@ -12,11 +12,11 @@ type CreateAPIKeyReq struct {
 }
 
 type CreateAPIKeyReqBody struct {
-	Name      string `json:"name,omitempty"`
-	Expired   bool   `json:"expired,omitempty"`
-	ExpiredAt string `json:"expired_at,omitempty"`
-	Desc      string `json:"desc,omitempty"`
-	Enable    bool   `json:"enable,omitempty"`
+	Name      *string `json:"name,omitempty"`
+	Expired   *bool   `json:"expired,omitempty"`
+	ExpiredAt *string `json:"expired_at,omitempty"`
+	Desc      *string `json:"desc,omitempty"`
+	Enable    *bool   `json:"enable,omitempty"`
 }
 
 type CreateAPIKeyReqBuilder struct {
@@ -35,26 +35,26 @@ func NewCreateAPIKeyReqBuilder() *CreateAPIKeyReqBuilder {
 }
 
 func (b *CreateAPIKeyReqBuilder) Expired(expired bool) *CreateAPIKeyReqBuilder {
-	b.apiReq.Body.(*CreateAPIKeyReqBody).Expired = expired
+	b.apiReq.Body.(*CreateAPIKeyReqBody).Expired = &expired
 	return b
 }
 func (b *CreateAPIKeyReqBuilder) ExpiredAt(expiredAt string) *CreateAPIKeyReqBuilder {
-	b.apiReq.Body.(*CreateAPIKeyReqBody).ExpiredAt = expiredAt
+	b.apiReq.Body.(*CreateAPIKeyReqBody).ExpiredAt = &expiredAt
 	return b
 }
 
 func (b *CreateAPIKeyReqBuilder) Desc(desc string) *CreateAPIKeyReqBuilder {
-	b.apiReq.Body.(*CreateAPIKeyReqBody).Desc = desc
+	b.apiReq.Body.(*CreateAPIKeyReqBody).Desc = &desc
 	return b
 }
 
 func (b *CreateAPIKeyReqBuilder) Name(name string) *CreateAPIKeyReqBuilder {
-	b.apiReq.Body.(*CreateAPIKeyReqBody).Name = name
+	b.apiReq.Body.(*CreateAPIKeyReqBody).Name = &name
 	return b
 }
 
 func (b *CreateAPIKeyReqBuilder) Enable(enable bool) *CreateAPIKeyReqBuilder {
-	b.apiReq.Body.(*CreateAPIKeyReqBody).Enable = enable
+	b.apiReq.Body.(*CreateAPIKeyReqBody).Enable = &enable
 	return b
 }
 
@@ -192,10 +192,10 @@ type UpdateAPIKeyReq struct {
 }
 
 type UpdateAPIKeyReqBody struct {
-	Expired   bool   `json:"expired,omitempty"`
-	ExpiredAt string `json:"expired_at"`
-	Desc      string `json:"desc"`
-	Enable    bool   `json:"enable"`
+	Expired   *bool   `json:"expired,omitempty"`
+	ExpiredAt *string `json:"expired_at,omitempty"`
+	Desc      *string `json:"desc,omitempty"`
+	Enable    *bool   `json:"enable,omitempty"`
 }
 
 type UpdateAPIKeyReqBuilder struct {
@@ -219,22 +219,22 @@ func (b *UpdateAPIKeyReqBuilder) Name(name string) *UpdateAPIKeyReqBuilder {
 }
 
 func (b *UpdateAPIKeyReqBuilder) Expired(expired bool) *UpdateAPIKeyReqBuilder {
-	b.apiReq.Body.(*UpdateAPIKeyReqBody).Expired = expired
+	b.apiReq.Body.(*UpdateAPIKeyReqBody).Expired = &expired
 	return b
 }
 
 func (b *UpdateAPIKeyReqBuilder) ExpiredAt(expiredAt string) *UpdateAPIKeyReqBuilder {
-	b.apiReq.Body.(*UpdateAPIKeyReqBody).ExpiredAt = expiredAt
+	b.apiReq.Body.(*UpdateAPIKeyReqBody).ExpiredAt = &expiredAt
 	return b
 }
 
 func (b *UpdateAPIKeyReqBuilder) Desc(desc string) *UpdateAPIKeyReqBuilder {
-	b.apiReq.Body.(*UpdateAPIKeyReqBody).Desc = desc
+	b.apiReq.Body.(*UpdateAPIKeyReqBody).Desc = &desc
 	return b
 }
 
 func (b *UpdateAPIKeyReqBuilder) Enable(enable bool) *UpdateAPIKeyReqBuilder {
-	b.apiReq.Body.(*UpdateAPIKeyReqBody).Enable = enable
+	b.apiReq.Body.(*UpdateAPIKeyReqBody).Enable = &enable
 	return b
 }
 

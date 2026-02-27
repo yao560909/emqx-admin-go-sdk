@@ -1,11 +1,11 @@
 package authorization
 
 type Rule struct {
-	Action     string `json:"action"`
-	Permission string `json:"permission"`
-	Topic      string `json:"topic"`
-	Qos        []int  `json:"qos"`
-	Retain     string `json:"retain"`
+	Action     *string `json:"action,omitempty"`
+	Permission *string `json:"permission,omitempty"`
+	Topic      *string `json:"topic,omitempty"`
+	Qos        []int  `json:"qos,omitempty"`
+	Retain     *string `json:"retain,omitempty"`
 }
 
 type UserRules struct {

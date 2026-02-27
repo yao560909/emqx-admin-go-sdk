@@ -36,9 +36,9 @@ type UpdateSysTopicsConfigReq struct {
 }
 
 type UpdateSysTopicsConfigReqBody struct {
-	SysEventMessages     *SysEventMessages `json:"sys_event_messages"`
-	SysHeartbeatInterval string            `json:"sys_heartbeat_interval"`
-	SysMsgInterval       string            `json:"sys_msg_interval"`
+	SysEventMessages     *SysEventMessages `json:"sys_event_messages,omitempty"`
+	SysHeartbeatInterval *string            `json:"sys_heartbeat_interval,omitempty"`
+	SysMsgInterval       *string            `json:"sys_msg_interval,omitempty"`
 }
 
 type UpdateSysTopicsConfigResp struct {
@@ -61,18 +61,18 @@ func NewUpdateSysTopicsConfigReqBuilder() *UpdateSysTopicsConfigReqBuilder {
 	return builder
 }
 
-func (b *UpdateSysTopicsConfigReqBuilder) SysEventMessages(sysEventMessages *SysEventMessages) *UpdateSysTopicsConfigReqBuilder {
-	b.apiReq.Body.(*UpdateSysTopicsConfigReqBody).SysEventMessages = sysEventMessages
+func (b *UpdateSysTopicsConfigReqBuilder) SysEventMessages(sysEventMessages SysEventMessages) *UpdateSysTopicsConfigReqBuilder {
+	b.apiReq.Body.(*UpdateSysTopicsConfigReqBody).SysEventMessages = &sysEventMessages
 	return b
 }
 
 func (b *UpdateSysTopicsConfigReqBuilder) SysHeartbeatInterval(sysHeartbeatInterval string) *UpdateSysTopicsConfigReqBuilder {
-	b.apiReq.Body.(*UpdateSysTopicsConfigReqBody).SysHeartbeatInterval = sysHeartbeatInterval
+	b.apiReq.Body.(*UpdateSysTopicsConfigReqBody).SysHeartbeatInterval = &sysHeartbeatInterval
 	return b
 }
 
 func (b *UpdateSysTopicsConfigReqBuilder) SysMsgInterval(sysMsgInterval string) *UpdateSysTopicsConfigReqBuilder {
-	b.apiReq.Body.(*UpdateSysTopicsConfigReqBody).SysMsgInterval = sysMsgInterval
+	b.apiReq.Body.(*UpdateSysTopicsConfigReqBody).SysMsgInterval = &sysMsgInterval
 	return b
 }
 
@@ -116,8 +116,8 @@ type UpdateSysmonConfigReq struct {
 }
 
 type UpdateSysmonConfigReqBody struct {
-	SysmonVm SysmonVm `json:"vm"`
-	SysmonOs SysmonOs `json:"os"`
+	SysmonVm *SysmonVm `json:"vm,omitempty"`
+	SysmonOs *SysmonOs `json:"os,omitempty"`
 }
 
 type UpdateSysmonConfigResp struct {
@@ -141,12 +141,12 @@ func NewUpdateSysmonConfigReqBuilder() *UpdateSysmonConfigReqBuilder {
 }
 
 func (b *UpdateSysmonConfigReqBuilder) Os(os SysmonOs) *UpdateSysmonConfigReqBuilder {
-	b.apiReq.Body.(*UpdateSysmonConfigReqBody).SysmonOs = os
+	b.apiReq.Body.(*UpdateSysmonConfigReqBody).SysmonOs = &os
 	return b
 }
 
 func (b *UpdateSysmonConfigReqBuilder) Vm(vm SysmonVm) *UpdateSysmonConfigReqBuilder {
-	b.apiReq.Body.(*UpdateSysmonConfigReqBody).SysmonVm = vm
+	b.apiReq.Body.(*UpdateSysmonConfigReqBody).SysmonVm = &vm
 	return b
 }
 
@@ -190,10 +190,10 @@ type UpdateGlobalZoneConfigReq struct {
 }
 
 type UpdateGlobalZoneConfigReqBody struct {
-	FlappingDetect *FlappingDetect `json:"flapping_detect"`
-	ForceGc        *ForceGc        `json:"force_gc"`
-	ForceShutdown  *ForceShutdown  `json:"force_shutdown"`
-	Mqtt           *Mqtt           `json:"mqtt"`
+	FlappingDetect *FlappingDetect `json:"flapping_detect,omitempty"`
+	ForceGc        *ForceGc        `json:"force_gc,omitempty"`
+	ForceShutdown  *ForceShutdown  `json:"force_shutdown,omitempty"`
+	Mqtt           *Mqtt           `json:"mqtt,omitempty"`
 }
 
 type UpdateGlobalZoneConfigResp struct {
@@ -276,9 +276,9 @@ type UpdateAlarmConfigReq struct {
 }
 
 type UpdateAlarmConfigReqBody struct {
-	Actions        []*string `json:"actions"`
-	SizeLimit      int       `json:"size_limit"`
-	ValidityPeriod string    `json:"validity_period"`
+	Actions        []string `json:"actions,omitempty"`
+	SizeLimit      *int       `json:"size_limit,omitempty"`
+	ValidityPeriod *string    `json:"validity_period,omitempty"`
 }
 
 type UpdateAlarmConfigResp struct {
@@ -311,7 +311,7 @@ publish is to publish the alarm as an MQTT message to the system topics:
 $SYS/brokers/emqx@xx.xx.xx.x/alarms/activate and
 $SYS/brokers/emqx@xx.xx.xx.x/alarms/deactivate
 */
-func (b *UpdateAlarmConfigReqBuilder) Actions(actions []*string) *UpdateAlarmConfigReqBuilder {
+func (b *UpdateAlarmConfigReqBuilder) Actions(actions []string) *UpdateAlarmConfigReqBuilder {
 	b.apiReq.Body.(*UpdateAlarmConfigReqBody).Actions = actions
 	return b
 }
@@ -324,7 +324,7 @@ The maximum total number of deactivated alarms to keep as history.
 When this limit is exceeded, the oldest deactivated alarms are deleted to cap the total number.
 */
 func (b *UpdateAlarmConfigReqBuilder) SizeLimit(sizeLimit int) *UpdateAlarmConfigReqBuilder {
-	b.apiReq.Body.(*UpdateAlarmConfigReqBody).SizeLimit = sizeLimit
+	b.apiReq.Body.(*UpdateAlarmConfigReqBody).SizeLimit = &sizeLimit
 	return b
 }
 
@@ -335,7 +335,7 @@ Retention time of deactivated alarms. Alarms are not deleted immediately
 when deactivated, but after the retention time.
 */
 func (b *UpdateAlarmConfigReqBuilder) ValidityPeriod(validityPeriod string) *UpdateAlarmConfigReqBuilder {
-	b.apiReq.Body.(*UpdateAlarmConfigReqBody).ValidityPeriod = validityPeriod
+	b.apiReq.Body.(*UpdateAlarmConfigReqBody).ValidityPeriod = &validityPeriod
 	return b
 }
 

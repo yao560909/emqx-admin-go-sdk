@@ -36,20 +36,20 @@ type OpenTelemetryExporter struct {
 }
 
 type SslOptions struct {
-	Ciphers              []*string `json:"ciphers"`
-	Depth                int       `json:"depth"`
-	Enable               bool      `json:"enable"`
-	HibernateAfter       string    `json:"hibernate_after"`
-	LogLevel             string    `json:"log_level"`
-	Password             string    `json:"password"`
-	ReuseSessions        bool      `json:"reuse_sessions"`
-	SecureRenegotiate    bool      `json:"secure_renegotiate"`
-	Verify               string    `json:"verify"`
-	Versions             []*string `json:"versions"`
-	Cacertfile           string    `json:"cacertfile"`
-	Certfile             string    `json:"certfile"`
-	Keyfile              string    `json:"keyfile"`
-	ServerNameIndication string    `json:"server_name_indication"`
+	Ciphers              []string `json:"ciphers,omitempty"`
+	Depth                *int       `json:"depth,omitempty"`
+	Enable               *bool      `json:"enable,omitempty"`
+	HibernateAfter       *string    `json:"hibernate_after,omitempty"`
+	LogLevel             *string    `json:"log_level,omitempty"`
+	Password             *string    `json:"password,omitempty"`
+	ReuseSessions        *bool      `json:"reuse_sessions,omitempty"`
+	SecureRenegotiate    *bool      `json:"secure_renegotiate,omitempty"`
+	Verify               *string    `json:"verify,omitempty"`
+	Versions             []string `json:"versions,omitempty"`
+	Cacertfile           *string    `json:"cacertfile,omitempty"`
+	Certfile             *string    `json:"certfile,omitempty"`
+	Keyfile              *string    `json:"keyfile,omitempty"`
+	ServerNameIndication *string    `json:"server_name_indication,omitempty"`
 }
 
 type OpenTelemetryLogs struct {
@@ -70,5 +70,5 @@ type OpenTelemetryTraces struct {
 }
 
 type Filter struct {
-	TraceAll bool `json:"trace_all"`
+	TraceAll *bool `json:"trace_all,omitempty"`
 }

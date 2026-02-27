@@ -19,23 +19,23 @@ type SysmonConfig struct {
 }
 
 type SysmonOs struct {
-	CpuCheckInterval     string `json:"cpu_check_interval"`
-	CpuHighWatermark     string `json:"cpu_high_watermark"`
-	CpuLowWatermark      string `json:"cpu_low_watermark"`
-	MemCheckInterval     string `json:"mem_check_interval"`
-	ProcmemHighWatermark string `json:"procmem_high_watermark"`
-	SysmemHighWatermark  string `json:"sysmem_high_watermark"`
+	CpuCheckInterval     *string `json:"cpu_check_interval,omitempty"`
+	CpuHighWatermark     *string `json:"cpu_high_watermark,omitempty"`
+	CpuLowWatermark      *string `json:"cpu_low_watermark,omitempty"`
+	MemCheckInterval     *string `json:"mem_check_interval,omitempty"`
+	ProcmemHighWatermark *string `json:"procmem_high_watermark,omitempty"`
+	SysmemHighWatermark  *string `json:"sysmem_high_watermark,omitempty"`
 }
 
 type SysmonVm struct {
-	BusyDistPort         bool   `json:"busy_dist_port"`
-	BusyPort             bool   `json:"busy_port"`
-	LargeHeap            string `json:"large_heap"`
-	LongGc               string `json:"long_gc"`
-	LongSchedule         string `json:"long_schedule"`
-	ProcessCheckInterval string `json:"process_check_interval"`
-	ProcessHighWatermark string `json:"process_high_watermark"`
-	ProcessLowWatermark  string `json:"process_low_watermark"`
+	BusyDistPort         *bool   `json:"busy_dist_port,omitempty"`
+	BusyPort             *bool   `json:"busy_port,omitempty"`
+	LargeHeap            *string `json:"large_heap,omitempty"`
+	LongGc               *string `json:"long_gc,omitempty"`
+	LongSchedule         *string `json:"long_schedule,omitempty"`
+	ProcessCheckInterval *string `json:"process_check_interval,omitempty"`
+	ProcessHighWatermark *string `json:"process_high_watermark,omitempty"`
+	ProcessLowWatermark  *string `json:"process_low_watermark,omitempty"`
 }
 
 type GlobalZoneConfig struct {
@@ -46,55 +46,55 @@ type GlobalZoneConfig struct {
 }
 
 type FlappingDetect struct {
-	BanTime    string `json:"ban_time"`
-	Enable     bool   `json:"enable"`
-	MaxCount   int    `json:"max_count"`
-	WindowTime string `json:"window_time"`
+	BanTime    *string `json:"ban_time,omitempty"`
+	Enable     *bool   `json:"enable,omitempty"`
+	MaxCount   *int    `json:"max_count,omitempty"`
+	WindowTime *string `json:"window_time,omitempty"`
 }
 
 type ForceGc struct {
-	Bytes  string `json:"bytes"`
-	Count  int    `json:"count"`
-	Enable bool   `json:"enable"`
+	Bytes  *string `json:"bytes,omitempty"`
+	Count  *int    `json:"count,omitempty"`
+	Enable *bool   `json:"enable,omitempty"`
 }
 
 type ForceShutdown struct {
-	Enable         bool   `json:"enable"`
-	MaxHeapSize    string `json:"max_heap_size"`
-	MaxMailboxSize int    `json:"max_mailbox_size"`
+	Enable         *bool   `json:"enable,omitempty"`
+	MaxHeapSize    *string `json:"max_heap_size,omitempty"`
+	MaxMailboxSize *int    `json:"max_mailbox_size,omitempty"`
 }
 
 type Mqtt struct {
-	AwaitRelTimeout            string  `json:"await_rel_timeout"`
-	ExclusiveSubscription      bool    `json:"exclusive_subscription"`
-	IdleTimeout                string  `json:"idle_timeout"`
-	IgnoreLoopDeliver          bool    `json:"ignore_loop_deliver"`
-	KeepaliveMultiplier        float64 `json:"keepalive_multiplier"`
-	MaxAwaitingRel             int     `json:"max_awaiting_rel"`
-	MaxClientidLen             int     `json:"max_clientid_len"`
-	MaxInflight                int     `json:"max_inflight"`
-	MaxMqueueLen               int     `json:"max_mqueue_len"`
-	MaxPacketSize              string  `json:"max_packet_size"`
-	MaxQosAllowed              int     `json:"max_qos_allowed"`
-	MaxSubscriptions           string  `json:"max_subscriptions"`
-	MaxTopicAlias              int     `json:"max_topic_alias"`
-	MaxTopicLevels             int     `json:"max_topic_levels"`
-	MqueueDefaultPriority      string  `json:"mqueue_default_priority"`
-	MqueuePriorities           string  `json:"mqueue_priorities"`
-	MqueueStoreQos0            bool    `json:"mqueue_store_qos0"`
-	PeerCertAsClientid         string  `json:"peer_cert_as_clientid"`
-	PeerCertAsUsername         string  `json:"peer_cert_as_username"`
-	ResponseInformation        string  `json:"response_information"`
-	RetainAvailable            bool    `json:"retain_available"`
-	RetryInterval              string  `json:"retry_interval"`
-	ServerKeepalive            string  `json:"server_keepalive"`
-	SessionExpiryInterval      string  `json:"session_expiry_interval"`
-	SharedSubscription         bool    `json:"shared_subscription"`
-	SharedSubscriptionStrategy string  `json:"shared_subscription_strategy"`
-	StrictMode                 bool    `json:"strict_mode"`
-	UpgradeQos                 bool    `json:"upgrade_qos"`
-	UseUsernameAsClientid      bool    `json:"use_username_as_clientid"`
-	WildcardSubscription       bool    `json:"wildcard_subscription"`
+	AwaitRelTimeout            *string  `json:"await_rel_timeout,omitempty"`
+	ExclusiveSubscription      *bool    `json:"exclusive_subscription,omitempty"`
+	IdleTimeout                *string  `json:"idle_timeout,omitempty"`
+	IgnoreLoopDeliver          *bool    `json:"ignore_loop_deliver,omitempty"`
+	KeepaliveMultiplier        *float64 `json:"keepalive_multiplier,omitempty"`
+	MaxAwaitingRel             *int     `json:"max_awaiting_rel,omitempty"`
+	MaxClientidLen             *int     `json:"max_clientid_len,omitempty"`
+	MaxInflight                *int     `json:"max_inflight,omitempty"`
+	MaxMqueueLen               *int     `json:"max_mqueue_len,omitempty"`
+	MaxPacketSize              *string  `json:"max_packet_size,omitempty"`
+	MaxQosAllowed              *int     `json:"max_qos_allowed,omitempty"`
+	MaxSubscriptions           *string  `json:"max_subscriptions,omitempty"`
+	MaxTopicAlias              *int     `json:"max_topic_alias,omitempty"`
+	MaxTopicLevels             *int     `json:"max_topic_levels,omitempty"`
+	MqueueDefaultPriority      *string  `json:"mqueue_default_priority,omitempty"`
+	MqueuePriorities           *string  `json:"mqueue_priorities,omitempty"`
+	MqueueStoreQos0            *bool    `json:"mqueue_store_qos0,omitempty"`
+	PeerCertAsClientid         *string  `json:"peer_cert_as_clientid,omitempty"`
+	PeerCertAsUsername         *string  `json:"peer_cert_as_username,omitempty"`
+	ResponseInformation        *string  `json:"response_information,omitempty"`
+	RetainAvailable            *bool    `json:"retain_available,omitempty"`
+	RetryInterval              *string  `json:"retry_interval,omitempty"`
+	ServerKeepalive            *string  `json:"server_keepalive,omitempty"`
+	SessionExpiryInterval      *string  `json:"session_expiry_interval,omitempty"`
+	SharedSubscription         *bool    `json:"shared_subscription,omitempty"`
+	SharedSubscriptionStrategy *string  `json:"shared_subscription_strategy,omitempty"`
+	StrictMode                 *bool    `json:"strict_mode,omitempty"`
+	UpgradeQos                 *bool    `json:"upgrade_qos,omitempty"`
+	UseUsernameAsClientid      *bool    `json:"use_username_as_clientid,omitempty"`
+	WildcardSubscription       *bool    `json:"wildcard_subscription,omitempty"`
 }
 
 type AlarmConfig struct {

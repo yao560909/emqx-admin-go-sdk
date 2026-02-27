@@ -52,8 +52,8 @@ type AddRuleReq struct {
 }
 
 type AddRuleReqBody struct {
-	Username string  `json:"username"`
-	Rules    []*Rule `json:"rules"`
+	Username *string  `json:"username,omitempty"`
+	Rules    []*Rule `json:"rules,omitempty"`
 }
 
 type AddRuleReqBuilder struct {
@@ -71,7 +71,7 @@ func NewAddRuleReqBuilder() *AddRuleReqBuilder {
 }
 
 func (b *AddRuleReqBuilder) Username(username string) *AddRuleReqBuilder {
-	b.apiReq.Body.(*AddRuleReqBody).Username = username
+	b.apiReq.Body.(*AddRuleReqBody).Username = &username
 	return b
 }
 
@@ -141,8 +141,8 @@ type AddRuleForClientsReq struct {
 }
 
 type AddRuleForClientsReqBody struct {
-	ClientId string  `json:"clientid"`
-	Rules    []*Rule `json:"rules"`
+	ClientId *string  `json:"clientid,omitempty"`
+	Rules    []*Rule `json:"rules,omitempty"`
 }
 
 type AddRuleForClientsReqBuilder struct {
@@ -160,7 +160,7 @@ func NewAddRuleForClientsReqBuilder() *AddRuleForClientsReqBuilder {
 }
 
 func (b *AddRuleForClientsReqBuilder) ClientId(clientId string) *AddRuleForClientsReqBuilder {
-	b.apiReq.Body.(*AddRuleForClientsReqBody).ClientId = clientId
+	b.apiReq.Body.(*AddRuleForClientsReqBody).ClientId = &clientId
 	return b
 }
 
@@ -219,7 +219,7 @@ type SetRuleForClientReq struct {
 }
 
 type SetRuleForClientReqBody struct {
-	Rules []*Rule `json:"rules"`
+	Rules []*Rule `json:"rules,omitempty"`
 }
 
 type SetRuleForClientReqBuilder struct {
@@ -393,8 +393,8 @@ type SetRuleForUserReq struct {
 }
 
 type SetRuleForUserReqBody struct {
-	Username string  `json:"username"`
-	Rules    []*Rule `json:"rules"`
+	Username *string  `json:"username,omitempty"`
+	Rules    []*Rule `json:"rules,omitempty"`
 }
 
 type SetRuleForUserReqBuilder struct {
@@ -412,7 +412,7 @@ func NewSetRuleForUserReqBuilder() *SetRuleForUserReqBuilder {
 
 func (b *SetRuleForUserReqBuilder) Username(username string) *SetRuleForUserReqBuilder {
 	b.apiReq.PathParams.Set("username", username)
-	b.apiReq.Body.(*SetRuleForUserReqBody).Username = username
+	b.apiReq.Body.(*SetRuleForUserReqBody).Username = &username
 	return b
 }
 
@@ -555,7 +555,7 @@ type SetRulesForAllReq struct {
 }
 
 type SetRulesForAllReqBody struct {
-	Rules []*Rule `json:"rules"`
+	Rules []*Rule `json:"rules,omitempty"`
 }
 
 type SetRulesForAllResp struct {
@@ -593,7 +593,7 @@ type MoveAuthorizationSourceReq struct {
 }
 
 type MoveAuthorizationSourceReqBody struct {
-	Position string `json:"position"`
+	Position *string `json:"position,omitempty"`
 }
 
 type MoveAuthorizationSourceReqBuilder struct {
@@ -621,7 +621,7 @@ func (b *MoveAuthorizationSourceReqBuilder) Type(sourceType string) *MoveAuthori
 }
 
 func (b *MoveAuthorizationSourceReqBuilder) Position(position string) *MoveAuthorizationSourceReqBuilder {
-	b.apiReq.Body.(*MoveAuthorizationSourceReqBody).Position = position
+	b.apiReq.Body.(*MoveAuthorizationSourceReqBody).Position = &position
 	return b
 }
 
@@ -746,9 +746,9 @@ type GetAuthorizationSettingsReq struct {
 }
 
 type Cache struct {
-	Enable  bool   `json:"enable"`
-	MaxSize string `json:"max_size"`
-	Ttl     string `json:"ttl"`
+	Enable  *bool   `json:"enable,omitempty"`
+	MaxSize *string `json:"max_size,omitempty"`
+	Ttl     *string `json:"ttl,omitempty"`
 }
 
 type GetAuthorizationSettingsResp struct {
@@ -787,9 +787,9 @@ type UpdateAuthorizationSettingsReq struct {
 }
 
 type UpdateAuthorizationSettingsReqBody struct {
-	Cache      *Cache `json:"cache"`
-	DenyAction string `json:"deny_action"`
-	NoMatch    string `json:"no_match"`
+	Cache      *Cache `json:"cache,omitempty"`
+	DenyAction *string `json:"deny_action,omitempty"`
+	NoMatch    *string `json:"no_match,omitempty"`
 }
 
 type UpdateAuthorizationSettingsResp struct {
@@ -818,7 +818,7 @@ Default: true
 Enable or disable the authorization cache.
 */
 func (b *UpdateAuthorizationSettingsReqBuilder) CacheEnable(enable bool) *UpdateAuthorizationSettingsReqBuilder {
-	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).Cache.Enable = enable
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).Cache.Enable = &enable
 	return b
 }
 
@@ -828,7 +828,7 @@ Default: 32
 Maximum number of cached items.
 */
 func (b *UpdateAuthorizationSettingsReqBuilder) CacheMaxSize(maxSize string) *UpdateAuthorizationSettingsReqBuilder {
-	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).Cache.MaxSize = maxSize
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).Cache.MaxSize = &maxSize
 	return b
 }
 
@@ -838,7 +838,7 @@ Default: "1m"
 Time to live for the cached data.
 */
 func (b *UpdateAuthorizationSettingsReqBuilder) CacheTtl(ttl string) *UpdateAuthorizationSettingsReqBuilder {
-	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).Cache.Ttl = ttl
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).Cache.Ttl = &ttl
 	return b
 }
 
@@ -849,7 +849,7 @@ Enum: "ignore" "disconnect"
 The action when the authorization check rejects an operation.
 */
 func (b *UpdateAuthorizationSettingsReqBuilder) DenyAction(denyAction string) *UpdateAuthorizationSettingsReqBuilder {
-	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).DenyAction = denyAction
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).DenyAction = &denyAction
 	return b
 }
 
@@ -863,7 +863,7 @@ sources such as built_in_database, an HTTP API, or a query against PostgreSQL.
 Find more details in 'authorization.sources' config.
 */
 func (b *UpdateAuthorizationSettingsReqBuilder) NoMatch(noMatch string) *UpdateAuthorizationSettingsReqBuilder {
-	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).NoMatch = noMatch
+	b.apiReq.Body.(*UpdateAuthorizationSettingsReqBody).NoMatch = &noMatch
 	return b
 }
 

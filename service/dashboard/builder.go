@@ -55,8 +55,8 @@ type LoginReq struct {
 }
 
 type LoginReqBody struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username *string `json:"username,omitempty"`
+	Password *string `json:"password,omitempty"`
 }
 
 type LoginReqBuilder struct {
@@ -75,12 +75,12 @@ func NewLoginReqBuilder() *LoginReqBuilder {
 }
 
 func (b *LoginReqBuilder) Username(username string) *LoginReqBuilder {
-	b.apiReq.Body.(*LoginReqBody).Username = username
+	b.apiReq.Body.(*LoginReqBody).Username = &username
 	return b
 }
 
 func (b *LoginReqBuilder) Password(password string) *LoginReqBuilder {
-	b.apiReq.Body.(*LoginReqBody).Password = password
+	b.apiReq.Body.(*LoginReqBody).Password = &password
 	return b
 }
 
@@ -101,9 +101,9 @@ type CreateUserReq struct {
 }
 
 type CreateUserReqBody struct {
-	Username    string `json:"username"`
-	Password    string `json:"password"`
-	Description string `json:"description"`
+	Username    *string `json:"username,omitempty"`
+	Password    *string `json:"password,omitempty"`
+	Description *string `json:"description,omitempty"`
 }
 
 type CreateUserReqBuilder struct {
@@ -122,17 +122,17 @@ func NewCreateUserReqBuilder() *CreateUserReqBuilder {
 }
 
 func (b *CreateUserReqBuilder) Username(username string) *CreateUserReqBuilder {
-	b.apiReq.Body.(*CreateUserReqBody).Username = username
+	b.apiReq.Body.(*CreateUserReqBody).Username = &username
 	return b
 }
 
 func (b *CreateUserReqBuilder) Password(password string) *CreateUserReqBuilder {
-	b.apiReq.Body.(*CreateUserReqBody).Password = password
+	b.apiReq.Body.(*CreateUserReqBody).Password = &password
 	return b
 }
 
 func (b *CreateUserReqBuilder) Description(description string) *CreateUserReqBuilder {
-	b.apiReq.Body.(*CreateUserReqBody).Description = description
+	b.apiReq.Body.(*CreateUserReqBody).Description = &description
 	return b
 }
 
@@ -168,7 +168,7 @@ func NewUpdateUserReqBuilder() *UpdateUserReqBuilder {
 }
 
 type UpdateUserReqBody struct {
-	Description string `json:"description"`
+	Description *string `json:"description,omitempty"`
 }
 
 func (b *UpdateUserReqBuilder) Build() *UpdateUserReq {
@@ -178,7 +178,7 @@ func (b *UpdateUserReqBuilder) Build() *UpdateUserReq {
 }
 
 func (b *UpdateUserReqBuilder) Description(description string) *UpdateUserReqBuilder {
-	b.apiReq.Body.(*UpdateUserReqBody).Description = description
+	b.apiReq.Body.(*UpdateUserReqBody).Description = &description
 	return b
 }
 
@@ -227,8 +227,8 @@ type ChangePasswordReq struct {
 }
 
 type ChangePasswordReqBody struct {
-	OldPwd string `json:"old_pwd"`
-	NewPwd string `json:"new_pwd"`
+	OldPwd *string `json:"old_pwd,omitempty"`
+	NewPwd *string `json:"new_pwd,omitempty"`
 }
 
 type ChangePasswordReqBuilder struct {
@@ -252,12 +252,12 @@ func (b *ChangePasswordReqBuilder) Username(username string) *ChangePasswordReqB
 }
 
 func (b *ChangePasswordReqBuilder) OldPwd(oldPwd string) *ChangePasswordReqBuilder {
-	b.apiReq.Body.(*ChangePasswordReqBody).OldPwd = oldPwd
+	b.apiReq.Body.(*ChangePasswordReqBody).OldPwd = &oldPwd
 	return b
 }
 
 func (b *ChangePasswordReqBuilder) NewPwd(newPwd string) *ChangePasswordReqBuilder {
-	b.apiReq.Body.(*ChangePasswordReqBody).NewPwd = newPwd
+	b.apiReq.Body.(*ChangePasswordReqBody).NewPwd = &newPwd
 	return b
 }
 
@@ -277,7 +277,7 @@ type LogoutReq struct {
 }
 
 type LogoutReqBody struct {
-	Username string `json:"username"`
+	Username *string `json:"username,omitempty"`
 }
 
 type LogoutReqBuilder struct {
@@ -296,7 +296,7 @@ func NewLogoutReqBuilder() *LogoutReqBuilder {
 }
 
 func (b *LogoutReqBuilder) username(username string) *LogoutReqBuilder {
-	b.apiReq.Body.(*LogoutReqBody).Username = username
+	b.apiReq.Body.(*LogoutReqBody).Username = &username
 	return b
 }
 

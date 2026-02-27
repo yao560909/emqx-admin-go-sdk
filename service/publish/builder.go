@@ -13,21 +13,21 @@ type PublishReqBuilder struct {
 }
 
 type PublishReqBody struct {
-	PayloadEncoding string     `json:"payload_encoding"`
-	Topic           string     `json:"topic"`
-	Qos             string     `json:"qos"`
-	Clientid        string     `json:"clientid"`
-	Payload         string     `json:"payload"`
-	Retain          bool       `json:"retain"`
-	Properties      Properties `json:"properties"`
+	PayloadEncoding *string     `json:"payload_encoding,omitempty"`
+	Topic           *string     `json:"topic,omitempty"`
+	Qos             *string     `json:"qos,omitempty"`
+	Clientid        *string     `json:"clientid,omitempty"`
+	Payload         *string     `json:"payload,omitempty"`
+	Retain          *bool       `json:"retain,omitempty"`
+	Properties      *Properties `json:"properties,omitempty"`
 }
 type Properties struct {
-	PayloadFormatIndicator string            `json:"payload_format_indicator"`
-	MessageExpiryInterval  string            `json:"message_expiry_interval"`
-	ResponseTopic          string            `json:"response_topic"`
-	CorrelationData        string            `json:"correlation_data"`
-	UserProperties         map[string]string `json:"user_properties"`
-	ContentType            string            `json:"content_type"`
+	PayloadFormatIndicator *string            `json:"payload_format_indicator,omitempty"`
+	MessageExpiryInterval  *string            `json:"message_expiry_interval,omitempty"`
+	ResponseTopic          *string            `json:"response_topic,omitempty"`
+	CorrelationData        *string            `json:"correlation_data,omitempty"`
+	UserProperties         map[string]string `json:"user_properties,omitempty"`
+	ContentType            *string            `json:"content_type,omitempty"`
 }
 
 // NewPublishReqBuilder creates a new PublishReqBuilder
@@ -43,40 +43,40 @@ func NewPublishReqBuilder() *PublishReqBuilder {
 
 // Topic sets the topic for the publish request
 func (b *PublishReqBuilder) Topic(topic string) *PublishReqBuilder {
-	b.apiReq.Body.(*PublishReqBody).Topic = topic
+	b.apiReq.Body.(*PublishReqBody).Topic = &topic
 	return b
 }
 
 // Payload sets the payload for the publish request
 func (b *PublishReqBuilder) Payload(payload string) *PublishReqBuilder {
-	b.apiReq.Body.(*PublishReqBody).Payload = payload
+	b.apiReq.Body.(*PublishReqBody).Payload = &payload
 	return b
 }
 
 // QoS sets the QoS level for the publish request
 func (b *PublishReqBuilder) QoS(qos string) *PublishReqBuilder {
-	b.apiReq.Body.(*PublishReqBody).Qos = qos
+	b.apiReq.Body.(*PublishReqBody).Qos = &qos
 	return b
 }
 
 // Retain sets the retain flag for the publish request
 func (b *PublishReqBuilder) Retain(retain bool) *PublishReqBuilder {
-	b.apiReq.Body.(*PublishReqBody).Retain = retain
+	b.apiReq.Body.(*PublishReqBody).Retain = &retain
 	return b
 }
 
 // ClientID sets the client ID for the publish request
 func (b *PublishReqBuilder) ClientID(clientId string) *PublishReqBuilder {
-	b.apiReq.Body.(*PublishReqBody).Clientid = clientId
+	b.apiReq.Body.(*PublishReqBody).Clientid = &clientId
 	return b
 }
 
 func (b *PublishReqBuilder) PayloadEncoding(payloadEncoding string) *PublishReqBuilder {
-	b.apiReq.Body.(*PublishReqBody).PayloadEncoding = payloadEncoding
+	b.apiReq.Body.(*PublishReqBody).PayloadEncoding = &payloadEncoding
 	return b
 }
 func (b *PublishReqBuilder) Properties(properties Properties) *PublishReqBuilder {
-	b.apiReq.Body.(*PublishReqBody).Properties = properties
+	b.apiReq.Body.(*PublishReqBody).Properties = &properties
 	return b
 }
 
