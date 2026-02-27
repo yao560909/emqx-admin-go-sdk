@@ -70,3 +70,15 @@ type Subscription struct {
 	Rh       int    `json:"rh"`
 	Topic    string `json:"topic"`
 }
+
+type AuthzCache struct {
+	Access      *Access `json:"access"`
+	Result      string  `json:"result"`
+	Topic       string  `json:"topic"`
+	UpdatedTime int64   `json:"updated_time"`
+}
+
+type Access struct {
+	ActionType string `json:"action_type"`
+	Qos        int    `json:"qos"`
+}

@@ -289,3 +289,80 @@ type GetClientResp struct {
 	core.CodeError
 	Client
 }
+
+type GetClientAuthzCacheReq struct {
+	apiReq *core.APIReq
+}
+
+type GetClientAuthzCacheReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetClientAuthzCacheReqBuilder() *GetClientAuthzCacheReqBuilder {
+	builder := &GetClientAuthzCacheReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetClientAuthzCacheReqBuilder) Clientid(clientid string) *GetClientAuthzCacheReqBuilder {
+	b.apiReq.PathParams.Set("clientid", clientid)
+	return b
+}
+
+func (b *GetClientAuthzCacheReqBuilder) Build() *GetClientAuthzCacheReq {
+	req := &GetClientAuthzCacheReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetClientAuthzCacheResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Data []*AuthzCache `json:"-"`
+}
+
+func (resp *GetClientAuthzCacheResp) UnmarshalJSON(b []byte) error {
+	var authzCaches []*AuthzCache
+	if err := json.Unmarshal(b, &authzCaches); err == nil {
+		resp.Data = authzCaches
+		return nil
+	}
+	type alias GetClientAuthzCacheResp
+	return json.Unmarshal(b, (*alias)(resp))
+}
+
+type CleanAuthzCacheReq struct {
+	apiReq *core.APIReq
+}
+
+type CleanAuthzCacheReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewCleanAuthzCacheReqBuilder() *CleanAuthzCacheReqBuilder {
+	builder := &CleanAuthzCacheReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *CleanAuthzCacheReqBuilder) Clientid(clientid string) *CleanAuthzCacheReqBuilder {
+	b.apiReq.PathParams.Set("clientid", clientid)
+	return b
+}
+
+func (b *CleanAuthzCacheReqBuilder) Build() *CleanAuthzCacheReq {
+	req := &CleanAuthzCacheReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type CleanAuthzCacheResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}

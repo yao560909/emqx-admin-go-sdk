@@ -9,10 +9,11 @@ import (
 )
 
 const (
-	ApiPathClients                        = "/api/v5/clients"
-	ApiPathClients_Clientid               = "/api/v5/clients/{clientid}"
-	ApiPathClientsKickoutBulk             = "/api/v5/clients/kickout/bulk"
-	ApiPathClients_Clientid_Subscriptions = "/api/v5/clients/{clientid}/subscriptions"
+	ApiPathClients                             = "/api/v5/clients"
+	ApiPathClients_Clientid                    = "/api/v5/clients/{clientid}"
+	ApiPathClientsKickoutBulk                  = "/api/v5/clients/kickout/bulk"
+	ApiPathClients_Clientid_Subscriptions      = "/api/v5/clients/{clientid}/subscriptions"
+	ApiPathClients_Clientid_AuthorizationCache = "/api/v5/clients/{clientid}/authorization/cache"
 )
 
 type ClientsService struct {
@@ -124,6 +125,48 @@ func (s *ClientsService) GetClient(ctx context.Context, req *GetClientReq, optio
 	if err != nil {
 		s.config.Logger.Error(ctx, fmt.Sprintf("[GetClient] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
+	}
+	return resp, nil
+}
+
+// Get client authz cache in the cluster.
+func (s *ClientsService) GetClientAuthzCache(ctx context.Context, req *GetClientAuthzCacheReq, options ...core.RequestOptionFunc) (*GetClientAuthzCacheResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathClients_Clientid_AuthorizationCache
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetClientAuthzCache] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetClientAuthzCacheResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetClientAuthzCache] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+	return resp, nil
+}
+
+// Clean client authz cache in the cluster.
+func (s *ClientsService) CleanAuthzCache(ctx context.Context, req *CleanAuthzCacheReq, options ...core.RequestOptionFunc) (*CleanAuthzCacheResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathClients_Clientid_AuthorizationCache
+	apiReq.HttpMethod = "DELETE"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[CleanAuthzCache] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &CleanAuthzCacheResp{APIResp: apiResp}
+	if len(apiResp.RawBody) > 0 {
+		err = json.Unmarshal(apiResp.RawBody, resp)
+		if err != nil {
+			s.config.Logger.Error(ctx, fmt.Sprintf("[CleanAuthzCache] fail to unmarshal response body, error: %v", err.Error()))
+			return nil, err
+		}
 	}
 	return resp, nil
 }
