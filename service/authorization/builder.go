@@ -65,6 +65,7 @@ func NewAddRuleReqBuilder() *AddRuleReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &AddRuleReqBody{},
 	}
 	return builder
 }
@@ -153,6 +154,7 @@ func NewAddRuleForClientsReqBuilder() *AddRuleForClientsReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &AddRuleForClientsReqBody{},
 	}
 	return builder
 }
@@ -603,6 +605,7 @@ func NewMoveAuthorizationSourceReqBuilder() *MoveAuthorizationSourceReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &MoveAuthorizationSourceReqBody{},
 	}
 	return builder
 }
@@ -804,6 +807,7 @@ func NewUpdateAuthorizationSettingsReqBuilder() *UpdateAuthorizationSettingsReqB
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        UpdateAuthorizationSettingsReqBody{},
 	}
 	return builder
 }

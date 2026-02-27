@@ -69,6 +69,7 @@ func NewLoginReqBuilder() *LoginReqBuilder {
 		SkipAuth:    true,
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &LoginReqBody{},
 	}
 	return builder
 }
@@ -115,6 +116,7 @@ func NewCreateUserReqBuilder() *CreateUserReqBuilder {
 		SkipAuth:    true,
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &CreateUserReqBody{},
 	}
 	return builder
 }
@@ -160,6 +162,7 @@ func NewUpdateUserReqBuilder() *UpdateUserReqBuilder {
 		SkipAuth:    true,
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &UpdateUserReqBody{},
 	}
 	return builder
 }
@@ -238,6 +241,7 @@ func NewChangePasswordReqBuilder() *ChangePasswordReqBuilder {
 		SkipAuth:    true,
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &ChangePasswordReqBody{},
 	}
 	return builder
 }
@@ -286,6 +290,7 @@ func NewLogoutReqBuilder() *LogoutReqBuilder {
 		SkipAuth:    true,
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &LogoutReqBody{},
 	}
 	return builder
 }

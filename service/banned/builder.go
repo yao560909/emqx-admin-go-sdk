@@ -25,6 +25,7 @@ func NewBannedReqBuilder() *BannedReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &BannedReqBody{},
 	}
 	return builder
 }

@@ -65,6 +65,7 @@ func NewUpdatePrometheusConfigReqBuilder() *UpdatePrometheusConfigReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &UpdatePrometheusConfigReqBody{},
 	}
 	return builder
 }
@@ -268,6 +269,7 @@ func NewUpdateOpenTelemetryConfigReqBuilder() *UpdateOpenTelemetryConfigReqBuild
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &UpdateOpenTelemetryConfigReqBody{},
 	}
 	return builder
 }

@@ -36,6 +36,7 @@ func NewPublishReqBuilder() *PublishReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &PublishReqBody{},
 	}
 	return builder
 }

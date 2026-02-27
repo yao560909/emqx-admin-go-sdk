@@ -140,6 +140,7 @@ func NewCreateUsersForAuthenticatorReqBuilder() *CreateUsersForAuthenticatorReqB
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &UserBody{},
 	}
 	return builder
 }
@@ -299,6 +300,7 @@ func NewUpdateUserInAuthenticatorReqBuilder() *UpdateUserInAuthenticatorReqBuild
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
+		Body:        &UserBody{},
 	}
 	return builder
 }
