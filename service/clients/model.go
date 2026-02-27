@@ -60,3 +60,13 @@ type Meta struct {
 	Limit   int  `json:"limit"`
 	Page    int  `json:"page"`
 }
+
+type Subscription struct {
+	Clientid string `json:"clientid"`
+	Nl       int    `json:"nl"`
+	Node     string `json:"node"`
+	Qos      int    `json:"qos"`
+	Rap      int    `json:"rap"`
+	Rh       int    `json:"rh"`
+	Topic    string `json:"topic"`
+}

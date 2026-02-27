@@ -1,6 +1,8 @@
 package clients
 
 import (
+	"encoding/json"
+
 	"github.com/yao560909/emqx-admin-go-sdk/core"
 )
 
@@ -208,4 +210,82 @@ func (b *BatchKickOutClientReqBuilder) ClientIdArray(clientIdArray []string) *Ba
 type BatchKickOutClientResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
+}
+
+type GetClientSubscriptionsReq struct {
+	apiReq *core.APIReq
+}
+
+type GetClientSubscriptionsReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetClientSubscriptionsReqBuilder() *GetClientSubscriptionsReqBuilder {
+	builder := &GetClientSubscriptionsReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetClientSubscriptionsReqBuilder) Clientid(clientid string) *GetClientSubscriptionsReqBuilder {
+	b.apiReq.PathParams.Set("clientid", clientid)
+	return b
+}
+
+func (b *GetClientSubscriptionsReqBuilder) Build() *GetClientSubscriptionsReq {
+	req := &GetClientSubscriptionsReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetClientSubscriptionsResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Data []*Subscription `json:"-"`
+}
+
+func (resp *GetClientSubscriptionsResp) UnmarshalJSON(b []byte) error {
+	var subscriptions []*Subscription
+	if err := json.Unmarshal(b, &subscriptions); err == nil {
+		resp.Data = subscriptions
+		return nil
+	}
+	type alias GetClientSubscriptionsResp
+	return json.Unmarshal(b, (*alias)(resp))
+}
+
+type GetClientReq struct {
+	apiReq *core.APIReq
+}
+
+type GetClientReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetClientReqBuilder() *GetClientReqBuilder {
+	builder := &GetClientReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetClientReqBuilder) Clientid(clientid string) *GetClientReqBuilder {
+	b.apiReq.PathParams.Set("clientid", clientid)
+	return b
+}
+
+func (b *GetClientReqBuilder) Build() *GetClientReq {
+	req := &GetClientReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetClientResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Client
 }

@@ -9,9 +9,10 @@ import (
 )
 
 const (
-	ApiPathClients            = "/api/v5/clients"
-	ApiPathClients_Clientid   = "/api/v5/clients/{clientid}"
-	ApiPathClientsKickoutBulk = "/api/v5/clients/kickout/bulk"
+	ApiPathClients                        = "/api/v5/clients"
+	ApiPathClients_Clientid               = "/api/v5/clients/{clientid}"
+	ApiPathClientsKickoutBulk             = "/api/v5/clients/kickout/bulk"
+	ApiPathClients_Clientid_Subscriptions = "/api/v5/clients/{clientid}/subscriptions"
 )
 
 type ClientsService struct {
@@ -82,6 +83,47 @@ func (s *ClientsService) BatchKickOutClient(ctx context.Context, req *BatchKickO
 			s.config.Logger.Error(ctx, fmt.Sprintf("[BatchKickOutClient] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Get client subscriptions
+func (s *ClientsService) GetClientSubscriptions(ctx context.Context, req *GetClientSubscriptionsReq, options ...core.RequestOptionFunc) (*GetClientSubscriptionsResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathClients_Clientid_Subscriptions
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetClientSubscriptions] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetClientSubscriptionsResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetClientSubscriptions] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
+	}
+
+	return resp, nil
+}
+
+// Get clients info by client ID
+func (s *ClientsService) GetClient(ctx context.Context, req *GetClientReq, options ...core.RequestOptionFunc) (*GetClientResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathClients_Clientid
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetClient] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetClientResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetClient] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }
