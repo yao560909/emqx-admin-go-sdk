@@ -455,3 +455,47 @@ type SubscribeTopicResp struct {
 	core.CodeError
 	Subscription
 }
+
+// --------------------------------
+type UnsubscribeTopicReq struct {
+	apiReq *core.APIReq
+}
+
+type UnsubscribeTopicReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+type UnsubscribeTopicReqBody struct {
+	Topic *string `json:"topic,omitempty"`
+}
+
+func NewUnsubscribeTopicReqBuilder() *UnsubscribeTopicReqBuilder {
+	builder := &UnsubscribeTopicReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+		Body:        &UnsubscribeTopicReqBody{},
+	}
+	return builder
+}
+
+func (b *UnsubscribeTopicReqBuilder) Clientid(clientid string) *UnsubscribeTopicReqBuilder {
+	b.apiReq.PathParams.Set("clientid", clientid)
+	return b
+}
+
+func (b *UnsubscribeTopicReqBuilder) Topic(topic string) *UnsubscribeTopicReqBuilder {
+	b.apiReq.Body.(*UnsubscribeTopicReqBody).Topic = &topic
+	return b
+}
+
+func (b *UnsubscribeTopicReqBuilder) Build() *UnsubscribeTopicReq {
+	req := &UnsubscribeTopicReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type UnsubscribeTopicResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}
