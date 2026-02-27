@@ -7,9 +7,14 @@ import (
 	"github.com/yao560909/emqx-admin-go-sdk/service/authentication"
 	"github.com/yao560909/emqx-admin-go-sdk/service/banned"
 	"github.com/yao560909/emqx-admin-go-sdk/service/clients"
+	"github.com/yao560909/emqx-admin-go-sdk/service/cluster"
 	"github.com/yao560909/emqx-admin-go-sdk/service/configs"
+	"github.com/yao560909/emqx-admin-go-sdk/service/dashboard"
+	"github.com/yao560909/emqx-admin-go-sdk/service/listeners"
 	"github.com/yao560909/emqx-admin-go-sdk/service/metrics"
+	"github.com/yao560909/emqx-admin-go-sdk/service/monitor"
 	"github.com/yao560909/emqx-admin-go-sdk/service/nodes"
+	"github.com/yao560909/emqx-admin-go-sdk/service/publish"
 	"github.com/yao560909/emqx-admin-go-sdk/service/subscriptions"
 	"github.com/yao560909/emqx-admin-go-sdk/service/topics"
 )
@@ -50,6 +55,11 @@ type Client struct {
 	Alarms         *alarms.AlarmsService
 	Subscriptions  *subscriptions.SubscriptionsService
 	APIKeys        *apikeys.APIKeysService
+	Cluster        *cluster.ClusterService
+	Dashboard      *dashboard.DashboardService
+	Listeners      *listeners.ListenersService
+	Monitor        *monitor.MonitorService
+	Publish        *publish.PublishService
 }
 
 func NewClient(edition Edition, appId, appSecret, target, scheme string, options ...ClientOptionFunc) *Client {
@@ -88,6 +98,11 @@ func initService(client *Client, config *core.Config) {
 		client.Alarms = alarms.NewService(config)
 		client.Subscriptions = subscriptions.NewService(config)
 		client.APIKeys = apikeys.NewService(config)
+		client.Cluster = cluster.NewService(config)
+		client.Dashboard = dashboard.NewService(config)
+		client.Listeners = listeners.NewService(config)
+		client.Monitor = monitor.NewService(config)
+		client.Publish = publish.NewService(config)
 	case Enterprise:
 		client.Nodes = nodes.NewService(config)
 		client.Clients = clients.NewService(config)
@@ -100,6 +115,11 @@ func initService(client *Client, config *core.Config) {
 		client.Alarms = alarms.NewService(config)
 		client.Subscriptions = subscriptions.NewService(config)
 		client.APIKeys = apikeys.NewService(config)
+		client.Cluster = cluster.NewService(config)
+		client.Dashboard = dashboard.NewService(config)
+		client.Listeners = listeners.NewService(config)
+		client.Monitor = monitor.NewService(config)
+		client.Publish = publish.NewService(config)
 	default:
 	}
 }
