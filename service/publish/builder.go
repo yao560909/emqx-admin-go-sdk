@@ -22,12 +22,12 @@ type PublishReqBody struct {
 	Properties      *Properties `json:"properties,omitempty"`
 }
 type Properties struct {
-	PayloadFormatIndicator *string            `json:"payload_format_indicator,omitempty"`
-	MessageExpiryInterval  *string            `json:"message_expiry_interval,omitempty"`
-	ResponseTopic          *string            `json:"response_topic,omitempty"`
-	CorrelationData        *string            `json:"correlation_data,omitempty"`
+	PayloadFormatIndicator *string           `json:"payload_format_indicator,omitempty"`
+	MessageExpiryInterval  *string           `json:"message_expiry_interval,omitempty"`
+	ResponseTopic          *string           `json:"response_topic,omitempty"`
+	CorrelationData        *string           `json:"correlation_data,omitempty"`
 	UserProperties         map[string]string `json:"user_properties,omitempty"`
-	ContentType            *string            `json:"content_type,omitempty"`
+	ContentType            *string           `json:"content_type,omitempty"`
 }
 
 // NewPublishReqBuilder creates a new PublishReqBuilder

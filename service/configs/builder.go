@@ -37,8 +37,8 @@ type UpdateSysTopicsConfigReq struct {
 
 type UpdateSysTopicsConfigReqBody struct {
 	SysEventMessages     *SysEventMessages `json:"sys_event_messages,omitempty"`
-	SysHeartbeatInterval *string            `json:"sys_heartbeat_interval,omitempty"`
-	SysMsgInterval       *string            `json:"sys_msg_interval,omitempty"`
+	SysHeartbeatInterval *string           `json:"sys_heartbeat_interval,omitempty"`
+	SysMsgInterval       *string           `json:"sys_msg_interval,omitempty"`
 }
 
 type UpdateSysTopicsConfigResp struct {
@@ -277,8 +277,8 @@ type UpdateAlarmConfigReq struct {
 
 type UpdateAlarmConfigReqBody struct {
 	Actions        []string `json:"actions,omitempty"`
-	SizeLimit      *int       `json:"size_limit,omitempty"`
-	ValidityPeriod *string    `json:"validity_period,omitempty"`
+	SizeLimit      *int     `json:"size_limit,omitempty"`
+	ValidityPeriod *string  `json:"validity_period,omitempty"`
 }
 
 type UpdateAlarmConfigResp struct {

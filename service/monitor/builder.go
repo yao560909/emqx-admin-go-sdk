@@ -37,17 +37,17 @@ type UpdatePrometheusConfigReq struct {
 }
 
 type UpdatePrometheusConfigReqBody struct {
-	PushGatewayServer     *string            `json:"push_gateway_server,omitempty"`
-	Interval              *string            `json:"interval,omitempty"`
+	PushGatewayServer     *string           `json:"push_gateway_server,omitempty"`
+	Interval              *string           `json:"interval,omitempty"`
 	Headers               map[string]string `json:"headers,omitempty"`
-	JobName               *string            `json:"job_name,omitempty"`
-	Enable                *bool              `json:"enable,omitempty"`
-	VmDistCollector       *string            `json:"vm_dist_collector,omitempty"`
-	MnesiaCollector       *string            `json:"mnesia_collector,omitempty"`
-	VmStatisticsCollector *string            `json:"vm_statistics_collector,omitempty"`
-	VmSystemInfoCollector *string            `json:"vm_system_info_collector,omitempty"`
-	VmMemoryCollector     *string            `json:"vm_memory_collector,omitempty"`
-	VmMsaccCollector      *string            `json:"vm_msacc_collector,omitempty"`
+	JobName               *string           `json:"job_name,omitempty"`
+	Enable                *bool             `json:"enable,omitempty"`
+	VmDistCollector       *string           `json:"vm_dist_collector,omitempty"`
+	MnesiaCollector       *string           `json:"mnesia_collector,omitempty"`
+	VmStatisticsCollector *string           `json:"vm_statistics_collector,omitempty"`
+	VmSystemInfoCollector *string           `json:"vm_system_info_collector,omitempty"`
+	VmMemoryCollector     *string           `json:"vm_memory_collector,omitempty"`
+	VmMsaccCollector      *string           `json:"vm_msacc_collector,omitempty"`
 }
 
 type UpdatePrometheusConfigResp struct {
@@ -182,7 +182,7 @@ Enum: "enabled" "disabled"
 Deprecated since 5.4.0, use prometheus.collectors.vm_msacc instead
 */
 func (b *UpdatePrometheusConfigReqBuilder) VmMsaccCollector(vmMsaccCollector string) *UpdatePrometheusConfigReqBuilder {
-	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).VmMsaccCollector =&vmMsaccCollector
+	b.apiReq.Body.(*UpdatePrometheusConfigReqBody).VmMsaccCollector = &vmMsaccCollector
 	return b
 }
 
@@ -244,13 +244,13 @@ type Logs struct {
 }
 
 type Traces struct {
-	Enable         *bool    `json:"enable,omitempty"`
-	ScheduledDelay *string  `json:"scheduled_delay,omitempty"`
+	Enable         *bool   `json:"enable,omitempty"`
+	ScheduledDelay *string `json:"scheduled_delay,omitempty"`
 	Filter         *Filter `json:"filter,omitempty"`
 }
 
 type Exporter struct {
-	Endpoint   *string      `json:"endpoint,omitempty"`
+	Endpoint   *string     `json:"endpoint,omitempty"`
 	SslOptions *SslOptions `json:"ssl_options,omitempty"`
 }
 

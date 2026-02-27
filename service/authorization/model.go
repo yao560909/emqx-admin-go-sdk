@@ -4,7 +4,7 @@ type Rule struct {
 	Action     *string `json:"action,omitempty"`
 	Permission *string `json:"permission,omitempty"`
 	Topic      *string `json:"topic,omitempty"`
-	Qos        []int  `json:"qos,omitempty"`
+	Qos        []int   `json:"qos,omitempty"`
 	Retain     *string `json:"retain,omitempty"`
 }
 

@@ -52,7 +52,7 @@ type AddRuleReq struct {
 }
 
 type AddRuleReqBody struct {
-	Username *string  `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
 	Rules    []*Rule `json:"rules,omitempty"`
 }
 
@@ -141,7 +141,7 @@ type AddRuleForClientsReq struct {
 }
 
 type AddRuleForClientsReqBody struct {
-	ClientId *string  `json:"clientid,omitempty"`
+	ClientId *string `json:"clientid,omitempty"`
 	Rules    []*Rule `json:"rules,omitempty"`
 }
 
@@ -393,7 +393,7 @@ type SetRuleForUserReq struct {
 }
 
 type SetRuleForUserReqBody struct {
-	Username *string  `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
 	Rules    []*Rule `json:"rules,omitempty"`
 }
 
@@ -787,7 +787,7 @@ type UpdateAuthorizationSettingsReq struct {
 }
 
 type UpdateAuthorizationSettingsReqBody struct {
-	Cache      *Cache `json:"cache,omitempty"`
+	Cache      *Cache  `json:"cache,omitempty"`
 	DenyAction *string `json:"deny_action,omitempty"`
 	NoMatch    *string `json:"no_match,omitempty"`
 }
