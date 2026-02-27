@@ -201,7 +201,7 @@ Example: limit=50
 Results per page(max 1000)
 */
 func (b *ListCurrentlyBannedReqBuilder) Limit(limit string) *ListCurrentlyBannedReqBuilder {
-	b.apiReq.PathParams.Set("limit", limit)
+	b.apiReq.QueryParams.Set("limit", limit)
 	return b
 }
 
@@ -212,7 +212,7 @@ Example: page=1
 Page number of the results to fetch.
 */
 func (b *ListCurrentlyBannedReqBuilder) Page(page string) *ListCurrentlyBannedReqBuilder {
-	b.apiReq.PathParams.Set("page", page)
+	b.apiReq.QueryParams.Set("page", page)
 	return b
 }
 
