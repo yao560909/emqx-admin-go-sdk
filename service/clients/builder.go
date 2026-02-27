@@ -366,3 +366,92 @@ type CleanAuthzCacheResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
 }
+
+// --------------------------------
+type SubscribeTopicReq struct {
+	apiReq *core.APIReq
+}
+
+type SubscribeTopicReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+type SubscribeTopicReqBody struct {
+	Topic *string `json:"topic,omitempty"`
+	Qos   *string `json:"qos,omitempty"`
+	Nl    *string `json:"nl,omitempty"`
+	Rap   *string `json:"rap,omitempty"`
+	Rh    *string `json:"rh,omitempty"`
+}
+
+func NewSubscribeTopicReqBuilder() *SubscribeTopicReqBuilder {
+	builder := &SubscribeTopicReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+		Body:        &SubscribeTopicReqBody{},
+	}
+	return builder
+}
+
+func (b *SubscribeTopicReqBuilder) Clientid(clientid string) *SubscribeTopicReqBuilder {
+	b.apiReq.PathParams.Set("clientid", clientid)
+	return b
+}
+
+func (b *SubscribeTopicReqBuilder) Topic(topic string) *SubscribeTopicReqBuilder {
+	b.apiReq.Body.(*SubscribeTopicReqBody).Topic = &topic
+	return b
+}
+
+/*
+*
+Default: 0
+QoS
+*/
+func (b *SubscribeTopicReqBuilder) Qos(qos string) *SubscribeTopicReqBuilder {
+	b.apiReq.Body.(*SubscribeTopicReqBody).Qos = &qos
+	return b
+}
+
+/*
+*
+Default: 0
+No Local
+*/
+func (b *SubscribeTopicReqBuilder) Nl(nl string) *SubscribeTopicReqBuilder {
+	b.apiReq.Body.(*SubscribeTopicReqBody).Nl = &nl
+	return b
+}
+
+/*
+*
+Default: 0
+Retain as Published
+*/
+func (b *SubscribeTopicReqBuilder) Rap(rap string) *SubscribeTopicReqBuilder {
+	b.apiReq.Body.(*SubscribeTopicReqBody).Rap = &rap
+	return b
+}
+
+/*
+*
+Default: 0
+Retain Handling
+*/
+func (b *SubscribeTopicReqBuilder) Rh(rh string) *SubscribeTopicReqBuilder {
+	b.apiReq.Body.(*SubscribeTopicReqBody).Rh = &rh
+	return b
+}
+
+func (b *SubscribeTopicReqBuilder) Build() *SubscribeTopicReq {
+	req := &SubscribeTopicReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type SubscribeTopicResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+	Subscription
+}

@@ -13,6 +13,7 @@ const (
 	ApiPathClients_Clientid                    = "/api/v5/clients/{clientid}"
 	ApiPathClientsKickoutBulk                  = "/api/v5/clients/kickout/bulk"
 	ApiPathClients_Clientid_Subscriptions      = "/api/v5/clients/{clientid}/subscriptions"
+	ApiPathClients_Clientid_Subscribe          = "/api/v5/clients/{clientid}/subscribe"
 	ApiPathClients_Clientid_AuthorizationCache = "/api/v5/clients/{clientid}/authorization/cache"
 )
 
@@ -167,6 +168,26 @@ func (s *ClientsService) CleanAuthzCache(ctx context.Context, req *CleanAuthzCac
 			s.config.Logger.Error(ctx, fmt.Sprintf("[CleanAuthzCache] fail to unmarshal response body, error: %v", err.Error()))
 			return nil, err
 		}
+	}
+	return resp, nil
+}
+
+// Subscribe
+func (s *ClientsService) SubscribeTopic(ctx context.Context, req *SubscribeTopicReq, options ...core.RequestOptionFunc) (*SubscribeTopicResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathClients_Clientid_Subscribe
+	apiReq.HttpMethod = "POST"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[SubscribeTopic] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &SubscribeTopicResp{APIResp: apiResp}
+	err = json.Unmarshal(apiResp.RawBody, resp)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[SubscribeTopic] fail to unmarshal response body, error: %v", err.Error()))
+		return nil, err
 	}
 	return resp, nil
 }
