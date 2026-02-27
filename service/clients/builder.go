@@ -1,8 +1,6 @@
 package clients
 
 import (
-	"fmt"
-
 	"github.com/yao560909/emqx-admin-go-sdk/core"
 )
 
@@ -37,13 +35,13 @@ func (b *ListClientsReqBuilder) Build() *ListClientsReq {
 	return req
 }
 
-func (b *ListClientsReqBuilder) Limit(limit int64) *ListClientsReqBuilder {
-	b.apiReq.QueryParams.Set("limit", fmt.Sprint(limit))
+func (b *ListClientsReqBuilder) Limit(limit string) *ListClientsReqBuilder {
+	b.apiReq.QueryParams.Set("limit", limit)
 	return b
 }
 
-func (b *ListClientsReqBuilder) Page(page int64) *ListClientsReqBuilder {
-	b.apiReq.QueryParams.Set("page", fmt.Sprint(page))
+func (b *ListClientsReqBuilder) Page(page string) *ListClientsReqBuilder {
+	b.apiReq.QueryParams.Set("page", page)
 	return b
 }
 
