@@ -9,9 +9,8 @@ import (
 )
 
 const (
-	ApiPathAPIKey        = "/api/v5/api_key"
-	ApiPathAPIKey_APIKey = "/api/v5/api_key/{api_key}"
-	ApiPathAPIKey_Name   = "/api/v5/api_key/{name}"
+	ApiPathAPIKey      = "/api/v5/api_key"
+	ApiPathAPIKey_Name = "/api/v5/api_key/{name}"
 )
 
 type APIKeysService struct {
@@ -22,7 +21,8 @@ func NewService(config *core.Config) *APIKeysService {
 	return &APIKeysService{config: config}
 }
 
-// Create an API key.
+// 需要先调用login获取token
+// Create new api_key
 func (s *APIKeysService) CreateAPIKey(ctx context.Context, req *CreateAPIKeyReq, options ...core.RequestOptionFunc) (*CreateAPIKeyResp, error) {
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAPIKey
@@ -42,10 +42,11 @@ func (s *APIKeysService) CreateAPIKey(ctx context.Context, req *CreateAPIKeyReq,
 	return resp, nil
 }
 
-// Delete an API key.
+// 需要先调用login获取token
+// Delete the specific api_key
 func (s *APIKeysService) DeleteAPIKey(ctx context.Context, req *DeleteAPIKeyReq, options ...core.RequestOptionFunc) (*DeleteAPIKeyResp, error) {
 	apiReq := req.apiReq
-	apiReq.ApiPath = ApiPathAPIKey_APIKey
+	apiReq.ApiPath = ApiPathAPIKey_Name
 	apiReq.HttpMethod = "DELETE"
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
@@ -64,7 +65,8 @@ func (s *APIKeysService) DeleteAPIKey(ctx context.Context, req *DeleteAPIKeyReq,
 	return resp, nil
 }
 
-// List all API keys.
+// 需要先调用login获取token
+// Return api_key list
 func (s *APIKeysService) ListAPIKeys(ctx context.Context, req *ListAPIKeysReq, options ...core.RequestOptionFunc) (*ListAPIKeysResp, error) {
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAPIKey
@@ -84,7 +86,8 @@ func (s *APIKeysService) ListAPIKeys(ctx context.Context, req *ListAPIKeysReq, o
 	return resp, nil
 }
 
-// Get an API key.
+// 需要先调用login获取token
+// Return the specific api_key
 func (s *APIKeysService) GetAPIKey(ctx context.Context, req *GetAPIKeyReq, options ...core.RequestOptionFunc) (*GetAPIKeyResp, error) {
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAPIKey_Name
@@ -104,10 +107,11 @@ func (s *APIKeysService) GetAPIKey(ctx context.Context, req *GetAPIKeyReq, optio
 	return resp, nil
 }
 
-// Update an API key.
+// 需要先调用login获取token
+// Update the specific api_key
 func (s *APIKeysService) UpdateAPIKey(ctx context.Context, req *UpdateAPIKeyReq, options ...core.RequestOptionFunc) (*UpdateAPIKeyResp, error) {
 	apiReq := req.apiReq
-	apiReq.ApiPath = ApiPathAPIKey_APIKey
+	apiReq.ApiPath = ApiPathAPIKey_Name
 	apiReq.HttpMethod = "PUT"
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)

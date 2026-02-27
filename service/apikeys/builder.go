@@ -1,6 +1,10 @@
 package apikeys
 
-import "github.com/yao560909/emqx-admin-go-sdk/core"
+import (
+	"encoding/json"
+
+	"github.com/yao560909/emqx-admin-go-sdk/core"
+)
 
 // --------------------
 type CreateAPIKeyReq struct {
@@ -8,9 +12,11 @@ type CreateAPIKeyReq struct {
 }
 
 type CreateAPIKeyReqBody struct {
-	Expired *string `json:"expired,omitempty"`
-	Note    *string `json:"note,omitempty"`
-	Tag     *string `json:"tag,omitempty"`
+	Name      string `json:"name,omitempty"`
+	Expired   bool   `json:"expired,omitempty"`
+	ExpiredAt string `json:"expired_at,omitempty"`
+	Desc      string `json:"desc,omitempty"`
+	Enable    bool   `json:"enable,omitempty"`
 }
 
 type CreateAPIKeyReqBuilder struct {
@@ -22,35 +28,31 @@ func NewCreateAPIKeyReqBuilder() *CreateAPIKeyReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
-		Body:        &CreateAPIKeyReqBody{},
 	}
 	return builder
 }
 
-/*
-*
-Expiration time, format: rfc3339, for example: 2025-12-31T23:59:59+08:00
-*/
-func (b *CreateAPIKeyReqBuilder) Expired(expired string) *CreateAPIKeyReqBuilder {
-	b.apiReq.Body.(*CreateAPIKeyReqBody).Expired = &expired
+func (b *CreateAPIKeyReqBuilder) Expired(expired bool) *CreateAPIKeyReqBuilder {
+	b.apiReq.Body.(*CreateAPIKeyReqBody).Expired = expired
+	return b
+}
+func (b *CreateAPIKeyReqBuilder) ExpiredAt(expiredAt string) *CreateAPIKeyReqBuilder {
+	b.apiReq.Body.(*CreateAPIKeyReqBody).ExpiredAt = expiredAt
 	return b
 }
 
-/*
-*
-Note for the API key
-*/
-func (b *CreateAPIKeyReqBuilder) Note(note string) *CreateAPIKeyReqBuilder {
-	b.apiReq.Body.(*CreateAPIKeyReqBody).Note = &note
+func (b *CreateAPIKeyReqBuilder) Desc(desc string) *CreateAPIKeyReqBuilder {
+	b.apiReq.Body.(*CreateAPIKeyReqBody).Desc = desc
 	return b
 }
 
-/*
-*
-Tag for the API key
-*/
-func (b *CreateAPIKeyReqBuilder) Tag(tag string) *CreateAPIKeyReqBuilder {
-	b.apiReq.Body.(*CreateAPIKeyReqBody).Tag = &tag
+func (b *CreateAPIKeyReqBuilder) Name(name string) *CreateAPIKeyReqBuilder {
+	b.apiReq.Body.(*CreateAPIKeyReqBody).Name = name
+	return b
+}
+
+func (b *CreateAPIKeyReqBuilder) Enable(enable bool) *CreateAPIKeyReqBuilder {
+	b.apiReq.Body.(*CreateAPIKeyReqBody).Enable = enable
 	return b
 }
 
@@ -84,12 +86,8 @@ func NewDeleteAPIKeyReqBuilder() *DeleteAPIKeyReqBuilder {
 	return builder
 }
 
-/*
-*
-API Key to delete
-*/
-func (b *DeleteAPIKeyReqBuilder) APIKey(apiKey string) *DeleteAPIKeyReqBuilder {
-	b.apiReq.PathParams.Set("api_key", apiKey)
+func (b *DeleteAPIKeyReqBuilder) Name(name string) *DeleteAPIKeyReqBuilder {
+	b.apiReq.PathParams.Set("name", name)
 	return b
 }
 
@@ -122,28 +120,6 @@ func NewListAPIKeysReqBuilder() *ListAPIKeysReqBuilder {
 	return builder
 }
 
-/*
-*
-Default: 100
-Example: limit=50
-Results per page(max 1000)
-*/
-func (b *ListAPIKeysReqBuilder) Limit(limit string) *ListAPIKeysReqBuilder {
-	b.apiReq.QueryParams.Set("limit", limit)
-	return b
-}
-
-/*
-*
-Default: 1
-Example: page=1
-Page number of the results to fetch.
-*/
-func (b *ListAPIKeysReqBuilder) Page(page string) *ListAPIKeysReqBuilder {
-	b.apiReq.QueryParams.Set("page", page)
-	return b
-}
-
 func (b *ListAPIKeysReqBuilder) Build() *ListAPIKeysReq {
 	req := &ListAPIKeysReq{}
 	req.apiReq = b.apiReq
@@ -153,8 +129,17 @@ func (b *ListAPIKeysReqBuilder) Build() *ListAPIKeysReq {
 type ListAPIKeysResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
-	Data []*APIKey `json:"data"`
-	Meta *Meta     `json:"meta"`
+	Data []*APIKey `json:"-"`
+}
+
+func (resp *ListAPIKeysResp) UnmarshalJSON(b []byte) error {
+	var apikeys []*APIKey
+	if err := json.Unmarshal(b, &apikeys); err == nil {
+		resp.Data = apikeys
+		return nil
+	}
+	type alias ListAPIKeysResp
+	return json.Unmarshal(b, (*alias)(resp))
 }
 
 // ---------------------------------
@@ -202,9 +187,10 @@ type UpdateAPIKeyReq struct {
 }
 
 type UpdateAPIKeyReqBody struct {
-	Expired *string `json:"expired,omitempty"`
-	Note    *string `json:"note,omitempty"`
-	Tag     *string `json:"tag,omitempty"`
+	Expired   bool   `json:"expired,omitempty"`
+	ExpiredAt string `json:"expired_at"`
+	Desc      string `json:"desc"`
+	Enable    bool   `json:"enable"`
 }
 
 type UpdateAPIKeyReqBuilder struct {
@@ -216,44 +202,32 @@ func NewUpdateAPIKeyReqBuilder() *UpdateAPIKeyReqBuilder {
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
-		Body:        &UpdateAPIKeyReqBody{},
 	}
 	return builder
 }
 
-/*
-*
-API Key to update
-*/
-func (b *UpdateAPIKeyReqBuilder) APIKey(apiKey string) *UpdateAPIKeyReqBuilder {
-	b.apiReq.PathParams.Set("api_key", apiKey)
+func (b *UpdateAPIKeyReqBuilder) Name(name string) *UpdateAPIKeyReqBuilder {
+	b.apiReq.PathParams.Set("name", name)
 	return b
 }
 
-/*
-*
-Expiration time, format: rfc3339, for example: 2025-12-31T23:59:59+08:00
-*/
-func (b *UpdateAPIKeyReqBuilder) Expired(expired string) *UpdateAPIKeyReqBuilder {
-	b.apiReq.Body.(*UpdateAPIKeyReqBody).Expired = &expired
+func (b *UpdateAPIKeyReqBuilder) Expired(expired bool) *UpdateAPIKeyReqBuilder {
+	b.apiReq.Body.(*UpdateAPIKeyReqBody).Expired = expired
 	return b
 }
 
-/*
-*
-Note for the API key
-*/
-func (b *UpdateAPIKeyReqBuilder) Note(note string) *UpdateAPIKeyReqBuilder {
-	b.apiReq.Body.(*UpdateAPIKeyReqBody).Note = &note
+func (b *UpdateAPIKeyReqBuilder) ExpiredAt(expiredAt string) *UpdateAPIKeyReqBuilder {
+	b.apiReq.Body.(*UpdateAPIKeyReqBody).ExpiredAt = expiredAt
 	return b
 }
 
-/*
-*
-Tag for the API key
-*/
-func (b *UpdateAPIKeyReqBuilder) Tag(tag string) *UpdateAPIKeyReqBuilder {
-	b.apiReq.Body.(*UpdateAPIKeyReqBody).Tag = &tag
+func (b *UpdateAPIKeyReqBuilder) Desc(desc string) *UpdateAPIKeyReqBuilder {
+	b.apiReq.Body.(*UpdateAPIKeyReqBody).Desc = desc
+	return b
+}
+
+func (b *UpdateAPIKeyReqBuilder) Enable(enable bool) *UpdateAPIKeyReqBuilder {
+	b.apiReq.Body.(*UpdateAPIKeyReqBody).Enable = enable
 	return b
 }
 
