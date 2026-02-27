@@ -25,6 +25,7 @@ type CreateAPIKeyReqBuilder struct {
 
 func NewCreateAPIKeyReqBuilder() *CreateAPIKeyReqBuilder {
 	builder := &CreateAPIKeyReqBuilder{}
+	builder.apiReq.SkipAuth=true
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
@@ -79,6 +80,7 @@ type DeleteAPIKeyReqBuilder struct {
 
 func NewDeleteAPIKeyReqBuilder() *DeleteAPIKeyReqBuilder {
 	builder := &DeleteAPIKeyReqBuilder{}
+	builder.apiReq.SkipAuth=true
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
@@ -113,6 +115,7 @@ type ListAPIKeysReqBuilder struct {
 
 func NewListAPIKeysReqBuilder() *ListAPIKeysReqBuilder {
 	builder := &ListAPIKeysReqBuilder{}
+	builder.apiReq.SkipAuth=true
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
@@ -153,6 +156,7 @@ type GetAPIKeyReqBuilder struct {
 
 func NewGetAPIKeyReqBuilder() *GetAPIKeyReqBuilder {
 	builder := &GetAPIKeyReqBuilder{}
+	builder.apiReq.SkipAuth=true
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
@@ -199,6 +203,7 @@ type UpdateAPIKeyReqBuilder struct {
 
 func NewUpdateAPIKeyReqBuilder() *UpdateAPIKeyReqBuilder {
 	builder := &UpdateAPIKeyReqBuilder{}
+	builder.apiReq.SkipAuth=true
 	builder.apiReq = &core.APIReq{
 		PathParams:  core.PathParams{},
 		QueryParams: core.QueryParams{},
