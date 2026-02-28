@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/yao560909/emqx-admin-go-sdk/service/topics"
+
 	"github.com/valyala/fasthttp"
 )
 
@@ -52,6 +54,9 @@ func (r *Requester) DoRequest(apiReq *APIReq, options ...RequestOptionFunc) (*AP
 	path, err := reqTranslator.Path(apiReq.ApiPath, apiReq.PathParams)
 	if err != nil {
 		return nil, err
+	}
+	if apiReq.ApiPath == topics.ApiPathTopics_Topic {
+		req.SetRequestURI(path)
 	}
 	req.URI().SetPath(path)
 
