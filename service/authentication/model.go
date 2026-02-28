@@ -8,8 +8,8 @@ type Authentication struct {
 }
 
 type User struct {
-	UserId      string `json:"user_id"`
-	IsSuperuser bool   `json:"is_superuser"`
+	UserId      *string `json:"user_id"`
+	IsSuperuser *bool   `json:"is_superuser"`
 }
 
 type Meta struct {
