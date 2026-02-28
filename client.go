@@ -5,6 +5,7 @@ import (
 	"github.com/yao560909/emqx-admin-go-sdk/service/alarms"
 	"github.com/yao560909/emqx-admin-go-sdk/service/apikeys"
 	"github.com/yao560909/emqx-admin-go-sdk/service/authentication"
+	"github.com/yao560909/emqx-admin-go-sdk/service/authorization"
 	"github.com/yao560909/emqx-admin-go-sdk/service/banned"
 	"github.com/yao560909/emqx-admin-go-sdk/service/clients"
 	"github.com/yao560909/emqx-admin-go-sdk/service/cluster"
@@ -50,7 +51,7 @@ type Client struct {
 	Banned         *banned.BannedService
 	Authentication *authentication.AuthenticationService
 	Topics         *topics.TopicsService
-	Authorization  *authentication.AuthenticationService
+	Authorization  *authorization.AuthorizationService
 	Configs        *configs.ConfigsService
 	Alarms         *alarms.AlarmsService
 	Subscriptions  *subscriptions.SubscriptionsService
@@ -93,7 +94,7 @@ func initService(client *Client, config *core.Config) {
 		client.Banned = banned.NewService(config)
 		client.Authentication = authentication.NewService(config)
 		client.Topics = topics.NewService(config)
-		client.Authorization = authentication.NewService(config)
+		client.Authorization = authorization.NewService(config)
 		client.Configs = configs.NewService(config)
 		client.Alarms = alarms.NewService(config)
 		client.Subscriptions = subscriptions.NewService(config)
@@ -110,7 +111,7 @@ func initService(client *Client, config *core.Config) {
 		client.Banned = banned.NewService(config)
 		client.Authentication = authentication.NewService(config)
 		client.Topics = topics.NewService(config)
-		client.Authorization = authentication.NewService(config)
+		client.Authorization = authorization.NewService(config)
 		client.Configs = configs.NewService(config)
 		client.Alarms = alarms.NewService(config)
 		client.Subscriptions = subscriptions.NewService(config)
