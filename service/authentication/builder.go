@@ -156,7 +156,7 @@ func (b *CreateUsersForAuthenticatorReqBuilder) Id(id string) *CreateUsersForAut
 
 type UserBody struct {
 	UserId      *string `json:"user_id,omitempty"`
-	IsSuperuser *string `json:"is_superuser,omitempty"`
+	IsSuperuser *bool `json:"is_superuser,omitempty"`
 	Password    *string `json:"password,omitempty"`
 }
 
@@ -174,7 +174,7 @@ func (b *CreateUsersForAuthenticatorReqBuilder) Password(password string) *Creat
 *
 Default: false
 */
-func (b *CreateUsersForAuthenticatorReqBuilder) IsSuperuser(isSuperuser string) *CreateUsersForAuthenticatorReqBuilder {
+func (b *CreateUsersForAuthenticatorReqBuilder) IsSuperuser(isSuperuser bool) *CreateUsersForAuthenticatorReqBuilder {
 	b.apiReq.Body.(*UserBody).IsSuperuser = &isSuperuser
 	return b
 }
@@ -332,7 +332,7 @@ func (b *UpdateUserInAuthenticatorReqBuilder) Password(password string) *UpdateU
 *
 Default: false
 */
-func (b *UpdateUserInAuthenticatorReqBuilder) IsSuperuser(isSuperuser string) *UpdateUserInAuthenticatorReqBuilder {
+func (b *UpdateUserInAuthenticatorReqBuilder) IsSuperuser(isSuperuser bool) *UpdateUserInAuthenticatorReqBuilder {
 	b.apiReq.Body.(*UserBody).IsSuperuser = &isSuperuser
 	return b
 }
