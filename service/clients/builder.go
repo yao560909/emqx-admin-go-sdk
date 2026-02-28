@@ -2,6 +2,7 @@ package clients
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/yao560909/emqx-admin-go-sdk/core"
 )
@@ -98,8 +99,8 @@ clean_start
 boolean
 Whether the client uses a new session
 */
-func (b *ListClientsReqBuilder) CleanStart(cleanStart string) *ListClientsReqBuilder {
-	b.apiReq.QueryParams.Set("clean_start", cleanStart)
+func (b *ListClientsReqBuilder) CleanStart(cleanStart bool) *ListClientsReqBuilder {
+	b.apiReq.QueryParams.Set("clean_start", fmt.Sprintf("%t", cleanStart))
 	return b
 }
 
