@@ -9,6 +9,7 @@ type Listener struct {
 	Status     *Status       `json:"status"`
 	Bind       string        `json:"bind"`
 	NodeStatus []*NodeStatus `json:"node_status"`
+	Number     int   `json:"number"`
 }
 
 type ListenerStatus struct {
@@ -27,5 +28,5 @@ type Status struct {
 
 type NodeStatus struct {
 	Node   string `json:"node"`
-	Status Status `json:"status"`
+	Status *Status `json:"status"`
 }
