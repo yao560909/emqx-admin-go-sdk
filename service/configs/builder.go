@@ -410,7 +410,6 @@ type GetConfigsReq struct {
 type GetConfigsResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
-	Configs map[string]interface{} `json:"configs"`
 }
 
 type GetConfigsReqBuilder struct {
