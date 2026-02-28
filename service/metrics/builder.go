@@ -2,6 +2,7 @@ package metrics
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/yao560909/emqx-admin-go-sdk/core"
 )
@@ -29,8 +30,8 @@ func NewStatsReqBuilder() *StatsReqBuilder {
 boolean
 Calculation aggregate for all nodes
 */
-func (b *StatsReqBuilder) Aggregate(aggregate string) *StatsReqBuilder {
-	b.apiReq.QueryParams.Set("aggregate", aggregate)
+func (b *StatsReqBuilder) Aggregate(aggregate bool) *StatsReqBuilder {
+	b.apiReq.QueryParams.Set("aggregate", fmt.Sprintf("%t", aggregate))
 	return b
 }
 
@@ -43,7 +44,7 @@ func (b *StatsReqBuilder) Build() *StatsReq {
 type StatsResp struct {
 	*core.APIResp `json:"-"`
 	core.CodeError
-	Stats
+	*Stats
 	Data []*Stats `json:"-"`
 }
 
@@ -73,6 +74,15 @@ func NewMetricsReqBuilder() *MetricsReqBuilder {
 		QueryParams: core.QueryParams{},
 	}
 	return builder
+}
+
+/*
+*
+Whether to aggregate all nodes Metrics
+*/
+func (b *MetricsReqBuilder) Aggregate(aggregate bool) *MetricsReqBuilder {
+	b.apiReq.QueryParams.Set("aggregate", fmt.Sprintf("%t", aggregate))
+	return b
 }
 
 func (b *MetricsReqBuilder) Build() *MetricsReq {
