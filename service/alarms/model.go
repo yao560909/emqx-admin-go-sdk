@@ -7,6 +7,7 @@ type Alarm struct {
 	Message    string             `json:"message"`
 	Name       string             `json:"name"`
 	Node       string             `json:"node"`
+	DeactivateAt *string          `json:"deactivate_at"`
 }
 
 type Meta struct {
