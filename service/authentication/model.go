@@ -40,22 +40,22 @@ type NodeError struct {
 }
 
 type AuthenticatorMetrics struct {
-	Nomatch    int `json:"nomatch"`
-	Total      int `json:"total"`
-	Success    int `json:"success"`
-	Failed     int `json:"failed"`
-	Rate       int `json:"rate"`
-	RateLast5m int `json:"rate_last5m"`
-	RateMax    int `json:"rate_max"`
+	Nomatch    int     `json:"nomatch"`
+	Total      int     `json:"total"`
+	Success    int     `json:"success"`
+	Failed     int     `json:"failed"`
+	Rate       float64 `json:"rate"`
+	RateLast5m float64 `json:"rate_last5m"`
+	RateMax    float64 `json:"rate_max"`
 }
 
 type ResourceMetrics struct {
-	Success    int `json:"success"`
-	Matched    int `json:"matched"`
-	Failed     int `json:"failed"`
-	Rate       int `json:"rate"`
-	RateLast5m int `json:"rate_last5m"`
-	RateMax    int `json:"rate_max"`
+	Success    int     `json:"success"`
+	Matched    int     `json:"matched"`
+	Failed     int     `json:"failed"`
+	Rate       float64 `json:"rate"`
+	RateLast5m float64 `json:"rate_last5m"`
+	RateMax    float64 `json:"rate_max"`
 }
 
 type NodeMetrics struct {
