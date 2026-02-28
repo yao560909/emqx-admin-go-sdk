@@ -2,7 +2,7 @@ package authentication
 
 import (
 	"encoding/json"
-
+	"fmt"
 	"github.com/yao560909/emqx-admin-go-sdk/core"
 )
 
@@ -108,8 +108,8 @@ func (b *ListUsersInAuthenticatorReqBuilder) LikeUserId(likeUserId string) *List
 *
 Is superuser
 */
-func (b *ListUsersInAuthenticatorReqBuilder) IsSuperuser(isSuperuser string) *ListUsersInAuthenticatorReqBuilder {
-	b.apiReq.QueryParams.Set("is_superuser", isSuperuser)
+func (b *ListUsersInAuthenticatorReqBuilder) IsSuperuser(isSuperuser bool) *ListUsersInAuthenticatorReqBuilder {
+	b.apiReq.QueryParams.Set("is_superuser", fmt.Sprintf("%t", isSuperuser))
 	return b
 }
 
