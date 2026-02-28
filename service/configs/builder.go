@@ -436,6 +436,15 @@ func (b *GetConfigsReqBuilder) Key(key string) *GetConfigsReqBuilder {
 	return b
 }
 
+/*
+*
+Node's name. Will deprecated in 5.2.0.
+*/
+func (b *GetConfigsReqBuilder) Node(node string) *GetConfigsReqBuilder {
+	b.apiReq.QueryParams.Set("node", node)
+	return b
+}
+
 func (b *GetConfigsReqBuilder) Build() *GetConfigsReq {
 	req := &GetConfigsReq{}
 	req.apiReq = b.apiReq

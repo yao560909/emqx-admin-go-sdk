@@ -3,6 +3,7 @@ package authentication
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/yao560909/emqx-admin-go-sdk/core"
 )
 
@@ -156,7 +157,7 @@ func (b *CreateUsersForAuthenticatorReqBuilder) Id(id string) *CreateUsersForAut
 
 type UserBody struct {
 	UserId      *string `json:"user_id,omitempty"`
-	IsSuperuser *bool `json:"is_superuser,omitempty"`
+	IsSuperuser *bool   `json:"is_superuser,omitempty"`
 	Password    *string `json:"password,omitempty"`
 }
 
