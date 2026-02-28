@@ -295,3 +295,31 @@ func (b *UpdateOpenTelemetryConfigReqBuilder) Build() *UpdateOpenTelemetryConfig
 	req.apiReq = b.apiReq
 	return req
 }
+
+type GetPrometheusStatsReq struct {
+	apiReq *core.APIReq
+}
+
+type GetPrometheusStatsReqBuilder struct {
+	apiReq *core.APIReq
+}
+
+func NewGetPrometheusStatsReqBuilder() *GetPrometheusStatsReqBuilder {
+	builder := &GetPrometheusStatsReqBuilder{}
+	builder.apiReq = &core.APIReq{
+		PathParams:  core.PathParams{},
+		QueryParams: core.QueryParams{},
+	}
+	return builder
+}
+
+func (b *GetPrometheusStatsReqBuilder) Build() *GetPrometheusStatsReq {
+	req := &GetPrometheusStatsReq{}
+	req.apiReq = b.apiReq
+	return req
+}
+
+type GetPrometheusStatsResp struct {
+	*core.APIResp `json:"-"`
+	core.CodeError
+}

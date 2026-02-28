@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	ApiPathPrometheusConfig    = "/api/v5/monitor/prometheus"
-	ApiPathOpenTelemetryConfig = "/api/v5/monitor/opentelemetry"
+	ApiPathPrometheusConfig    = "/api/v5/prometheus"
+	ApiPathOpenTelemetryConfig = "/api/v5/opentelemetry"
+	ApiPathPrometheusStats     = "/api/v5/prometheus/stats"
 )
 
 type MonitorService struct {
@@ -98,5 +99,20 @@ func (s *MonitorService) UpdateOpenTelemetryConfig(ctx context.Context, req *Upd
 		s.config.Logger.Error(ctx, fmt.Sprintf("[UpdateOpenTelemetryConfig] fail to unmarshal response body, error: %v", err.Error()))
 		return nil, err
 	}
+	return resp, nil
+}
+
+// Get Prometheus Metrics
+func (s *MonitorService) GetPrometheusStats(ctx context.Context, req *GetPrometheusStatsReq, options ...core.RequestOptionFunc) (*GetPrometheusStatsResp, error) {
+	apiReq := req.apiReq
+	apiReq.ApiPath = ApiPathPrometheusStats
+	apiReq.HttpMethod = "GET"
+	requester := core.NewRequester(s.config)
+	apiResp, err := requester.DoRequest(apiReq, options...)
+	if err != nil {
+		s.config.Logger.Error(ctx, fmt.Sprintf("[GetPrometheusStats] fail to invoke api, error: %v", err.Error()))
+		return nil, err
+	}
+	resp := &GetPrometheusStatsResp{APIResp: apiResp}
 	return resp, nil
 }
