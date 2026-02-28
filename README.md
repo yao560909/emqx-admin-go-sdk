@@ -6,6 +6,13 @@ Go client library for EMQX Admin API.
 ```go
 go get github.com/yao560909/emqx-admin-go-sdk
 ```
+
+## 版本说明
+基于 **开源 EMQX v5.4.1** 版本进行验证与测试。
+
+- `branch 5.4`：适配 **EMQX v5.4.\* 系列版本
+- `tag v1.5.4`：适配 **EMQX v5.4.\* 系列版本（稳定发布版本）
+
 ## API Client
 
 开发者在调用 API 前，需要先创建一个 API Client，然后才可以基于 API Client 发起 API 调用，Client对象线程安全，全局初始化一次即可。
