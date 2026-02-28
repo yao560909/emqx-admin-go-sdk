@@ -1,13 +1,13 @@
 package alarms
 
 type Alarm struct {
-	ActivateAt string             `json:"activate_at"`
-	Details    map[string]float64 `json:"details"`
-	Duration   int64              `json:"duration"`
-	Message    string             `json:"message"`
-	Name       string             `json:"name"`
-	Node       string             `json:"node"`
-	DeactivateAt *string          `json:"deactivate_at"`
+	ActivateAt   string             `json:"activate_at"`
+	Details      map[string]float64 `json:"details"`
+	Duration     int64              `json:"duration"`
+	Message      string             `json:"message"`
+	Name         string             `json:"name"`
+	Node         string             `json:"node"`
+	DeactivateAt *string            `json:"deactivate_at"`
 }
 
 type Meta struct {
