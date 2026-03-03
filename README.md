@@ -4,7 +4,7 @@ Go client library for EMQX Admin API.
 ## 安装
 
 ```go
-go get github.com/yao560909/emqx-admin-go-sdk
+go get github.com/yao560909/emqx-admin-go-sdk@5.4
 ```
 
 ## 版本说明
