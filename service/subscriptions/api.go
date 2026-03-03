@@ -25,6 +25,7 @@ func (s *SubscriptionsService) ListSubscriptions(ctx context.Context, req *ListS
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathSubscriptions
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

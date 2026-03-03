@@ -26,6 +26,7 @@ func (s *BannedService) Banned(ctx context.Context, req *BannedReq, options ...c
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathBanned
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -46,6 +47,7 @@ func (s *BannedService) RemoveBanned(ctx context.Context, req *RemoveBannedReq, 
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathBanned_As__Who
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -68,6 +70,7 @@ func (s *BannedService) ClearAllBanned(ctx context.Context, req *ClearAllBannedR
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathBanned
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -90,6 +93,7 @@ func (s *BannedService) ListCurrentlyBanned(ctx context.Context, req *ListCurren
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathBanned
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

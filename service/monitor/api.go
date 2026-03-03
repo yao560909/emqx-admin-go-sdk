@@ -27,6 +27,7 @@ func (s *MonitorService) GetPrometheusConfig(ctx context.Context, req *GetPromet
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathPrometheusConfig
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -47,6 +48,7 @@ func (s *MonitorService) UpdatePrometheusConfig(ctx context.Context, req *Update
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathPrometheusConfig
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -67,6 +69,7 @@ func (s *MonitorService) GetOpenTelemetryConfig(ctx context.Context, req *GetOpe
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathOpenTelemetryConfig
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -87,6 +90,7 @@ func (s *MonitorService) UpdateOpenTelemetryConfig(ctx context.Context, req *Upd
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathOpenTelemetryConfig
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -107,6 +111,7 @@ func (s *MonitorService) GetPrometheusStats(ctx context.Context, req *GetPrometh
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathPrometheusStats
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

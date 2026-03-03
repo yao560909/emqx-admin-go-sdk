@@ -28,6 +28,7 @@ func (s *NodesService) ListNodes(ctx context.Context, req *ListNodesReq, options
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathNodes
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -48,6 +49,7 @@ func (s *NodesService) GetNode(ctx context.Context, req *GetNodeReq, options ...
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathNodes_Node
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -67,6 +69,7 @@ func (s *NodesService) GetNodeMetrics(ctx context.Context, req *GetNodeMetricsRe
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathNodes_Node_Metrics
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -86,6 +89,7 @@ func (s *NodesService) GetNodeStats(ctx context.Context, req *GetNodeStatsReq, o
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathNodes_Node_Stats
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

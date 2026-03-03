@@ -27,7 +27,7 @@ func NewRequester(config *Config) *Requester {
 		uri: uri,
 		client: &fasthttp.Client{
 			Name:                "emqx-admin-go-sdk",
-			MaxConnsPerHost:     1000,
+			MaxConnsPerHost:     2000,
 			MaxIdleConnDuration: 30 * time.Second,
 			ReadTimeout:         5 * time.Second,
 			WriteTimeout:        5 * time.Second,
@@ -93,7 +93,14 @@ func (r *Requester) DoRequest(apiReq *APIReq, options ...RequestOptionFunc) (*AP
 	resp := fasthttp.AcquireResponse()
 	defer fasthttp.ReleaseResponse(resp)
 
-	err = r.client.Do(req, resp)
+	if apiReq.Context != nil {
+		deadline, ok := apiReq.Context.Deadline()
+		if ok {
+			err = r.client.DoDeadline(req, resp, deadline)
+		}
+	} else {
+		err = r.client.Do(req, resp)
+	}
 	if err != nil {
 		return nil, fmt.Errorf("request %s failed: %w", req.URI().String(), err)
 	}

@@ -25,6 +25,7 @@ func (s *AlarmsService) ListAlarms(ctx context.Context, req *ListAlarmsReq, opti
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAlarms
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -45,6 +46,7 @@ func (s *AlarmsService) DeleteAlarms(ctx context.Context, req *DeleteAlarmsReq, 
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAlarms
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

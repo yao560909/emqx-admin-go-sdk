@@ -30,6 +30,7 @@ func (s *AuthenticationService) ListAuthenticators(ctx context.Context, req *Lis
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -50,6 +51,7 @@ func (s *AuthenticationService) ListUsersInAuthenticator(ctx context.Context, re
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication_Id_Users
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -70,6 +72,7 @@ func (s *AuthenticationService) CreateUsersForAuthenticator(ctx context.Context,
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication_Id_Users
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -90,6 +93,7 @@ func (s *AuthenticationService) MoveAuthenticatorPosition(ctx context.Context, r
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication_Id_Position
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -112,6 +116,7 @@ func (s *AuthenticationService) GetUserFromAuthenticator(ctx context.Context, re
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication_Id_Users_UserId
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -132,6 +137,7 @@ func (s *AuthenticationService) UpdateUserInAuthenticator(ctx context.Context, r
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication_Id_Users_UserId
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -152,6 +158,7 @@ func (s *AuthenticationService) DeleteUserFromAuthenticator(ctx context.Context,
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication_Id_Users_UserId
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -174,6 +181,7 @@ func (s *AuthenticationService) GetAuthenticatorStatus(ctx context.Context, req 
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication_Id_Status
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -194,6 +202,7 @@ func (s *AuthenticationService) GetAuthenticator(ctx context.Context, req *GetAu
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication_Id
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -214,6 +223,7 @@ func (s *AuthenticationService) DeleteAuthenticator(ctx context.Context, req *De
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthentication_Id
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

@@ -1,6 +1,9 @@
 package core
 
-import "net/url"
+import (
+	"context"
+	"net/url"
+)
 
 type APIReq struct {
 	HttpMethod  string
@@ -9,6 +12,7 @@ type APIReq struct {
 	QueryParams QueryParams
 	PathParams  PathParams
 	SkipAuth    bool
+	Context     context.Context
 }
 
 type PathParams map[string]string

@@ -26,6 +26,7 @@ func (s *TopicsService) ListTopics(ctx context.Context, req *ListTopicsReq, opti
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathTopics
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -46,6 +47,7 @@ func (s *TopicsService) GetTopic(ctx context.Context, req *GetTopicReq, options 
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathTopics_Topic
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

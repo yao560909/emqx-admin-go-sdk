@@ -26,6 +26,7 @@ func (s *ClusterService) ListCluster(ctx context.Context, req *ListClusterReq, o
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathCluster
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -46,6 +47,7 @@ func (s *ClusterService) GetClusterTopology(ctx context.Context, req *GetCluster
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClusterTopology
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

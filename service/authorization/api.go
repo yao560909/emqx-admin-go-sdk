@@ -36,6 +36,7 @@ func (s *AuthorizationService) ListRulesForUsers(ctx context.Context, req *ListR
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -56,6 +57,7 @@ func (s *AuthorizationService) AddRule(ctx context.Context, req *AddRuleReq, opt
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsers
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -78,6 +80,7 @@ func (s *AuthorizationService) ListRulesForClients(ctx context.Context, req *Lis
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -98,6 +101,7 @@ func (s *AuthorizationService) AddRuleForClients(ctx context.Context, req *AddRu
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesClients
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -120,6 +124,7 @@ func (s *AuthorizationService) GetRuleForClient(ctx context.Context, req *GetRul
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesClientsClientId
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -140,6 +145,7 @@ func (s *AuthorizationService) SetRuleForClient(ctx context.Context, req *SetRul
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesClientsClientId
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -162,6 +168,7 @@ func (s *AuthorizationService) DeleteRuleForClient(ctx context.Context, req *Del
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesClientsClientId
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -184,6 +191,7 @@ func (s *AuthorizationService) GetAuthorizationSourceStatus(ctx context.Context,
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesTypeStatus
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -204,6 +212,7 @@ func (s *AuthorizationService) ListAuthorizationSources(ctx context.Context, req
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSources
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -224,6 +233,7 @@ func (s *AuthorizationService) GetRuleForUser(ctx context.Context, req *GetRuleF
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsersUsername
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -244,6 +254,7 @@ func (s *AuthorizationService) SetRuleForUser(ctx context.Context, req *SetRuleF
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsersUsername
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -266,6 +277,7 @@ func (s *AuthorizationService) DeleteRuleForUser(ctx context.Context, req *Delet
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesUsersUsername
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -288,6 +300,7 @@ func (s *AuthorizationService) DeleteAllRules(ctx context.Context, req *DeleteAl
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRules
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -310,6 +323,7 @@ func (s *AuthorizationService) DeleteRulesForAll(ctx context.Context, req *Delet
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesAll
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -332,6 +346,7 @@ func (s *AuthorizationService) SetRulesForAll(ctx context.Context, req *SetRules
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesAll
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -352,6 +367,7 @@ func (s *AuthorizationService) ListRulesForAll(ctx context.Context, req *ListRul
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesBuiltInDatabaseRulesAll
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -372,6 +388,7 @@ func (s *AuthorizationService) MoveAuthorizationSource(ctx context.Context, req 
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesTypeMove
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -394,6 +411,7 @@ func (s *AuthorizationService) GetAuthorizationSource(ctx context.Context, req *
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesType
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -414,6 +432,7 @@ func (s *AuthorizationService) DeleteAuthorizationSource(ctx context.Context, re
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSourcesType
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -436,6 +455,7 @@ func (s *AuthorizationService) CleanAuthorizationCache(ctx context.Context, req 
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationCache
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -458,6 +478,7 @@ func (s *AuthorizationService) GetAuthorizationSettings(ctx context.Context, req
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSettings
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -478,6 +499,7 @@ func (s *AuthorizationService) UpdateAuthorizationSettings(ctx context.Context, 
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAuthorizationSettings
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

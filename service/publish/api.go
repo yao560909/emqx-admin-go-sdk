@@ -26,6 +26,7 @@ func (s *PublishService) Publish(ctx context.Context, req *PublishReq, options .
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathPublish
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -46,6 +47,7 @@ func (s *PublishService) PublishABatchOfMessages(ctx context.Context, req *Publi
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathPublishBulk
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

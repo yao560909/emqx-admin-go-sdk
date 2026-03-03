@@ -29,6 +29,7 @@ func (s *DashboardService) Login(ctx context.Context, req *LoginReq, options ...
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathLogin
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -51,6 +52,7 @@ func (s *DashboardService) ListUsers(ctx context.Context, req *ListUsersReq, opt
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathUsers
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -72,6 +74,7 @@ func (s *DashboardService) CreateUser(ctx context.Context, req *CreateUserReq, o
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathUsers
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -93,6 +96,7 @@ func (s *DashboardService) UpdateUser(ctx context.Context, req *UpdateUserReq, o
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathUsers_Username
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -114,6 +118,7 @@ func (s *DashboardService) DeleteUser(ctx context.Context, req *DeleteUserReq, o
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathUsers_Username
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -137,6 +142,7 @@ func (s *DashboardService) ChangePassword(ctx context.Context, req *ChangePasswo
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathUsers_Username_ChangePwd
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -162,6 +168,7 @@ func (s *DashboardService) Logout(ctx context.Context, req *LogoutReq, options .
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathLogout
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

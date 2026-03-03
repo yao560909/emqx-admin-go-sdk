@@ -27,6 +27,7 @@ func (s *APIKeysService) CreateAPIKey(ctx context.Context, req *CreateAPIKeyReq,
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAPIKey
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -48,6 +49,7 @@ func (s *APIKeysService) DeleteAPIKey(ctx context.Context, req *DeleteAPIKeyReq,
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAPIKey_Name
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -71,6 +73,7 @@ func (s *APIKeysService) ListAPIKeys(ctx context.Context, req *ListAPIKeysReq, o
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAPIKey
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -92,6 +95,7 @@ func (s *APIKeysService) GetAPIKey(ctx context.Context, req *GetAPIKeyReq, optio
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAPIKey_Name
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -113,6 +117,7 @@ func (s *APIKeysService) UpdateAPIKey(ctx context.Context, req *UpdateAPIKeyReq,
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAPIKey_Name
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

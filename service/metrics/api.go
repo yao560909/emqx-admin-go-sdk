@@ -30,6 +30,7 @@ func (s *MetricsService) Stats(ctx context.Context, req *StatsReq, options ...co
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathMetricsStats
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -50,6 +51,7 @@ func (s *MetricsService) Metrics(ctx context.Context, req *MetricsReq, options .
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathMetrics
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -70,6 +72,7 @@ func (s *MetricsService) ListMonitorForTheCluster(ctx context.Context, req *List
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathMetricsMonitor
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -90,6 +93,7 @@ func (s *MetricsService) ListMonitorForNode(ctx context.Context, req *ListMonito
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathMetricsMonitorNodes_Node
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -110,6 +114,7 @@ func (s *MetricsService) CurrentMonitorForTheCluster(ctx context.Context, req *C
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathMetricsMonitor_current
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -130,6 +135,7 @@ func (s *MetricsService) CurrentMonitorForNode(ctx context.Context, req *Current
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathMetricsMonitor_currentNodes_Node
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

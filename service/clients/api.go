@@ -31,6 +31,7 @@ func (s *ClientsService) ListClients(ctx context.Context, req *ListClientsReq, o
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClients
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -51,6 +52,7 @@ func (s *ClientsService) KickOutClient(ctx context.Context, req *KickOutClientRe
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClients_Clientid
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -73,6 +75,7 @@ func (s *ClientsService) BatchKickOutClient(ctx context.Context, req *BatchKickO
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClientsKickoutBulk
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -95,6 +98,7 @@ func (s *ClientsService) GetClientSubscriptions(ctx context.Context, req *GetCli
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClients_Clientid_Subscriptions
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -116,6 +120,7 @@ func (s *ClientsService) GetClient(ctx context.Context, req *GetClientReq, optio
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClients_Clientid
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -136,6 +141,7 @@ func (s *ClientsService) GetClientAuthzCache(ctx context.Context, req *GetClient
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClients_Clientid_AuthorizationCache
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -156,6 +162,7 @@ func (s *ClientsService) CleanAuthzCache(ctx context.Context, req *CleanAuthzCac
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClients_Clientid_AuthorizationCache
 	apiReq.HttpMethod = "DELETE"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -178,6 +185,7 @@ func (s *ClientsService) SubscribeTopic(ctx context.Context, req *SubscribeTopic
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClients_Clientid_Subscribe
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -198,6 +206,7 @@ func (s *ClientsService) UnsubscribeTopic(ctx context.Context, req *UnsubscribeT
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathClients_Clientid_Unsubscribe
 	apiReq.HttpMethod = "POST"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

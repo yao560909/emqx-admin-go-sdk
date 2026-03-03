@@ -31,6 +31,7 @@ func (s *ConfigsService) GetSysTopicsConfig(ctx context.Context, req *GetSysTopi
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathSysTopicsConfig
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -50,6 +51,7 @@ func (s *ConfigsService) UpdateSysTopicsConfig(ctx context.Context, req *UpdateS
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathSysTopicsConfig
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -70,6 +72,7 @@ func (s *ConfigsService) GetSysmonConfig(ctx context.Context, req *GetSysmonConf
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathSysmonConfig
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -89,6 +92,7 @@ func (s *ConfigsService) UpdateSysmonConfig(ctx context.Context, req *UpdateSysm
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathSysmonConfig
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -109,6 +113,7 @@ func (s *ConfigsService) GetGlobalZoneConfig(ctx context.Context, req *GetGlobal
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathGlobalZoneConfig
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -128,6 +133,7 @@ func (s *ConfigsService) UpdateGlobalZoneConfig(ctx context.Context, req *Update
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathGlobalZoneConfig
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -148,6 +154,7 @@ func (s *ConfigsService) GetAlarmConfig(ctx context.Context, req *GetAlarmConfig
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAlarmConfig
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -167,6 +174,7 @@ func (s *ConfigsService) UpdateAlarmConfig(ctx context.Context, req *UpdateAlarm
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathAlarmConfig
 	apiReq.HttpMethod = "PUT"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -187,6 +195,7 @@ func (s *ConfigsService) GetDashboardConfig(ctx context.Context, req *GetDashboa
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathDashboardConfig
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -207,6 +216,7 @@ func (s *ConfigsService) GetLogConfig(ctx context.Context, req *GetLogConfigReq,
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathLogConfig
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -227,6 +237,7 @@ func (s *ConfigsService) GetConfigs(ctx context.Context, req *GetConfigsReq, opt
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathConfigs
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {

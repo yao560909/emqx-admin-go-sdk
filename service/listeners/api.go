@@ -26,6 +26,7 @@ func (s *ListenersService) ListListeners(ctx context.Context, req *ListListeners
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathListeners
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
@@ -46,6 +47,7 @@ func (s *ListenersService) ListListenersStatus(ctx context.Context, req *Listene
 	apiReq := req.apiReq
 	apiReq.ApiPath = ApiPathListenersStatus
 	apiReq.HttpMethod = "GET"
+	apiReq.Context = ctx
 	requester := core.NewRequester(s.config)
 	apiResp, err := requester.DoRequest(apiReq, options...)
 	if err != nil {
