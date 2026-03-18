@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/yao560909/emqx-admin-go-sdk/service/topics"
-
 	"github.com/valyala/fasthttp"
 )
+
+const ApipathtopicsTopic = "/api/v5/topics/{topic}"
 
 var reqTranslator ReqTranslator
 
@@ -55,7 +55,7 @@ func (r *Requester) DoRequest(apiReq *APIReq, options ...RequestOptionFunc) (*AP
 	if err != nil {
 		return nil, err
 	}
-	if apiReq.ApiPath == topics.ApiPathTopics_Topic {
+	if apiReq.ApiPath == ApipathtopicsTopic {
 		req.SetRequestURI(path)
 	}
 	req.URI().SetPath(path)
