@@ -97,6 +97,8 @@ func (r *Requester) DoRequest(apiReq *APIReq, options ...RequestOptionFunc) (*AP
 		deadline, ok := apiReq.Context.Deadline()
 		if ok {
 			err = r.client.DoDeadline(req, resp, deadline)
+		}else {
+			err = r.client.Do(req, resp)
 		}
 	} else {
 		err = r.client.Do(req, resp)
